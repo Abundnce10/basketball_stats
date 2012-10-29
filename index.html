@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stattracker - Input Stats</title>
+	<link rel="stylesheet" href="input.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script type="text/javascript" src="input.js"></script>
+</head>
+
+<body>
+
+	<h1>Team Name</h1>
+	<h2>Score: <strong id="score"></strong></h2>
+	<!--<button id="inputOutput">Switch Modes</button>
+-->
+
+	<!-- Start of Output Table -->
+	<div id="output">
+		<p>Output</p>
+		<table id="outputTable">
+			<tr>
+				<th>Player</th>
+				<th>Points</th>
+				<th>Field Goals</th>
+				<th>2pt Field Goals</th>
+				<th>3pt Field Goals</th>
+				<th>Free Throws</th>
+				<th>Def Reb</th>
+				<th>Off Reb</th>
+				<th>Asst</th>
+				<th>Blcok</th>
+				<th>Steal</th>
+				<th>Turnover</th>
+			</tr>
+			<tr>
+				<td class="player1Name">0</td>
+				<td id="player1Points">0</td>
+				<td id="player1FieldGoals">0/0</td>
+				<td id="player12ptFieldGoals">0/0</td>
+				<td id="player13ptFieldGoals">0/0</td>
+				<td id="player1FreeThrows">0/0</td>
+				<td id="player1DefReb">0</td>
+				<td id="player1OffReb">0</td>
+				<td id="player1Asst">0</td>
+				<td id="player1Block">0</td>
+				<td id="player1Steal">0</td>
+				<td id="player1Turnover">0</td>
+			</tr>
+			<tr>
+				<td class="player2Name">0</td>
+				<td id="player2Points">0</td>
+				<td id="player2FieldGoals">0/0</td>
+				<td id="player22ptFieldGoals">0/0</td>
+				<td id="player23ptFieldGoals">0/0</td>
+				<td id="player2FreeThrows">0/0</td>
+				<td id="player2DefReb">0</td>
+				<td id="player2OffReb">0</td>
+				<td id="player2Asst">0</td>
+				<td id="player2Block">0</td>
+				<td id="player2Steal">0</td>
+				<td id="player2Turnover">0</td>
+			</tr>
+			<tr>
+				<td class="player3Name">0</td>
+				<td id="player3Points">0</td>
+				<td id="player3FieldGoals">0/0</td>
+				<td id="player32ptFieldGoals">0/0</td>
+				<td id="player33ptFieldGoals">0/0</td>
+				<td id="player3FreeThrows">0/0</td>
+				<td id="player3DefReb">0</td>
+				<td id="player3OffReb">0</td>
+				<td id="player3Asst">0</td>
+				<td id="player3Block">0</td>
+				<td id="player3Steal">0</td>
+				<td id="player3Turnover">0</td>
+			</tr>
+			<tr>
+				<td class="player4Name">0</td>
+				<td id="player4Points">0</td>
+				<td id="player4FieldGoals">0/0</td>
+				<td id="player42ptFieldGoals">0/0</td>
+				<td id="player43ptFieldGoals">0/0</td>
+				<td id="player4FreeThrows">0/0</td>
+				<td id="player4DefReb">0</td>
+				<td id="player4OffReb">0</td>
+				<td id="player4Asst">0</td>
+				<td id="player4Block">0</td>
+				<td id="player4Steal">0</td>
+				<td id="player4Turnover">0</td>
+			</tr>
+			<tr>
+				<td class="player5Name">0</td>
+				<td id="player5Points">0</td>
+				<td id="player5FieldGoals">0/0</td>
+				<td id="player52ptFieldGoals">0/0</td>
+				<td id="player53ptFieldGoals">0/0</td>
+				<td id="player5FreeThrows">0/0</td>
+				<td id="player5DefReb">0</td>
+				<td id="player5OffReb">0</td>
+				<td id="player5Asst">0</td>
+				<td id="player5Block">0</td>
+				<td id="player5Steal">0</td>
+				<td id="player5Turnover">0</td>
+			</tr>
+		</table>
+	</div><!-- End of Output Table -->
+
+
+	<!-- Start of Input Table -->
+	<div id="input">
+		<p>Input</p>
+		<table id="inputTable">
+			<tr>
+				<th>Player</th>
+				<th>2Pt Make</th>
+				<th>2Pt Miss</th>
+				<th>3Pt Make</th>
+				<th>3Pt Miss</th>
+				<th>FT Make</th>
+				<th>FT Miss</th>
+				<th>Def Reb</th>
+				<th>Off Reb</th>
+				<th>Asst</th>
+				<th>Block</th>
+				<th>Steal</th>
+				<th>Turnover</th>
+			</tr>
+			<tr class="player1">
+				<td class="player1Name">Player #1</td>
+				<td><button type="button" class="2ptMake">+1</button></td>
+				<td><button type="button" class="2ptMiss">+1</button></td>
+				<td><button type="button" class="3ptMake">+1</button></td>
+				<td><button type="button" class="3ptMiss">+1</button></td>
+				<td><button type="button" class="FtMake">+1</button></td>
+				<td><button type="button" class="FtMiss">+1</button></td>
+				<td><button type="button" class="DefReb">+1</button></td>
+				<td><button type="button" class="OffReb">+1</button></td>
+				<td><button type="button" class="Asst">+1</button></td>
+				<td><button type="button" class="Block">+1</button></td>
+				<td><button type="button" class="Steal">+1</button></td>
+				<td><button type="button" class="Turnover">+1</button></td>
+			</tr>
+			<tr class="player2">
+				<td class="player2Name">Player #2</td>
+				<td><button type="button" class="2ptMake">+1</button></td>
+				<td><button type="button" class="2ptMiss">+1</button></td>
+				<td><button type="button" class="3ptMake">+1</button></td>
+				<td><button type="button" class="3ptMiss">+1</button></td>
+				<td><button type="button" class="FtMake">+1</button></td>
+				<td><button type="button" class="FtMiss">+1</button></td>
+				<td><button type="button" class="DefReb">+1</button></td>
+				<td><button type="button" class="OffReb">+1</button></td>
+				<td><button type="button" class="Asst">+1</button></td>
+				<td><button type="button" class="Block">+1</button></td>
+				<td><button type="button" class="Steal">+1</button></td>
+				<td><button type="button" class="Turnover">+1</button></td>
+			</tr>
+			<tr class="player3">
+				<td class="player3Name">Player #3</td>
+				<td><button type="button" class="2ptMake">+1</button></td>
+				<td><button type="button" class="2ptMiss">+1</button></td>
+				<td><button type="button" class="3ptMake">+1</button></td>
+				<td><button type="button" class="3ptMiss">+1</button></td>
+				<td><button type="button" class="FtMake">+1</button></td>
+				<td><button type="button" class="FtMiss">+1</button></td>
+				<td><button type="button" class="DefReb">+1</button></td>
+				<td><button type="button" class="OffReb">+1</button></td>
+				<td><button type="button" class="Asst">+1</button></td>
+				<td><button type="button" class="Block">+1</button></td>
+				<td><button type="button" class="Steal">+1</button></td>
+				<td><button type="button" class="Turnover">+1</button></td>
+			</tr>
+			<tr class="player4">
+				<td class="player4Name">Player #4</td>
+				<td><button type="button" class="2ptMake">+1</button></td>
+				<td><button type="button" class="2ptMiss">+1</button></td>
+				<td><button type="button" class="3ptMake">+1</button></td>
+				<td><button type="button" class="3ptMiss">+1</button></td>
+				<td><button type="button" class="FtMake">+1</button></td>
+				<td><button type="button" class="FtMiss">+1</button></td>
+				<td><button type="button" class="DefReb">+1</button></td>
+				<td><button type="button" class="OffReb">+1</button></td>
+				<td><button type="button" class="Asst">+1</button></td>
+				<td><button type="button" class="Block">+1</button></td>
+				<td><button type="button" class="Steal">+1</button></td>
+				<td><button type="button" class="Turnover">+1</button></td>
+			</tr>
+			<tr class="player5">
+				<td class="player5Name">Player #5</td>
+				<td><button type="button" class="2ptMake">+1</button></td>
+				<td><button type="button" class="2ptMiss">+1</button></td>
+				<td><button type="button" class="3ptMake">+1</button></td>
+				<td><button type="button" class="3ptMiss">+1</button></td>
+				<td><button type="button" class="FtMake">+1</button></td>
+				<td><button type="button" class="FtMiss">+1</button></td>
+				<td><button type="button" class="DefReb">+1</button></td>
+				<td><button type="button" class="OffReb">+1</button></td>
+				<td><button type="button" class="Asst">+1</button></td>
+				<td><button type="button" class="Block">+1</button></td>
+				<td><button type="button" class="Steal">+1</button></td>
+				<td><button type="button" class="Turnover">+1</button></td>
+			</tr>				
+		</table>
+	</div><!-- End of Input Table --> 
+	
+</body>
+</html>
