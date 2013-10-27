@@ -32,13 +32,25 @@
 	    stroke: white; stroke-width: 4;
 	}
 
-
-
 </style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(e) {
+    $('#basketball_court').click(function(e) {
+        var posX = $(this).offset().left, posY = $(this).offset().top;
+        alert((e.pageX - posX)+ ' , ' + (e.pageY - posY));
+    });
+});
+
+</script>
+
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
+
+<svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
 
 			<!-- Center Court -->
 	<circle cx="566" cy="302" r="72" class="circle" />
@@ -114,5 +126,7 @@
 
 </svg>
  
+
+
 </body>
 </html>
