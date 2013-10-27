@@ -2,4 +2,5 @@ Initial Commit.
 
 Need:
 * persistence
-* OO 
+
+Built ~Oct 2012
