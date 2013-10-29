@@ -40,11 +40,64 @@
 	</style>
 
 	<script>
+        var makeMiss = function() {
+            var num = Math.floor(Math.random()*10);
+
+            if ( num % 2 == 0 ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
 		$(document).ready(function(e) {
+
+            // svg dimensions
+            var svg_width = $('#basketball_court').attr('width');
+            var svg_height = $('#basketball_court').attr('height');
+
+            // shot container - [[x1,y1], [x2,y2]]
+            var shots = [];
+
+
 			$('svg').click(function(e) {
 				var posX = $(this.parentNode).offset().left, posY = $(this.parentNode).offset().top;
-				console.log((e.pageX - posX)+ ' , ' + (e.pageY - posY));
+
+                // user id
+                var uid = Math.floor((Math.random()*10)+1);
+
+                // shot location
+                var shot_x_coords = ((e.pageX - posX) / svg_width).toFixed(3);
+                var shot_y_coords = ((e.pageY - posY) / svg_height).toFixed(3);
+
+                var shot = {'uid':uid, 
+                            'xShot': shot_x_coords, 
+                            'yShot': shot_y_coords,
+                            'shot_success': makeMiss()};
+
+                // save shots
+                shots.push(shot);
+
+                // display Make or Miss
+                if (shot.shot_success == true) {
+                    console.log('Make');
+
+                // successful shot logo
+                
+                //$("svg").append('<circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>');
+
+                //$("svg").append('<circle cx="300" cy="402" r="42" fill="red" />');
+
+                } else {
+                    console.log('Miss');
+                }
+
+                // log to console
+				console.log((e.pageX - posX) + ' , ' + (e.pageY - posY));
+                console.log(shots);
 			});
+
+
 		});
 	</script>
 </head>
