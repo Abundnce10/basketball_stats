@@ -86,19 +86,15 @@
                     console.log('Make');
 
                 // successful shot logo
-
-                
-				d3.select("#basketball_court").selectAll("circle")
-						.data(shots)
-					.enter().append("circle")
-						.attr("cx", function(d) { return d.xShot; })
-						.attr("cy", function(d) { return d.yShot; })
-						.attr("r", 5)
-						.attr("fill", "red");
+                d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'green');
 
 
                 } else {
                     console.log('Miss');
+
+                // UNsuccessful shot logo
+                d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'red');
+
                 }
 
                 // log to console
