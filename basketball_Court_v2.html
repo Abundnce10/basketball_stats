@@ -2,6 +2,7 @@
 <html>
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
 
 	<style type="text/css">
 
@@ -83,10 +84,14 @@
                     console.log('Make');
 
                 // successful shot logo
-                
-                //$("svg").append('<circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>');
+                /*
+                var make = d3.select("#basketball_court")
+                                .append("circle")
+                                .attr("cx", 100)
+                                .attr("cy", 100)
+                                .attr("fill", "red");
+                */
 
-                //$("svg").append('<circle cx="300" cy="402" r="42" fill="red" />');
 
                 } else {
                     console.log('Miss');
