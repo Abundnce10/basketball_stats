@@ -2,192 +2,116 @@
 <html>
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
-	<style type="text/css">
+	<script src="game.js" type="text/javascript"></script>
 
-        #basketball_court {
-            background-color: #FFB56C;
-        }
-
-		.perimeter {
-			fill:rgb(255,255,255);stroke-width:8;stroke:black;
-		}
-
-		svg .boundary {
-			stroke: black; stroke-width: 8;
-		}
-
-		svg .thin_line {
-			stroke: black; stroke-width: 4;
-		}
-
-		svg .thick_line {
-			stroke: black; stroke-width: 8;
-		}
-
-		svg .circle {
-			fill: #FF9933; stroke: black; stroke-width: 4;
-		}
-
-		svg .key {
-			fill: #FF9933; stroke: black; stroke-width: 4;
-		}
-
-		svg .white_line {
-			stroke: #FF9933; stroke-width: 4;
-		}
-
-	</style>
-
-	<script>
-        var makeMiss = function() {
-            var num = Math.floor(Math.random()*10);
-
-            if ( num % 2 == 0 ) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-		$(document).ready(function(e) {
-
-            // svg dimensions
-            var svg_width = $('#basketball_court').attr('width');
-            var svg_height = $('#basketball_court').attr('height');
-
-            // shot container - [[x1,y1], [x2,y2]]
-            var shots = [];
+    <link rel="stylesheet" type="text/css" href="styles.css">
 
 
-			$('svg').click(function(e) {
-				var posX = $(this.parentNode).offset().left, posY = $(this.parentNode).offset().top;
-
-                // user id
-                var uid = Math.floor((Math.random()*10)+1);
-
-                // shot location
-                var shot_x_coords = ((e.pageX - posX) / svg_width).toFixed(3);
-                var shot_y_coords = ((e.pageY - posY) / svg_height).toFixed(3);
-
-                var shot = {'uid':uid, 
-                            'xShot': shot_x_coords, 
-                            'yShot': shot_y_coords,
-                            'shot_success': makeMiss()};
-
-                // save shots
-                shots.push(shot);
-
-                // display Make or Miss
-                if (shot.shot_success == true) {
-                    console.log('Make');
-
-                // successful shot logo
-                //d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'green');
-
-                //
-                d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4);
-
-
-                } else {
-                    console.log('Miss');
-
-                // UNsuccessful shot logo
-                d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'red');
-
-                }
-
-                // log to console
-				console.log((e.pageX - posX) + ' , ' + (e.pageY - posY));
-                console.log(shots);
-			});
-
-
-		});
-	</script>
 </head>
 <body>
 
 	<p>Middle of court: 566px, 302px</p>
-    <p>X & Y coordinates logged to console</p>
 
-	<div><svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
+	<div id="game">
 
-				<!-- Center Court -->
-		<circle cx="566" cy="302" r="72" class="circle" />
-		<circle cx="566" cy="302" r="24" class="circle" />
-		<line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
-
-
-		<!--               Left Half             -->
-
-				<!-- 3 Point Arc -->
-		<circle cx="50" cy="302" r="250" class="circle" />
-		<line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
-		<line x1="0" y1="56" x2="60" y2="56" class="white_line" />	
-		<line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
-		<line x1="0" y1="548" x2="60" y2="548" class="white_line" />
-				<!-- Top of Key -->
-		<circle cx="225" cy="302" r="72" class="circle" />
-				<!-- Key -->
-		<rect x="0" y="230" width="220" height="144" class="key" />
-				<!-- Top Hashes -->
-		<line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
-		<line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
-		<line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
-		<line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
-				<!-- Bottom Hashes -->
-		<line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
-		<line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
-		<line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
-		<line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
-		<!--               End Left Half              -->
+        <div id="teams_container">
+            <div id="away" class="team">
+                <div id="away_10" class="player selected">#10</div>
+                <div id="away_14" class="player">#14</div>
+                <div id="away_20" class="player">#20</div>
+                <div id="away_34" class="player">#34</div>
+                <div id="away_50" class="player">#50</div>
+            </div>
+            <div id="home" class="team">
+                <div id="home_2" class="player">#2</div>
+                <div id="home_8" class="player">#8</div>
+                <div id="home_15" class="player">#15</div>
+                <div id="home_24" class="player">#24</div>
+                <div id="home_44" class="player">#44</div>
+            </div>
+        </div><!-- id="team_container" -->
 
 
-		<!--                  Right Key                -->
+        <div id="svg_wrapper">
+            <svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
 
-				<!-- 3 Point Arc -->
-		<circle cx="1082" cy="302" r="250" class="circle" />
-		<line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
-		<line x1="1132" y1="56" x2="1072" y2="56" class="white_line" />	
-		<line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
-		<line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
-				<!-- Top of Key -->
-		<circle cx="907" cy="302" r="72" class="circle" />
-				<!-- Key  -->
-		<rect x="912" y="230" width="220" height="144" class="key" />
-				<!-- Top Hashes -->
-		<line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
-		<line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
-		<line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
-		<line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
-				<!-- Bottom Hashes -->
-		<line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
-		<line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
-		<line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
-		<line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
+			            <!-- Center Court -->
+	            <circle cx="566" cy="302" r="72" class="circle" />
+	            <circle cx="566" cy="302" r="24" class="circle" />
+	            <line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
 
 
-				<!-- Left Backboard -->
-		<line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
-		<line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
-		<circle  cx="47" cy="302" r="14" class="circle" />
-	
-				<!-- Right Backboard -->
-		<line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
-		<line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
-		<circle  cx="1085" cy="302" r="14" class="circle" />
+	            <!--               Left Half             -->
+
+			            <!-- 3 Point Arc -->
+	            <circle cx="50" cy="302" r="250" class="circle" />
+	            <line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
+	            <line x1="0" y1="56" x2="60" y2="56" class="white_line" />	
+	            <line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
+	            <line x1="0" y1="548" x2="60" y2="548" class="white_line" />
+			            <!-- Top of Key -->
+	            <circle cx="225" cy="302" r="72" class="circle" />
+			            <!-- Key -->
+	            <rect x="0" y="230" width="220" height="144" class="key" />
+			            <!-- Top Hashes -->
+	            <line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
+	            <line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
+	            <line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
+	            <line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
+			            <!-- Bottom Hashes -->
+	            <line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
+	            <line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
+	            <line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
+	            <line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
+	            <!--               End Left Half              -->
 
 
-				<!-- Boundary -->
-		<line x1="0" y1="0" x2="0" y2="604" class="boundary" />
-		<line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
-		<line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
-		<line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
+	            <!--                  Right Key                -->
 
-	</svg></div>
+			            <!-- 3 Point Arc -->
+	            <circle cx="1082" cy="302" r="250" class="circle" />
+	            <line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
+	            <line x1="1132" y1="56" x2="1072" y2="56" class="white_line" />	
+	            <line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
+	            <line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
+			            <!-- Top of Key -->
+	            <circle cx="907" cy="302" r="72" class="circle" />
+			            <!-- Key  -->
+	            <rect x="912" y="230" width="220" height="144" class="key" />
+			            <!-- Top Hashes -->
+	            <line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
+	            <line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
+	            <line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
+	            <line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
+			            <!-- Bottom Hashes -->
+	            <line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
+	            <line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
+	            <line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
+	            <line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
+
+
+			            <!-- Left Backboard -->
+	            <line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
+	            <line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
+	            <circle  cx="47" cy="302" r="14" class="circle" />
+
+			            <!-- Right Backboard -->
+	            <line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
+	            <line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
+	            <circle  cx="1085" cy="302" r="14" class="circle" />
+
+
+			            <!-- Boundary -->
+	            <line x1="0" y1="0" x2="0" y2="604" class="boundary" />
+	            <line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
+	            <line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
+	            <line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
+
+            </svg>
+        </div><!-- id="svg_wrapper" -->
+    </div>
 </body>
 </html>

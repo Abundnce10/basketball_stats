@@ -1,0 +1,56 @@
+#basketball_court {
+    background-color: #FFB56C;
+}
+
+.perimeter {
+	fill:rgb(255,255,255);stroke-width:8;stroke:black;
+}
+
+svg .boundary {
+	stroke: black; stroke-width: 8;
+}
+
+svg .thin_line {
+	stroke: black; stroke-width: 4;
+}
+
+svg .thick_line {
+	stroke: black; stroke-width: 8;
+}
+
+svg .circle {
+	fill: #FF9933; stroke: black; stroke-width: 4;
+}
+
+svg .key {
+	fill: #FF9933; stroke: black; stroke-width: 4;
+}
+
+svg .white_line {
+	stroke: #FF9933; stroke-width: 4;
+}
+
+div.player {
+    display: inline-block;
+    font-size: 1.2em;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    padding: 4px;
+    margin-left: 1em;
+    width: 1.8em;
+
+}
+
+div.player.selected {
+    border-color: blue;
+}
+
+div.team {
+    margin: 0;
+    padding: 0 0 1em 0;
+    display: inline-block;
+    width: 47%;
+    text-align: center;
+}
+
