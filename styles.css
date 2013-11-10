@@ -39,11 +39,12 @@ div.player {
     padding: 4px;
     margin-left: 1em;
     width: 1.8em;
-
+    cursor:move;
 }
 
 div.player.selected {
     border-color: blue;
+    border-width: 4px;
 }
 
 div.team {

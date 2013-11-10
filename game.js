@@ -25,7 +25,6 @@ $(document).ready(function(e) {
     };
 
 
-
     // Clicking On A Player
     $('.player').click(function(e) {
 
