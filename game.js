@@ -92,6 +92,12 @@ $(document).ready(function(e) {
                         'distance_pixels': shotDistance(hoop_x, hoop_y, shot_x, shot_y),
                         'points': shotPoints(shot_distance)};
 
+
+            // update score widget
+            var prev_score = parseInt($('#' + selected_team + '_score').text());
+            $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance));
+
+
             // Successful shot logo
             d3.select("#basketball_court").append('circle').attr('cx', shot_x_coords * svg_width).attr('cy', shot_y_coords * svg_height).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4);
 
@@ -115,6 +121,7 @@ $(document).ready(function(e) {
 
         // Save shot into home/away team shot array
         shots[selected_team].push(shot);
+
 
 
         // log to console
