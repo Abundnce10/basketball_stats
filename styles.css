@@ -30,6 +30,30 @@ svg .white_line {
 	stroke: #FF9933; stroke-width: 4;
 }
 
+div.team {
+    margin: 0;
+    padding: 0 0 1em 0;
+    display: inline-block;
+    width: 38%;
+    text-align: center;
+}
+
+div.score_container {
+    margin: 0;
+    padding: 0 0 1em 0;
+    display: inline-block;
+    width: 22%;
+    height: 45px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+div.score {
+    margin: 0;
+    padding: 0 0 0 0;
+    display: inline-block;
+}
+
 div.player {
     display: inline-block;
     font-size: 1.2em;
@@ -47,11 +71,31 @@ div.player.selected {
     border-width: 4px;
 }
 
-div.team {
-    margin: 0;
-    padding: 0 0 1em 0;
+.score {
     display: inline-block;
-    width: 47%;
-    text-align: center;
+    margin: 0;
+    padding: 0;
 }
+
+p.score_digits {
+    margin: 0;
+    font-size: 40px;
+    font-weight: bold;
+    float: left;
+    vertical-align: -7;
+}
+
+div.score p.score_team {
+    display: inline-block;
+    font-size: 1em;
+    margin: 0;
+    float: left;
+    padding-top: 1em;
+
+}
+
+
+
+
+
 
