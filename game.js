@@ -20,6 +20,11 @@ var shotPoints = function(shotDistance) {
     }
 }
 
+var pixelsToFeet = function(shotDistance) {
+    multiplier = 6/72;
+    return Number((multiplier * shotDistance).toFixed(1));
+}
+
 
 $(document).ready(function(e) {
 
@@ -30,8 +35,10 @@ $(document).ready(function(e) {
     // svg dimensions
     var svg_width = $('#basketball_court').attr('width');
     var svg_height = $('#basketball_court').attr('height');
-    var hoop_x = 49;
-    var hoop_y = 302;
+    var away_hoop_x = 49;
+    var away_hoop_y = 302;
+    var home_hoop_x = 1086;
+    var home_hoop_y = 302;
 
     // shot container - [[x1,y1], [x2,y2]]
     var shots = {
@@ -75,10 +82,14 @@ $(document).ready(function(e) {
 
 
         // Log distance of shot in percentage
-        //console.log('hoop_x: ' + away_hoop_x + ' , hoop_y: ' + away_hoop_y);
-        //console.log('shot_x: ' + shot_x_coords + ' , shot_y: ' + shot_y_coords);
-        var shot_distance = shotDistance(hoop_x, hoop_y, shot_x, shot_y);
-        console.log(shot_distance);
+        if (selected_team == 'home') {
+            var shot_distance_pixels = shotDistance(home_hoop_x, home_hoop_y, shot_x, shot_y);
+        } else {
+            var shot_distance_pixels = shotDistance(away_hoop_x, away_hoop_y, shot_x, shot_y);
+        }
+        console.log(shot_distance_pixels);
+        console.log(pixelsToFeet(shot_distance_pixels));
+
 
 
         // display Make or Miss
@@ -89,13 +100,14 @@ $(document).ready(function(e) {
                         'xShot': shot_x_coords, 
                         'yShot': shot_y_coords,
                         'shot_success': true,
-                        'distance_pixels': shotDistance(hoop_x, hoop_y, shot_x, shot_y),
-                        'points': shotPoints(shot_distance)};
+                        'distance_pixels': shot_distance_pixels,
+                        'distance_feet': pixelsToFeet(shot_distance_pixels),
+                        'points': shotPoints(shot_distance_pixels)};
 
 
             // update score widget
             var prev_score = parseInt($('#' + selected_team + '_score').text());
-            $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance));
+            $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance_pixels));
 
 
             // Successful shot logo
@@ -110,7 +122,8 @@ $(document).ready(function(e) {
                         'xShot': shot_x_coords, 
                         'yShot': shot_y_coords,
                         'shot_success': false,
-                        'distance_pixels': shotDistance(hoop_x, hoop_y, shot_x, shot_y),
+                        'distance_pixels': shot_distance_pixels,
+                        'distance_feet': pixelsToFeet(shot_distance_pixels),
                         'points': 0};
 
             // UNsuccessful shot logo
@@ -125,7 +138,7 @@ $(document).ready(function(e) {
 
 
         // log to console
-		//console.log((e.pageX - posX) + ' , ' + (e.pageY - posY));
+		console.log((e.pageX - posX) + ' , ' + (e.pageY - posY));
         console.log(shots);
 	});
 
