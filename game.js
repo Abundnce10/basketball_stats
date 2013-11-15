@@ -63,6 +63,8 @@ $(document).ready(function(e) {
 
         clicks++;
 
+        var shotSuccess = true;
+
         // Get position of parent coords
 		var posX = $(this.parentNode).offset().left;
         var posY = $(this.parentNode).offset().top;
@@ -74,12 +76,13 @@ $(document).ready(function(e) {
         if (clicks === 1) {
             timer = setTimeout(function() {
                 clicks = 0;
-                $('#basketball_court').trigger("singleClickMake", [shotX, shotY]);
+                $('#basketball_court').trigger("placeMarker", [shotX, shotY, shotSuccess]);
             }, DELAY);
         } else {
             clearTimeout(timer); // prevent single click action
             clicks = 0;
-            $('#basketball_court').trigger("doubleClickMiss", [shotX, shotY]);
+            shotSuccess = false;
+            $('#basketball_court').trigger("placeMarker", [shotX, shotY, shotSuccess]);
         }
     })
     .on("dblclick", function(e) {
@@ -87,7 +90,8 @@ $(document).ready(function(e) {
     });
 
 
-    $('#basketball_court').on("singleClickMake", function(e, shotX, shotY) {
+    // Place Shot Marker Event Handler
+    $('#basketball_court').on("placeMarker", function(e, shotX, shotY, shotSuccess) {
 
         // user id
         var user_number = $('#' + selected_player).text().substring(1);
@@ -103,62 +107,44 @@ $(document).ready(function(e) {
         //console.log(shot_distance_pixels);
         //console.log(pixelsToFeet(shot_distance_pixels));
 
-        //console.log('Make for the ' + selected_team + ' team');
 
-        var shot = {'uid': user_number,
-                    'shot_success': true,
-                    'distance_pixels': shot_distance_pixels,
-                    'distance_feet': pixelsToFeet(shot_distance_pixels),
-                    'points': shotPoints(shot_distance_pixels)};
+        // Made Shot
+        if (shotSuccess == true) {
 
-
-        // update score widget
-        var prev_score = parseInt($('#' + selected_team + '_score').text());
-        $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance_pixels));
-
-        // Successful shot logo
-        d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4);
-
-        // Save shot into home/away team shot array
-        shots[selected_team].push(shot);
-
-        console.log(shots);
-
-    });
+            var shot = {'uid': user_number,
+                        'shot_success': shotSuccess,
+                        'distance_pixels': shot_distance_pixels,
+                        'distance_feet': pixelsToFeet(shot_distance_pixels),
+                        'points': shotPoints(shot_distance_pixels)};
 
 
-    $('#basketball_court').on("doubleClickMiss", function(e, shotX, shotY) {
-        
-        // user id
-        var user_number = $('#' + selected_player).text().substring(1);
+            // update score widget
+            var prev_score = parseInt($('#' + selected_team + '_score').text());
+            $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance_pixels));
 
-        // determine shot distance 
-        if (selected_team == 'home') {
-            var shot_distance_pixels = shotDistance(home_hoop_x, home_hoop_y, shotX, shotY);
+            // Successful shot logo
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4);
+
+        // Missed Shot
         } else {
-            var shot_distance_pixels = shotDistance(away_hoop_x, away_hoop_y, shotX, shotY);
+
+            var shot = {'uid': user_number,
+                        'shot_success': shotSuccess,
+                        'distance_pixels': shot_distance_pixels,
+                        'distance_feet': pixelsToFeet(shot_distance_pixels),
+                        'points': 0};
+
+            // Unsuccessful shot logo
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red');
+
         }
 
-        // Log distance of shot in percentage
-        //console.log(shot_distance_pixels);
-        //console.log(pixelsToFeet(shot_distance_pixels));
-
-        //console.log('Miss for the ' + selected_team + ' team');
-
-        var shot = {'uid': user_number,
-                    'shot_success': false,
-                    'distance_pixels': shot_distance_pixels,
-                    'distance_feet': pixelsToFeet(shot_distance_pixels),
-                    'points': shotPoints(shot_distance_pixels)};
-
-        // UNsuccessful shot logo
-        d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red');
-
         // Save shot into home/away team shot array
         shots[selected_team].push(shot);
 
         console.log(shots);
-    
+
     });
+
 
 });
