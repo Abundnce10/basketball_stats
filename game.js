@@ -15,6 +15,14 @@ var pixelsToFeet = function(shotDistance) {
     return Number((multiplier * shotDistance).toFixed(1));
 }
 
+var fadeShotOpacity = function(team) {
+    $('#'+team+'_3').remove();
+    $('#'+team+'_2').attr('opacity', '0.33');
+    $('#'+team+'_2').attr('id', team+'_3');
+    $('#'+team+'_1').attr('opacity', '0.66');
+    $('#'+team+'_1').attr('id', team+'_2');
+}
+
 
 $(document).ready(function(e) {
 
@@ -90,6 +98,7 @@ $(document).ready(function(e) {
     });
 
 
+
     // Place Shot Marker Event Handler
     $('#basketball_court').on("placeMarker", function(e, shotX, shotY, shotSuccess) {
 
@@ -103,10 +112,6 @@ $(document).ready(function(e) {
             var shot_distance_pixels = shotDistance(away_hoop_x, away_hoop_y, shotX, shotY);
         }
 
-        // Log distance of shot in percentage
-        //console.log(shot_distance_pixels);
-        //console.log(pixelsToFeet(shot_distance_pixels));
-
 
         // Made Shot
         if (shotSuccess == true) {
@@ -117,13 +122,16 @@ $(document).ready(function(e) {
                         'distance_feet': pixelsToFeet(shot_distance_pixels),
                         'points': shotPoints(shot_distance_pixels)};
 
-
             // update score widget
             var prev_score = parseInt($('#' + selected_team + '_score').text());
             $('#' + selected_team + '_score').html(prev_score + shotPoints(shot_distance_pixels));
 
+            // pop off the 3rd to last shot
+            fadeShotOpacity(selected_team);
+
             // Successful shot logo
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4);
+            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_1').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
+
 
         // Missed Shot
         } else {
@@ -134,8 +142,13 @@ $(document).ready(function(e) {
                         'distance_feet': pixelsToFeet(shot_distance_pixels),
                         'points': 0};
 
+            // pop off the 3rd to last shot
+            fadeShotOpacity(selected_team);
+
             // Unsuccessful shot logo
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red');
+            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_1').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
+
+
 
         }
 
