@@ -16,11 +16,15 @@ var pixelsToFeet = function(shotDistance) {
 }
 
 var fadeShotOpacity = function(team) {
+    $('#'+team+'_shot_last').attr('opacity', '0.5'); 
+    $('#'+team+'_shot_last').attr('id', '');   
+/*
     $('#'+team+'_3').remove();
     $('#'+team+'_2').attr('opacity', '0.33');
     $('#'+team+'_2').attr('id', team+'_3');
     $('#'+team+'_1').attr('opacity', '0.66');
     $('#'+team+'_1').attr('id', team+'_2');
+*/
 }
 
 
@@ -130,7 +134,7 @@ $(document).ready(function(e) {
             fadeShotOpacity(selected_team);
 
             // Successful shot logo
-            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_1').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
+            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_shot_last').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
 
 
         // Missed Shot
@@ -146,7 +150,7 @@ $(document).ready(function(e) {
             fadeShotOpacity(selected_team);
 
             // Unsuccessful shot logo
-            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_1').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
+            d3.select("#basketball_court").append('circle').attr('id', selected_team+'_shot_last').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
 
 
 
