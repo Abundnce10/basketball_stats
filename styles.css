@@ -1,3 +1,25 @@
+header {
+    text-align: center;
+    font-size: 2em;
+}
+
+#roster_container {
+    width: 800px;
+    padding: 0;
+    margin: 0 auto 0 auto;
+}
+
+.team_roster {
+    display:inline-block;
+    width: 395px;
+    margin: 0;
+    padding: 0;
+}
+
+.team_roster_header {
+    text-align: center;
+}
+
 #game {
     width: 1140px;
 }

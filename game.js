@@ -18,17 +18,13 @@ var pixelsToFeet = function(shotDistance) {
 var fadeShotOpacity = function(team) {
     $('#'+team+'_shot_last').attr('opacity', '0.5'); 
     $('#'+team+'_shot_last').attr('id', '');   
-/*
-    $('#'+team+'_3').remove();
-    $('#'+team+'_2').attr('opacity', '0.33');
-    $('#'+team+'_2').attr('id', team+'_3');
-    $('#'+team+'_1').attr('opacity', '0.66');
-    $('#'+team+'_1').attr('id', team+'_2');
-*/
 }
 
 
 $(document).ready(function(e) {
+
+    // Force the input of Roster
+    $('#game').hide();
 
     // variables to test for double click
     var DELAY = 225,
