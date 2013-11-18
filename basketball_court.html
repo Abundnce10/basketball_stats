@@ -16,97 +16,121 @@
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>Basketball Stat Tracker</header>
-    <div id="roster_container">
+
+
+    <!-- INPUT FORM -->
+    <div id="rosters_container">
+
+        <!-- AWAY TEAM ROSTER FORM -->
         <div class="team_roster" style="background-color: blue;">
+            
             <h2 class="team_roster_header">Away</h2>
             <form id="away_form">
-                <div>
-                    <label>Team Name</label>
-                    <input type="text" placeholder="East High Wildcats"></input>
-                </div>
-                <br>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="10" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="14" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="22" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="34" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="50" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                
-                <br>
 
-                <input type="submit" value="submit" >
+                <div id="form_away_players_container">
+
+                    <div class="team_name">
+                        <label>Team Name</label>
+                        <input type="text" placeholder="East High Wildcats"></input>
+                    </div>
+
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="10" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="14" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="22" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="34" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="50" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                        <button type="button" onclick="newPlayer('away')">+Player</button>
+                    </div>
+                </div><!-- End form_away_players_container -->
+
+                <button type="button" class="save_players_form" onclick="captureForm('form_away_players_container')">Save</button>
             </form>
         </div>
+
+
+        <!-- HOME TEAM ROSTER FORM -->
         <div class="team_roster" style="background-color: orange;">
+            
             <h2 class="team_roster_header">Home</h2>
             <form id="home_form">
-                <div>
+
+                <div class="team_name">
                     <label>Team Name</label>
                     <input type="text" placeholder="West High Knights"></input>
                 </div>
-                <br>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="10" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="14" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="22" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="34" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                <div class="form_player_add">
-                    <label>Number</label>
-                    <input type="text" placeholder="50" size="2"></input>
-                    <label>Name</label>
-                    <input type="text" placeholder="John Doe"></input>
-                </div>
-                
-                <br>
 
-                <input type="submit" value="submit" >
+                <div id="form_home_players_container">
+
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="10" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="14" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="22" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="34" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                    </div>
+                    <div class="form_player_add">
+                        <label>Number</label>
+                        <input type="text" placeholder="50" size="2"></input>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" size="15"></input>
+                        <button type="button" onclick="newPlayer('home')">+Player</button>
+                    </div>
+                </div><!-- End form_home_players_container -->
+
+                <button type="button" class="save_players_form" onclick="captureForm('form_home_players_container')">Save</button>
             </form>
         </div>
+
+
     </div>
+
+
+
+
+    <!-- Basketball Court - Input Mode -->
 	<div id="game">
 
         <div id="teams_container">

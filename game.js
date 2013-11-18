@@ -20,6 +20,19 @@ var fadeShotOpacity = function(team) {
     $('#'+team+'_shot_last').attr('id', '');   
 }
 
+var newPlayer = function(team) {
+    // Remove the add player button
+    $('#form_'+team+'_players_container').children().last().children().last().remove();
+
+    // Add a new div with form for new player
+    $('#form_'+team+'_players_container').append('<div class="form_player_add"><label>Number&nbsp;</label><input type="text" placeholder="XX" size="2"></input><label>&nbsp;Name&nbsp;</label><input type="text" placeholder="John Doe" size="15"></input><button type="button" onclick="newPlayer(\''+team+'\')">+Player</button></div>');   
+}
+
+var captureForm = function(teamForm) {
+    var items = $('#'+teamForm).children();
+    console.log(items);
+}
+
 
 $(document).ready(function(e) {
 
