@@ -28,11 +28,6 @@ var newPlayer = function(team) {
     $('#form_'+team+'_players_container').append('<div class="form_player_add"><label>Number&nbsp;</label><input type="text" placeholder="XX" size="2"></input><label>&nbsp;Name&nbsp;</label><input type="text" placeholder="John Doe" size="15"></input><button type="button" onclick="newPlayer(\''+team+'\')">+Player</button></div>');   
 }
 
-var captureForm = function(teamForm) {
-    var items = $('#'+teamForm).children();
-    console.log(items);
-}
-
 
 $(document).ready(function(e) {
 
@@ -61,6 +56,11 @@ $(document).ready(function(e) {
         'away': [],
         'home': []
     };
+
+    // teams container
+    var teams = {};
+    teams.away = {}; teams.home = {};
+    teams.away.players = []; teams.home.players = [];
 
 
 
@@ -171,6 +171,24 @@ $(document).ready(function(e) {
         console.log(shots);
 
     });
+
+
+    // Capture User input within Teams/Players Form
+    $('.save_players_form').on("click", function() {
+        // determine which team (home or away) was saved        
+        var team = ($(this).closest('form').attr('id')).split('_')[0];
+        // save team name
+        teams[team]['team_name'] = $('#'+team+'_form .team_name input').val();
+        // save player objects into array
+        $('#'+team+'_form .form_player_add').each(function(ix, elem) {
+            var i = $(elem).find('input');
+            teams[team]['players'].push( { number: i[0].value, name: i[1].value } );
+        });
+
+        console.log(teams);
+    });
+
+
 
 
 });
