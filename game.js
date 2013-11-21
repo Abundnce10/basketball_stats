@@ -28,6 +28,19 @@ var newPlayer = function(team) {
     $('#form_'+team+'_players_container').append('<div class="form_player_add"><label>Number&nbsp;</label><input type="text" placeholder="XX" size="2"></input><label>&nbsp;Name&nbsp;</label><input type="text" placeholder="John Doe" size="15"></input><button type="button" onclick="newPlayer(\''+team+'\')">+Player</button></div>');   
 }
 
+var createRosterHtml = function(name, players_array) {
+    var html_string = '';
+    // add name
+    html_string += '<h2 class="team_roster_header">'+name+'</h2>';
+    // add players
+    html_string += '<div class="players">';
+    for (var i = 0; i < players_array.length; i++) {
+        html_string += '<div class="player_roster"><p class="player_number">#' + players_array[i]["number"] + '</p>&nbsp;-&nbsp;<p class="player_name">' + players_array[i]["name"] + '</p></div>';
+    }
+    html_string += '</div>';
+    return html_string;
+}
+
 
 $(document).ready(function(e) {
 
@@ -185,6 +198,10 @@ $(document).ready(function(e) {
             teams[team]['players'].push( { number: i[0].value, name: i[1].value } );
         });
 
+        // Remove Form and display team object
+        $('#'+team+'_roster').empty();
+        $('#'+team+'_roster').append(createRosterHtml(teams[team]['team_name'], teams[team]['players']));        
+        
         console.log(teams);
     });
 

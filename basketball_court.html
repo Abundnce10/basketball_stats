@@ -24,8 +24,29 @@
     <div id="rosters_container">
 
         <!-- AWAY TEAM ROSTER FORM -->
-        <div class="team_roster" style="background-color: blue;">
+        <div id="away_roster" class="team_roster" style="background-color: #0066CC;">
             
+<!--
+            <h2 class="team_roster_header">Knights</h2>
+            <div class="players">
+                <div class="player_roster">
+                    <p class="player_number">#10</p>&nbsp;-&nbsp;<p class="player_name">Michael Stitt</p>
+                </div>
+                <div class="player_roster">
+                    <p class="player_number">#14</p>&nbsp;-&nbsp;<p class="player_name">Marcus Mitchell</p>
+                </div>
+                <div class="player_roster">
+                    <p class="player_number">#44</p>&nbsp;-&nbsp;<p class="player_name">Joe Bollinger</p>
+                </div>
+                <div class="player_roster">
+                    <p class="player_number">#34</p>&nbsp;-&nbsp;<p class="player_name">Kellen Alley</p>
+                </div>
+                <div class="player_roster">
+                    <p class="player_number">#40</p>&nbsp;-&nbsp;<p class="player_name">Sam Flemister</p>
+                </div>
+            </div>
+-->
+
             <h2 class="team_roster_header">Away</h2>
             <form id="away_form">
 
@@ -67,15 +88,17 @@
                         <input type="text" placeholder="John Doe" size="15"></input>
                         <button type="button" onclick="newPlayer('away')">+Player</button>
                     </div>
-                </div><!-- End form_away_players_container -->
+                </div>
 
                 <button type="button" class="save_players_form">Save</button>
             </form>
+
+
         </div>
 
 
         <!-- HOME TEAM ROSTER FORM -->
-        <div class="team_roster" style="background-color: orange;">
+        <div id="home_roster" class="team_roster" style="background-color: orange;">
             
             <h2 class="team_roster_header">Home</h2>
             <form id="home_form">

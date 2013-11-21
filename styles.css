@@ -29,6 +29,27 @@ header {
     margin-top: 1em;
 }
 
+.team_roster .players {
+    padding: 0 0 1em 1em;
+    
+}
+
+.player_number {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.player_name {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+
+
+
+
 #game {
     width: 1140px;
 }
