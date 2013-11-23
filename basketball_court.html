@@ -3,6 +3,7 @@
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     
@@ -16,251 +17,232 @@
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>Basketball Stat Tracker</header>
+    <div id="wrapper">
+
+        <!-- HEADER -->
+        <header>Basketball Stat Tracker</header>
 
 
-    <!-- INPUT FORM -->
-    <div id="rosters_container">
+        <!-- INPUT FORM -->
+        <div id="rosters_container">
 
-        <!-- AWAY TEAM ROSTER FORM -->
-        <div id="away_roster" class="team_roster" style="background-color: #0066CC;">
-            
-<!--
-            <h2 class="team_roster_header">Knights</h2>
-            <div class="players">
-                <div class="player_roster">
-                    <p class="player_number">#10</p>&nbsp;-&nbsp;<p class="player_name">Michael Stitt</p>
-                </div>
-                <div class="player_roster">
-                    <p class="player_number">#14</p>&nbsp;-&nbsp;<p class="player_name">Marcus Mitchell</p>
-                </div>
-                <div class="player_roster">
-                    <p class="player_number">#44</p>&nbsp;-&nbsp;<p class="player_name">Joe Bollinger</p>
-                </div>
-                <div class="player_roster">
-                    <p class="player_number">#34</p>&nbsp;-&nbsp;<p class="player_name">Kellen Alley</p>
-                </div>
-                <div class="player_roster">
-                    <p class="player_number">#40</p>&nbsp;-&nbsp;<p class="player_name">Sam Flemister</p>
-                </div>
+            <!-- AWAY TEAM ROSTER FORM -->
+            <div id="away_roster" class="team_roster">
+                
+                <h2 class="team_roster_header">Away</h2>
+                <form id="away_form">
+
+                    <div id="form_away_players_container">
+
+                        <div class="team_name">
+                            <label>Team Name</label>
+                            <input type="text" placeholder="East High Wildcats"></input>
+                        </div>
+
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="10" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="14" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="22" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="34" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="50" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                            <button type="button" onclick="newPlayer('away')">+Player</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="save_players_form">Save</button>
+                </form>
+
+
             </div>
--->
 
-            <h2 class="team_roster_header">Away</h2>
-            <form id="away_form">
 
-                <div id="form_away_players_container">
+            <!-- HOME TEAM ROSTER FORM -->
+            <div id="home_roster" class="team_roster">
+                
+                <h2 class="team_roster_header">Home</h2>
+                <form id="home_form">
 
                     <div class="team_name">
                         <label>Team Name</label>
-                        <input type="text" placeholder="East High Wildcats"></input>
+                        <input type="text" placeholder="West High Knights"></input>
                     </div>
 
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="10" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="14" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="22" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="34" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="50" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                        <button type="button" onclick="newPlayer('away')">+Player</button>
-                    </div>
-                </div>
+                    <div id="form_home_players_container">
 
-                <button type="button" class="save_players_form">Save</button>
-            </form>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="10" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="14" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="22" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="34" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="50" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                            <button type="button" onclick="newPlayer('home')">+Player</button>
+                        </div>
+                    </div><!-- End form_home_players_container -->
 
-
+                    <button type="button" class="save_players_form">Save</button>
+                </form>
+            </div>
         </div>
 
 
-        <!-- HOME TEAM ROSTER FORM -->
-        <div id="home_roster" class="team_roster" style="background-color: orange;">
-            
-            <h2 class="team_roster_header">Home</h2>
-            <form id="home_form">
 
-                <div class="team_name">
-                    <label>Team Name</label>
-                    <input type="text" placeholder="West High Knights"></input>
+
+        <!-- Basketball Court - Input Mode -->
+	    <div id="game">
+
+            <div id="teams_container">
+                <div id="away" class="team selected">
+                    <div id="away_10" class="player selected">#10</div>
+                    <div id="away_14" class="player">#14</div>
+                    <div id="away_20" class="player">#20</div>
+                    <div id="away_34" class="player">#34</div>
+                    <div id="away_50" class="player">#50</div>
+                    
                 </div>
+                <div class="score_container">
+                    <div class="score">
+                        <p class="score_team">Away -&nbsp;</p><p  id="away_score" class="score_digits">0</p>
+                    </div>
+                    <div class="score">&nbsp;vs.&nbsp;</div>
+                    <div class="score">
+                        <p id="home_score" class="score_digits">0</p><p class="score_team">&nbsp;- Home</p>
+                    </div>
+                </div>
+                <div id="home" class="team">
+                    <div id="home_2" class="player">#2</div>
+                    <div id="home_8" class="player">#8</div>
+                    <div id="home_15" class="player">#15</div>
+                    <div id="home_24" class="player">#24</div>
+                    <div id="home_44" class="player">#44</div>
+                </div>
+            </div><!-- id="team_container" -->
 
-                <div id="form_home_players_container">
 
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="10" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="14" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="22" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="34" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                    </div>
-                    <div class="form_player_add">
-                        <label>Number</label>
-                        <input type="text" placeholder="50" size="2"></input>
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe" size="15"></input>
-                        <button type="button" onclick="newPlayer('home')">+Player</button>
-                    </div>
-                </div><!-- End form_home_players_container -->
+            <div id="svg_wrapper">
+                <svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
 
-                <button type="button" class="save_players_form">Save</button>
-            </form>
+			                <!-- Center Court -->
+	                <circle cx="566" cy="302" r="72" class="circle" />
+	                <circle cx="566" cy="302" r="24" class="circle" />
+	                <line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
+
+
+	                <!--               Left Half             -->
+
+			                <!-- 3 Point Arc -->
+	                <circle cx="50" cy="302" r="250" class="circle" />
+	                <line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
+	                <line x1="0" y1="56" x2="60" y2="56" class="white_line" />	
+	                <line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
+	                <line x1="0" y1="548" x2="60" y2="548" class="white_line" />
+			                <!-- Top of Key -->
+	                <circle cx="225" cy="302" r="72" class="circle" />
+			                <!-- Key -->
+	                <rect x="0" y="230" width="220" height="144" class="key" />
+			                <!-- Top Hashes -->
+	                <line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
+	                <line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
+	                <line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
+	                <line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
+			                <!-- Bottom Hashes -->
+	                <line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
+	                <line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
+	                <line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
+	                <line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
+	                <!--               End Left Half              -->
+
+
+	                <!--                  Right Key                -->
+
+			                <!-- 3 Point Arc -->
+	                <circle cx="1082" cy="302" r="250" class="circle" />
+	                <line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
+	                <line x1="1132" y1="56" x2="1072" y2="56" class="white_line" />	
+	                <line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
+	                <line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
+			                <!-- Top of Key -->
+	                <circle cx="907" cy="302" r="72" class="circle" />
+			                <!-- Key  -->
+	                <rect x="912" y="230" width="220" height="144" class="key" />
+			                <!-- Top Hashes -->
+	                <line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
+	                <line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
+	                <line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
+	                <line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
+			                <!-- Bottom Hashes -->
+	                <line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
+	                <line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
+	                <line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
+	                <line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
+
+
+			                <!-- Left Backboard -->
+	                <line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
+	                <line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
+	                <circle  cx="47" cy="302" r="14" class="circle" />
+
+			                <!-- Right Backboard -->
+	                <line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
+	                <line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
+	                <circle  cx="1085" cy="302" r="14" class="circle" />
+
+
+			                <!-- Boundary -->
+	                <line x1="0" y1="0" x2="0" y2="604" class="boundary" />
+	                <line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
+	                <line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
+	                <line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
+
+                </svg>
+            </div><!-- id="svg_wrapper" -->
         </div>
 
-
-    </div>
-
-
-
-
-    <!-- Basketball Court - Input Mode -->
-	<div id="game">
-
-        <div id="teams_container">
-            <div id="away" class="team selected">
-                <div id="away_10" class="player selected">#10</div>
-                <div id="away_14" class="player">#14</div>
-                <div id="away_20" class="player">#20</div>
-                <div id="away_34" class="player">#34</div>
-                <div id="away_50" class="player">#50</div>
-                
-            </div>
-            <div class="score_container">
-                <div class="score">
-                    <p class="score_team">Away -&nbsp;</p><p  id="away_score" class="score_digits">0</p>
-                </div>
-                <div class="score">&nbsp;vs.&nbsp;</div>
-                <div class="score">
-                    <p id="home_score" class="score_digits">0</p><p class="score_team">&nbsp;- Home</p>
-                </div>
-            </div>
-            <div id="home" class="team">
-                <div id="home_2" class="player">#2</div>
-                <div id="home_8" class="player">#8</div>
-                <div id="home_15" class="player">#15</div>
-                <div id="home_24" class="player">#24</div>
-                <div id="home_44" class="player">#44</div>
-            </div>
-        </div><!-- id="team_container" -->
-
-
-        <div id="svg_wrapper">
-            <svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
-
-			            <!-- Center Court -->
-	            <circle cx="566" cy="302" r="72" class="circle" />
-	            <circle cx="566" cy="302" r="24" class="circle" />
-	            <line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
-
-
-	            <!--               Left Half             -->
-
-			            <!-- 3 Point Arc -->
-	            <circle cx="50" cy="302" r="250" class="circle" />
-	            <line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
-	            <line x1="0" y1="56" x2="60" y2="56" class="white_line" />	
-	            <line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
-	            <line x1="0" y1="548" x2="60" y2="548" class="white_line" />
-			            <!-- Top of Key -->
-	            <circle cx="225" cy="302" r="72" class="circle" />
-			            <!-- Key -->
-	            <rect x="0" y="230" width="220" height="144" class="key" />
-			            <!-- Top Hashes -->
-	            <line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
-	            <line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
-	            <line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
-	            <line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
-			            <!-- Bottom Hashes -->
-	            <line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
-	            <line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
-	            <line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
-	            <line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
-	            <!--               End Left Half              -->
-
-
-	            <!--                  Right Key                -->
-
-			            <!-- 3 Point Arc -->
-	            <circle cx="1082" cy="302" r="250" class="circle" />
-	            <line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
-	            <line x1="1132" y1="56" x2="1072" y2="56" class="white_line" />	
-	            <line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
-	            <line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
-			            <!-- Top of Key -->
-	            <circle cx="907" cy="302" r="72" class="circle" />
-			            <!-- Key  -->
-	            <rect x="912" y="230" width="220" height="144" class="key" />
-			            <!-- Top Hashes -->
-	            <line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
-	            <line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
-	            <line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
-	            <line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
-			            <!-- Bottom Hashes -->
-	            <line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
-	            <line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
-	            <line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
-	            <line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
-
-
-			            <!-- Left Backboard -->
-	            <line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
-	            <line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
-	            <circle  cx="47" cy="302" r="14" class="circle" />
-
-			            <!-- Right Backboard -->
-	            <line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
-	            <line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
-	            <circle  cx="1085" cy="302" r="14" class="circle" />
-
-
-			            <!-- Boundary -->
-	            <line x1="0" y1="0" x2="0" y2="604" class="boundary" />
-	            <line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
-	            <line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
-	            <line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
-
-            </svg>
-        </div><!-- id="svg_wrapper" -->
     </div>
 </body>
 </html>

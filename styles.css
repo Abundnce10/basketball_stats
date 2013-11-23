@@ -1,3 +1,7 @@
+#wrapper {
+    width: 1140px;
+}
+
 header {
     text-align: center;
     font-size: 2em;
@@ -148,6 +152,64 @@ div.score p.score_team {
     float: left;
     padding-top: 1em;
 
+}
+
+
+
+.roster {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 98%;
+}
+.roster li {
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 1.0em;
+    height: 18px;
+}
+
+.roster li:first-child {
+    border-top: 3px solid #FFCCCC;
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(2) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(3) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(4) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(5) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    border-bottom: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+    margin-bottom: 18px;
+}
+.roster li:last-child {
+    margin-bottom: 1.8em;
+} 
+.starters_header {
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 
