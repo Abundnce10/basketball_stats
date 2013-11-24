@@ -311,32 +311,19 @@ $(document).ready(function(e) {
                         // Unsuccessful shot logo
                         d3.select("#basketball_court").append('circle').attr('id', selected_team+'_shot_last').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
 
-
-
                     }
 
                     // Save shot into home/away team shot array
                     shots[selected_team].push(shot);
-
                     console.log(shots);
 
-                });
-                /////// End In Game Event Handlers ///////
-
-
+                });/////// End In Game Event Handlers ///////
 
             });// End 'Start Game' onclick
 
-
         }
-
-
         console.log(teams);
 
     });// End 'Save Players' Form onclick
-
-
-
-
 
 });// End Document onload
