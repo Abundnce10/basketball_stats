@@ -3,11 +3,43 @@
     margin: 0 auto 0 auto;
 }
 
+
+
+/* Header Div */
 header {
-    text-align: center;
-    font-size: 2em;
+    height: 60px;
 }
 
+header h1 {
+    text-align: center;
+    font-size: 2em;
+    margin: 0;
+}
+
+#header_left {
+    width: 20%;
+    display: inline-block;
+
+}
+
+#header_center {
+    width: 59%;
+    display: inline-block;
+}
+
+#header_right {
+    width: 20%;
+    display: inline-block;
+}
+
+header button {
+    float: right;
+    font-size: 0.9em;
+}
+
+
+
+/* Roster Input Form */
 #rosters_container {
     width: 800px;
     padding: 0;
