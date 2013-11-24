@@ -44,7 +44,9 @@ var createRosterHtml = function(teamName, playersArray) {
         if (playersArray[i].length == 1) {
             "&nbsp:".concat(spacer);
         }
-        htmlString += '<li>#' + playersArray[i]['number'] + spacer + playersArray[i]['name'] + '</li>';
+        htmlString += '<li id="' + teamName + '_' + playersArray[i]['number'] + '">#';
+        htmlString += playersArray[i]['number'] + spacer + playersArray[i]['name'];
+        htmlString += '</li>';
     }
 
     // finish html and return
@@ -64,7 +66,7 @@ $(document).ready(function(e) {
         timer = null;
 
     // Selected Player variable
-    var selected_player = 'away_10';// CHANGE: dynamicallly set
+    var selected_player = '';// CHANGE: dynamicallly set
     var selected_team = 'away';
 
     // svg dimensions
@@ -230,15 +232,42 @@ $(document).ready(function(e) {
             }
 
         });
+
+        // Disable Selection of Player Roster
         $(".roster").disableSelection();
 
         if (rostersSubmitted === 2) {
+
+            // Append a 'Start Game' Button
             $('#rosters_container').append('<button type="button" id="start_game">Start Game!</button>');
 
-            // Create 'start game' button event handler
+            // Create 'Start Game' Button Event Handler
             $('#start_game').on("click", function() {
                 
+                // Grab Away Starters & Append to #teams_container > #away
+                $('#away_roster ul li:lt(5)').each(function(i, elem) {
+                    var id = $(elem).attr('id');
+                    var num = id.split('_')[1];
+                    var html = '<div id="' + id + '" class="player">#' + num + '</div>';
+                    $('#game #away').append(html);
+                });
+
+                // Grab Home Starters & Append to #teams_container > #home
+                $('#home_roster ul li:lt(5)').each(function(i, elem) {
+                    var id = $(elem).attr('id');
+                    var num = id.split('_')[1];
+                    var html = '<div id="' + id + '" class="player">#' + num + '</div>';
+                    $('#game #home').append(html);
+                });                
+
+                // Highlight 1st away player
+                $('#game #away div').slice(0,1).addClass('selected');
+                selected_player = $('#game #away div').attr('id');
+
+                // Hide the Roster View
                 $('#rosters_container').hide();
+
+                // Display Input View
                 $('#game').show();
 
             });

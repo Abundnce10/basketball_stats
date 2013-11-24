@@ -127,7 +127,7 @@ div.player {
 }
 
 div.player.selected {
-    border-color: blue;
+    border-color: #FF3333;
     border-width: 4px;
 }
 
