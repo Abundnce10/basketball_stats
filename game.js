@@ -264,11 +264,14 @@ $(document).ready(function(e) {
                 $('#game #away div').slice(0,1).addClass('selected');
                 selected_player = $('#game #away div').attr('id');
 
+                // Remove 'Start Game' button and add 'Resume Game' button
+                
+
                 // Hide the Roster View
-                $('#rosters_container').hide();
+                $('#rosters_container').slideUp();
 
                 // Display Input View
-                $('#game').show();
+                $('#game').slideDown();
 
             });
 
