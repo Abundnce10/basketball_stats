@@ -1,0 +1,237 @@
+<!DOCTYPE>
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    
+    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<script src="game_input.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="styles_input.css">
+
+
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <div id="game">
+
+            <!-- HEADER -->
+            <header>
+                <div id="header_left">
+                    <button id="game_review" class="view_button">Review</button>
+                    <button id="game_input" class="view_button button_selected">Input</button>
+                </div>
+
+                <div id="header_center">            
+                    <h1>Basketball Stat Tracker</h1>
+                </div>
+                <div id="header_right">
+                    <button id="substitute" class="view_button">Substitution</button>
+                    <button id="Timeout" class="view_button">Timeout</button>
+                </div>
+            </header>
+
+            <!-- GAME BUTTONS WRAPPER -->
+            <div id="game_buttons_wrapper">
+                <div id="away_score_wrapper" class="score_wrapper">
+                    <div class="team_name_abbrev">
+                        <span>CHI</span>
+                    </div>
+                    <div class="spacer">
+                        <span>&nbsp;-&nbsp;</span>
+                    </div>
+                    <div class="team_score">
+                        <span>73</span>
+                    </div>
+                </div>
+
+                <div id="away_reset" class="reset">
+                    <div class="timeouts">
+                        <span>Timeouts</span>
+                        <span>3</span>
+                    </div>
+                    <div class="fouls">
+                        <span>Fouls</span>
+                        <span>8</span>
+                    </div>
+                </div>
+
+                <div id="game_input_buttons">
+                    <button id="turnover">Turnover</button>
+                    <button id="steal">Steal</button>
+                    <button id="rebound">Rebound</button>
+                    <button id="Assist">Assist</button>
+                    <button id="block">Block</button>
+                    <select id="foul">
+                        <option value="" style="display:none" selected="selected">Foul</option>
+                        <option value="shot_foul">Shooting</option>
+                        <option value="on_ball">Non Shooting</option>
+                        <option value="technical">Technical</option>
+                        <option value="flagrant">Flagrant</option>
+                    </select>
+                </div>
+
+                <div id="home_reset" class="reset">
+                    <div class="fouls">
+                        <span>Fouls</span>
+                        <span>7</span>
+                    </div>
+                    <div class="timeouts">
+                        <span>Timeouts</span>
+                        <span>1</span>
+                    </div>
+                </div>
+
+                <div id="home_score_wrapper" class="score_wrapper">
+                    <div id="away_name_abbrev" class="team_name_abbrev">
+                        <span>SEA</span>
+                    </div>
+                    <div class="spacer">
+                        <span>&nbsp;-&nbsp;</span>
+                    </div>
+                    <div>
+                        <span>68</span>
+                    </div>
+                </div>
+            </div><!-- id="game_buttons_wrapper" -->
+
+
+            <!-- GAME BODY -->
+            <div id="game_body">
+
+                <div id="away_players_wrapper" class="players_wrapper">
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#7</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#9</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#23</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#33</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#91</div>
+                    </div>
+                </div>
+
+
+                <div id="svg_wrapper">
+                    <svg id="basketball_court" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
+                                <!-- Center Court -->
+                        <circle cx="566" cy="302" r="72" class="circle" />
+                        <circle cx="566" cy="302" r="24" class="circle" />
+                        <line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
+
+                        <!--               Left Half             -->
+                                <!-- 3 Point Arc -->
+                        <circle cx="50" cy="302" r="250" class="circle" />
+                        <line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
+                        <line x1="0" y1="56" x2="60" y2="56" class="white_line" />  
+                        <line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
+                        <line x1="0" y1="548" x2="60" y2="548" class="white_line" />
+                                <!-- Top of Key -->
+                        <circle cx="225" cy="302" r="72" class="circle" />
+                                <!-- Key -->
+                        <rect x="0" y="230" width="220" height="144" class="key" />
+                                <!-- Top Hashes -->
+                        <line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
+                        <line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
+                        <line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
+                        <line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
+                                <!-- Bottom Hashes -->
+                        <line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
+                        <line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
+                        <line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
+                        <line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
+                        <!--               End Left Half              -->
+
+
+                        <!--                  Right Key                -->
+                                <!-- 3 Point Arc -->
+                        <circle cx="1082" cy="302" r="250" class="circle" />
+                        <line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
+                        <line x1="1132" y1="56" x2="1072" y2="56" class="white_line" /> 
+                        <line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
+                        <line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
+                                <!-- Top of Key -->
+                        <circle cx="907" cy="302" r="72" class="circle" />
+                                <!-- Key  -->
+                        <rect x="912" y="230" width="220" height="144" class="key" />
+                                <!-- Top Hashes -->
+                        <line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
+                        <line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
+                        <line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
+                        <line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
+                                <!-- Bottom Hashes -->
+                        <line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
+                        <line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
+                        <line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
+                        <line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
+
+
+                                <!-- Left Backboard -->
+                        <line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
+                        <line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
+                        <circle  cx="47" cy="302" r="14" class="circle" />
+
+                                <!-- Right Backboard -->
+                        <line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
+                        <line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
+                        <circle  cx="1085" cy="302" r="14" class="circle" />
+
+
+                                <!-- Boundary -->
+                        <line x1="0" y1="0" x2="0" y2="604" class="boundary" />
+                        <line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
+                        <line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
+                        <line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
+
+                    </svg>
+                </div>
+
+
+                <div id="home_players_wrapper" class="players_wrapper">
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#20</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#14</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#33</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#40</div>
+                    </div>
+                    <div class="player_wrapper">
+                        <img alt="Profile Pic" src="player.png" height="72" width="72" />
+                        <div class="player_number_wrapper">#55</div>
+                    </div>
+                </div>
+            </div><!-- id="game_body" -->
+
+
+        </div><!-- id="game" -->
+
+
+     </div><!-- id="wrapper" -->
+</body>
+</html>

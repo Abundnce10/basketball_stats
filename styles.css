@@ -1,5 +1,5 @@
 #wrapper {
-    width: 1140px;
+    width: 1310px;
     margin: 0 auto 0 auto;
 }
 
@@ -88,8 +88,42 @@ header button {
 
 
 #game {
-    width: 1140px;
+    width: 1310px;
+    display: inline-block;
 }
+
+#game_input_wrapper {
+   display: inline-block; 
+}
+
+#away_players_wrapper {
+    display: inline-block;
+    width: 72px;
+    vertical-align: top;
+    padding-top: 25px;
+}
+
+#svg_wrapper {
+    display: inline-block;
+}
+
+#home_players_wrapper {
+    display: inline-block;
+    width: 72px;
+    vertical-align: top;
+    padding-top: 30px;
+}
+
+.generic_player {
+    margin: 15px 0 0 0;
+}
+
+.generic_player_number {
+    font-size: 20px;
+    text-align: center;
+}
+
+
 
 #basketball_court {
     background-color: #FFB56C;

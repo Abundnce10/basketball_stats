@@ -326,4 +326,10 @@ $(document).ready(function(e) {
 
     });// End 'Save Players' Form onclick
 
+
+    $('#game_input_wrapper').on("hover", "#generic_player", function(e) {
+        
+    });
+
+
 });// End Document onload
