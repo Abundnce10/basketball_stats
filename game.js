@@ -59,10 +59,10 @@ var createRosterHtml = function(teamName, playersArray, homeAway) {
 $(document).ready(function(e) {
 
     // Force the input of Roster
-    $('#game').hide();
+    //$('#game').hide();
 
     // Hide in-game buttons
-    $('#header_right').hide();
+    //$('#header_right').hide();
 
     // variables to test for double click
     var DELAY = 225,
@@ -325,11 +325,5 @@ $(document).ready(function(e) {
         console.log(teams);
 
     });// End 'Save Players' Form onclick
-
-
-    $('#game_input_wrapper').on("hover", "#generic_player", function(e) {
-        
-    });
-
 
 });// End Document onload

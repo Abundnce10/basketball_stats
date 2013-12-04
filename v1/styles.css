@@ -1,0 +1,286 @@
+#wrapper {
+    width: 1310px;
+    margin: 0 auto 0 auto;
+}
+
+
+
+/* Header Div */
+header {
+    height: 60px;
+}
+
+header h1 {
+    text-align: center;
+    font-size: 2em;
+    margin: 0;
+}
+
+#header_left {
+    width: 20%;
+    display: inline-block;
+
+}
+
+#header_center {
+    width: 59%;
+    display: inline-block;
+}
+
+#header_right {
+    width: 20%;
+    display: inline-block;
+}
+
+header button {
+    float: right;
+    font-size: 0.9em;
+}
+
+
+
+/* Roster Input Form */
+#rosters_container {
+    width: 800px;
+    padding: 0;
+    margin: 0 auto 0 auto;
+}
+
+.team_roster {
+    display:inline-block;
+    width: 390px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.team_roster_header {
+    text-align: center;
+}
+
+.team_name {
+    margin-bottom: 1em;
+}
+
+.save_players_form {
+    margin-top: 1em;
+}
+
+.team_roster .players {
+    padding: 0 0 1em 1em;
+    
+}
+
+.player_number {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.player_name {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+
+
+
+
+#game {
+    width: 1310px;
+    display: inline-block;
+}
+
+#game_input_wrapper {
+   display: inline-block; 
+}
+
+#away_players_wrapper {
+    display: inline-block;
+    width: 72px;
+    vertical-align: top;
+    padding-top: 25px;
+}
+
+#svg_wrapper {
+    display: inline-block;
+}
+
+#home_players_wrapper {
+    display: inline-block;
+    width: 72px;
+    vertical-align: top;
+    padding-top: 30px;
+}
+
+.generic_player {
+    margin: 15px 0 0 0;
+}
+
+.generic_player_number {
+    font-size: 20px;
+    text-align: center;
+}
+
+
+
+#basketball_court {
+    background-color: #FFB56C;
+}
+
+.perimeter {
+	fill:rgb(255,255,255);stroke-width:8;stroke:black;
+}
+
+svg .boundary {
+	stroke: black; stroke-width: 8;
+}
+
+svg .thin_line {
+	stroke: black; stroke-width: 4;
+}
+
+svg .thick_line {
+	stroke: black; stroke-width: 8;
+}
+
+svg .circle {
+	fill: #FF9933; stroke: black; stroke-width: 4;
+}
+
+svg .key {
+	fill: #FF9933; stroke: black; stroke-width: 4;
+}
+
+svg .white_line {
+	stroke: #FF9933; stroke-width: 4;
+}
+
+div.team {
+    margin: 0;
+    padding: 0 0 1em 0;
+    display: inline-block;
+    width: 38%;
+    text-align: center;
+}
+
+div.score_container {
+    margin: 0;
+    padding: 0 0 1em 0;
+    display: inline-block;
+    width: 22%;
+    height: 45px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+div.score {
+    margin: 0;
+    padding: 0 0 0 0;
+    display: inline-block;
+}
+
+div.player {
+    display: inline-block;
+    font-size: 1.2em;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    padding: 4px;
+    margin-left: 1em;
+    width: 1.8em;
+    cursor:move;
+}
+
+div.player.selected {
+    border-color: #FF3333;
+    border-width: 4px;
+}
+
+.score {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+p.score_digits {
+    margin: 0;
+    font-size: 40px;
+    font-weight: bold;
+    float: left;
+    vertical-align: -7;
+}
+
+div.score p.score_team {
+    display: inline-block;
+    font-size: 1em;
+    margin: 0;
+    float: left;
+    padding-top: 1em;
+
+}
+
+
+
+.roster {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 98%;
+}
+.roster li {
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 1.0em;
+    height: 18px;
+}
+
+.roster li:first-child {
+    border-top: 3px solid #FFCCCC;
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(2) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(3) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(4) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+}
+.roster li:nth-child(5) {
+    border-left: 3px solid #FFCCCC;
+    border-right: 3px solid #FFCCCC;
+    border-bottom: 3px solid #FFCCCC;
+    background-color: #FFCCCC;
+    font-size: 1.2em;
+    margin-bottom: 18px;
+}
+.roster li:last-child {
+    margin-bottom: 1.8em;
+} 
+.starters_header {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+

@@ -3,11 +3,16 @@
     margin: 0 auto 0 auto;
 }
 
+#game {
+    width: 100%;
+}
+
 
 
 /* Header Div */
 header {
-    height: 60px;
+    height: 40px;
+    width: 100%;
 }
 
 header h1 {
@@ -19,7 +24,7 @@ header h1 {
 #header_left {
     width: 20%;
     display: inline-block;
-
+    vertical-align: bottom;
 }
 
 #header_center {
@@ -30,98 +35,128 @@ header h1 {
 #header_right {
     width: 20%;
     display: inline-block;
+    vertical-align: bottom;
 }
 
-header button {
+header #header_right button {
     float: right;
-    font-size: 0.9em;
+    margin-right: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+header #header_left button {
+    float: left;
+    margin-left: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.view_button {
+    border-radius: 7px;
+}
+
+.button_selected {
+    background-color: #B2B2B2;
+}
+
+#foul {
+    width: 80px;
+    height: 28px;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 
 
-/* Roster Input Form */
-#rosters_container {
-    width: 800px;
-    padding: 0;
-    margin: 0 auto 0 auto;
+
+
+/* Game Buttons Wrapper */
+#game_buttons_wrapper {
+    width: 100%;
+    margin-top: 10px;
 }
 
-.team_roster {
-    display:inline-block;
-    width: 390px;
-    margin: 0;
-    padding: 0;
-    vertical-align: top;
+#game_buttons_wrapper div {
+    display: inline-block;
 }
 
-.team_roster_header {
+div.score_wrapper {
+    width: 12%;
+    vertical-align: bottom;
+    padding: 0 0.2em 0 0.2em;
+}
+
+div.reset {
+    width: 13%;
+}
+
+div#game_input_buttons {
+    width: 46%;
     text-align: center;
+
 }
 
-.team_name {
-    margin-bottom: 1em;
+.score_wrapper span {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-left: 0.4em;
 }
 
-.save_players_form {
-    margin-top: 1em;
+#away_score_wrapper div {
+    float: left;
+
 }
 
-.team_roster .players {
-    padding: 0 0 1em 1em;
-    
+#home_score_wrapper div {
+    float: right;
+
 }
 
-.player_number {
+.reset div {
     display: inline-block;
-    font-size: 1.3em;
-    margin: 0;
+    margin: 0 0.2em 0 0.2em;
 }
 
-.player_name {
+div#game_input_buttons button {
+    font-size: 1.2em;
+    margin: 0 0.2em 0 0.2em;
+}
+
+
+
+/* Game Body */
+#game_body {
+    margin-top: 18px;
+}
+
+#game_body div {
     display: inline-block;
-    font-size: 1.3em;
-    margin: 0;
 }
 
-
-
-
-
-#game {
-    width: 1310px;
-    display: inline-block;
-}
-
-#game_input_wrapper {
-   display: inline-block; 
-}
-
-#away_players_wrapper {
-    display: inline-block;
+.players_wrapper {
     width: 72px;
-    vertical-align: top;
     padding-top: 25px;
-}
-
-#svg_wrapper {
-    display: inline-block;
-}
-
-#home_players_wrapper {
-    display: inline-block;
-    width: 72px;
     vertical-align: top;
-    padding-top: 30px;
+    display: inline-block;
 }
 
-.generic_player {
-    margin: 15px 0 0 0;
+.player_wrapper {
+    margin-top: 15px;
+    width: 100%;
 }
 
-.generic_player_number {
+.player_number_wrapper {
     font-size: 20px;
     text-align: center;
+    width: 100%;
 }
+
+
+
+
+
+
 
 
 
@@ -284,3 +319,47 @@ div.score p.score_team {
 
 
 
+
+/* Roster Input Form */
+#rosters_container {
+    width: 800px;
+    padding: 0;
+    margin: 0 auto 0 auto;
+}
+
+.team_roster {
+    display:inline-block;
+    width: 390px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.team_roster_header {
+    text-align: center;
+}
+
+.team_name {
+    margin-bottom: 1em;
+}
+
+.save_players_form {
+    margin-top: 1em;
+}
+
+.team_roster .players {
+    padding: 0 0 1em 1em;
+    
+}
+
+.player_number {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.player_name {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+}
