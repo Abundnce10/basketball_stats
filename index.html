@@ -31,13 +31,127 @@
             </div>
             <div id="header_right">
                 <button id="substitute" class="view_button">Substitution</button>
-                <button id="Timeout" class="view_button">Timeout</button>
+                <button id="timeout" class="view_button">Timeout</button>
             </div>
         </header><!-- header -->
 
 
 
         <!-- ROSTER/SUBSTITUTION -->
+        <div id="rosters_container">
+
+            <!-- AWAY TEAM ROSTER FORM -->
+            <div id="away_roster" class="team_roster">
+                
+                <h2 class="team_roster_header">Away</h2>
+                <form id="away_form">
+
+                    <div id="form_away_players_container">
+
+                        <div class="team_name">
+                            <label>Team Name</label>
+                            <input type="text" placeholder="East High Wildcats"></input>
+                        </div>
+
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="10" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="14" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="22" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="34" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="50" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                            <button type="button">+Player</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="save_players_form">Save</button>
+                    <br>
+                    <button type="button" class="saved_teams" id="away_saved_teams">Saved Teams</button>
+                </form>
+
+                <div class="local_storage_teams">
+                    
+                </div>
+
+            </div>
+
+
+            <!-- HOME TEAM ROSTER FORM -->
+            <div id="home_roster" class="team_roster">
+                
+                <h2 class="team_roster_header">Home</h2>
+                <form id="home_form">
+
+                    <div class="team_name">
+                        <label>Team Name</label>
+                        <input type="text" placeholder="West High Knights"></input>
+                    </div>
+
+                    <div id="form_home_players_container">
+
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="10" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="14" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="22" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="34" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                        </div>
+                        <div class="form_player_add">
+                            <label>Number</label>
+                            <input type="text" placeholder="50" size="2"></input>
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" size="15"></input>
+                            <button type="button">+Player</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="save_players_form">Save</button>
+                    <br>
+                    <button type="button" class="saved_teams" id="home_saved_teams">Saved Teams</button>
+
+                </form>
+            </div><!-- id="home_roster" -->
+
+        </div><!-- id="rosters_container" -->
 
 
 
