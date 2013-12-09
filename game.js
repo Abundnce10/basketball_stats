@@ -25,10 +25,10 @@ var createRosterHtml = function(teamName, playersArray, homeAway) {
 }
 
 
-var teamsToHtml = function(teamNames) {
-    var openDiv = "<div class='savedTeam'>";
-    var closeDiv = "</div>";
-    var html = openDiv;
+var localStorageTeamsToHtml = function(teamNames) {
+    var openDiv = "<a href='#' class='local_storage_team'>";
+    var closeDiv = "</a>";
+    var html;
     for (var i=0; i<teamNames.length; i++) {
         html += openDiv + teamNames[i] + closeDiv;
     }
@@ -101,7 +101,7 @@ $(document).ready(function(e) {
 
 
     // Retrieve Saved Teams from localStorage
-    $(".saved_teams").on("click", function() {
+    $(".saved_teams").one("click", function() {
         var roster = $(this).parent().parent().attr("id");
         var teamNames = [];
         var teams;
@@ -118,7 +118,7 @@ $(document).ready(function(e) {
                     teamNames.push(teams[i]['teamName']);
                 }
 
-                var html = teamsToHtml(teamNames);
+                var html = localStorageTeamsToHtml(teamNames);
 
                 // insert into .saved_teams div
                 $('#'+ roster +' .local_storage_teams').append(html);
@@ -133,9 +133,42 @@ $(document).ready(function(e) {
             return false;
         }
 
+    });
+
+
+    // Populate roster from localStorage
+    $('.local_storage_teams').on("click", "a", function(e) {
+        var teamName = $(this).html();
+        console.log(teamName);
+
+        var roster = $(this).parent().parent().attr('id');
+        console.log(roster);
+
+        var team = { players: [] };
+        team.teamName = teamName;
+        console.log(team);
+
+        // find team in localStorage
+        var teams = JSON.parse(localStorage.getItem("teams"));
+        console.log(teams);
+
+        for (var i=0; i < teams.length; i++) {
+            if (teamName === teams[i]['teamName']) {
+                team.players = teams[i]['players']
+            }
+        }
+
+
+        // Remove Form and display team
+        $('#'+roster).empty();
+        $('#'+roster).append(createRosterHtml(team.teamName, team.players, roster.split('_')[0])); 
 
 
     });
+
+
+
+
 
 
 });

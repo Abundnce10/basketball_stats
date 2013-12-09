@@ -368,3 +368,18 @@ div.score p.score_team {
     font-size: 1.3em;
     margin: 0;
 }
+
+.local_storage_team {
+    display: block;
+    background-color: green;
+    width: 80%;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    margin: 0.4em auto 0 auto;
+}
+
+a.local_storage_team:hover {
+    background-color: lightGreen;
+    color: black;
+}
