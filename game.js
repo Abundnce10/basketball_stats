@@ -28,7 +28,7 @@ var createRosterHtml = function(teamName, playersArray, homeAway) {
 var localStorageTeamsToHtml = function(teamNames) {
     var openDiv = "<a href='#' class='local_storage_team'>";
     var closeDiv = "</a>";
-    var html;
+    var html = '';
     for (var i=0; i<teamNames.length; i++) {
         html += openDiv + teamNames[i] + closeDiv;
     }
@@ -40,11 +40,15 @@ var localStorageTeamsToHtml = function(teamNames) {
 
 $(document).ready(function(e) {
 
+    console.log('load');
+
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
     $("#substitute").hide();
     $("#timeout").hide();
+    $("#start_game").hide();
+    $("#resume_game").hide();
 
     // Hide #game div
     $("#game").hide();
@@ -52,9 +56,14 @@ $(document).ready(function(e) {
     // teams object, away/home
     var teams = {};
 
+    // Submitted Rosters
+    var rostersSubmitted = 0;
+
 
     // Store Team to localStorage
     $(".save_players_form").on("click", function(e) {
+
+        rostersSubmitted += 1;
 
         // localStorage Object
         var teamObj = { players: [] };
@@ -88,13 +97,17 @@ $(document).ready(function(e) {
                 localStorage.setItem('teams', JSON.stringify(teamsLocalStorage));
             }
         }
-
-        console.log(teams);
         
 
         // Remove Form and display team
         $('#'+team+'_roster').empty();
-        $('#'+team+'_roster').append(createRosterHtml(teams[team]['team_name'], teams[team]['players'], team)); 
+        $('#'+team+'_roster').append(createRosterHtml(teams[team]['team_name'], teams[team]['players'], team));
+
+
+        // show start_game button if both rosters are ready
+        if (rostersSubmitted === 2) {
+            $("#start_game").show();
+        }
 
     });
 
@@ -129,8 +142,7 @@ $(document).ready(function(e) {
             }
 
         } else {
-            alert("No saved teams.");
-            return false;
+            $('#'+ roster +' .local_storage_teams').append("<div>Upgrade your browser</div>");
         }
 
     });
@@ -138,6 +150,9 @@ $(document).ready(function(e) {
 
     // Populate roster from localStorage
     $('.local_storage_teams').on("click", "a", function(e) {
+
+        rostersSubmitted += 1;
+
         var teamName = $(this).html();
         console.log(teamName);
 
@@ -158,14 +173,51 @@ $(document).ready(function(e) {
             }
         }
 
-
-        // Remove Form and display team
+        // Remove Form and display team roster
         $('#'+roster).empty();
-        $('#'+roster).append(createRosterHtml(team.teamName, team.players, roster.split('_')[0])); 
+        $('#'+roster).append(createRosterHtml(team.teamName, team.players, roster.split('_')[0]));
 
+
+        // Sort Roster Event Handler
+        $(".roster").sortable({
+            start: function (event, ui) {
+                ui.item.css('border', '1px solid green').append('<span class="ui-icon ui-icon-check icons"></span>');
+            },
+            stop: function (event, ui) {
+                //reset to no border or whatever your desired default border is
+                ui.item.css('border', '');
+                ui.item.children('.icons').remove();
+            }
+
+        });
+
+        // Disable Selection of Player Roster
+        $(".roster").disableSelection();
+
+
+        // show start_game button if both rosters are ready
+        if (rostersSubmitted === 2) {
+            $("#start_game").show();
+        }
 
     });
 
+
+    $('#start_resume_button_container').on("click", "a", function(e) {
+  
+        e.preventDefault();
+
+        $("#rosters_container").hide();
+        $("#game").show();
+
+        // show buttons in 
+        $("#game_review").show();
+        $("#game_input").show();
+        $("#substitute").show();
+        $("#timeout").show();
+
+
+    });
 
 
 

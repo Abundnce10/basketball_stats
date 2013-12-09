@@ -383,3 +383,22 @@ a.local_storage_team:hover {
     background-color: lightGreen;
     color: black;
 }
+
+#start_resume_button_container a {
+    display: block;
+    background-color: green;
+    width: 50%;
+    text-align: center;
+    font-size: 1.9em;
+    color: white;
+    text-decoration: none;
+    margin: 0.8em auto 0 auto;
+    border-radius: 12px;
+    -moz-border-radius: 15px;
+}
+
+#start_resume_button_container a:hover {
+    background-color: lightGreen;
+    color: black;
+}
+
