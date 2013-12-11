@@ -38,6 +38,7 @@ var localStorageTeamsToHtml = function(teamNames) {
 
 
 
+
 $(document).ready(function(e) {
 
     console.log('load');
@@ -63,6 +64,8 @@ $(document).ready(function(e) {
     // Store Team to localStorage
     $(".save_players_form").on("click", function(e) {
 
+        e.preventDefault();
+
         rostersSubmitted += 1;
 
         // localStorage Object
@@ -70,9 +73,14 @@ $(document).ready(function(e) {
 
         // determine which team (home or away) was saved
         var team = ($(this).closest('form').attr('id')).split('_')[0];
+        console.log(team);
 
         // save team name
         teamObj.teamName = $('#'+team+'_form .team_name input').val();
+
+
+        // save team abbreviation
+        teamObj.teamAbbreviation = $('#'+team+'_form .team_abbreviation input').val();
 
         // save player objects into array
         $('#'+team+'_form .form_player_add').each(function(ix, elem) {
@@ -101,8 +109,26 @@ $(document).ready(function(e) {
 
         // Remove Form and display team
         $('#'+team+'_roster').empty();
-        $('#'+team+'_roster').append(createRosterHtml(teams[team]['team_name'], teams[team]['players'], team));
+        $('#'+team+'_roster').append(createRosterHtml(teams[team]['teamName'], teams[team]['players'], team));
 
+
+        // Sort Roster Event Handler
+        $(".roster").sortable({
+            start: function (event, ui) {
+                ui.item.css('border', '1px solid green').append('<span class="ui-icon ui-icon-check icons"></span>');
+            },
+            stop: function (event, ui) {
+                //reset to no border or whatever your desired default border is
+                ui.item.css('border', '');
+                ui.item.children('.icons').remove();
+            }
+
+        });
+
+        console.log(teams);
+
+        // Disable Selection of Player Roster
+        $(".roster").disableSelection();
 
         // show start_game button if both rosters are ready
         if (rostersSubmitted === 2) {
@@ -154,14 +180,16 @@ $(document).ready(function(e) {
         rostersSubmitted += 1;
 
         var teamName = $(this).html();
-        console.log(teamName);
+        //console.log(teamName);
 
         var roster = $(this).parent().parent().attr('id');
         console.log(roster);
 
+        var homeAway = roster.split('_')[0]
+
         var team = { players: [] };
         team.teamName = teamName;
-        console.log(team);
+        //console.log(team);
 
         // find team in localStorage
         var teams = JSON.parse(localStorage.getItem("teams"));
@@ -169,13 +197,14 @@ $(document).ready(function(e) {
 
         for (var i=0; i < teams.length; i++) {
             if (teamName === teams[i]['teamName']) {
-                team.players = teams[i]['players']
+                team.players = teams[i]['players'];
+                team.teamAbbreviation = teams[i]['teamAbbreviation'];
             }
         }
 
         // Remove Form and display team roster
         $('#'+roster).empty();
-        $('#'+roster).append(createRosterHtml(team.teamName, team.players, roster.split('_')[0]));
+        $('#'+roster).append(createRosterHtml(team.teamName, team.players, homeAway));
 
 
         // Sort Roster Event Handler
@@ -216,6 +245,26 @@ $(document).ready(function(e) {
         $("#substitute").show();
         $("#timeout").show();
 
+
+    });
+
+
+    $('.players_input_container').on("click", ".new_player", function(e) {
+        
+        var newPlayerHtml = '<div class="form_player_add"><label>Number&nbsp;</label><input type="text" placeholder="50" size="2"></input><label>&nbsp;Name&nbsp;</label><input type="text" placeholder="John Doe" size="15"></input><button type="button" class="new_player">+Player</button></div>';
+
+        // Form to add new input field
+        var homeAwayForm = $(this).parent().parent();
+
+        // remove button from last player
+        homeAwayForm.children().last().children().last().remove();
+
+        // add new player input field along w/ new_player button
+        homeAwayForm.append(newPlayerHtml);
+
+        // place cursor in new player field
+        homeAwayForm.children().last().children().eq(1).focus();
+        
 
     });
 

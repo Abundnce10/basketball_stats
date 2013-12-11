@@ -46,11 +46,15 @@
                 <h2 class="team_roster_header">Away</h2>
                 <form id="away_form">
 
-                    <div id="form_away_players_container">
+                    <div id="form_away_players_container" class="players_input_container">
 
                         <div class="team_name">
                             <label>Team Name</label>
-                            <input type="text" placeholder="East High Wildcats"></input>
+                            <input type="text" placeholder="Chicago Bulls"></input>
+                        </div>
+                        <div class="team_abbreviation">
+                            <label>Abbreviation</label>
+                            <input type="text" placeholder="CHI" size="10"></input>
                         </div>
 
                         <div class="form_player_add">
@@ -82,13 +86,13 @@
                             <input type="text" placeholder="50" size="2"></input>
                             <label>Name</label>
                             <input type="text" placeholder="John Doe" size="15"></input>
-                            <button type="button">+Player</button>
+                            <button type="button" class="new_player">+Player</button>
                         </div>
                     </div>
 
-                    <button type="button" class="save_players_form">Save</button>
+                    <a href="#" class="save_players_form">Save</a>
                     <br>
-                    <button type="button" class="saved_teams" id="away_saved_teams">Saved Teams</button>
+                    <button type="button" class="saved_teams" id="away_saved_teams">Load Saved Teams</button>
                 </form>
 
                 <div class="local_storage_teams">
@@ -106,10 +110,14 @@
 
                     <div class="team_name">
                         <label>Team Name</label>
-                        <input type="text" placeholder="West High Knights"></input>
+                        <input type="text" placeholder="Seattle Supersonics"></input>
+                    </div>
+                    <div class="team_abbreviation">
+                        <label>Abbreviation</label>
+                        <input type="text" placeholder="SEA" size="10"></input>
                     </div>
 
-                    <div id="form_home_players_container">
+                    <div id="form_home_players_container" class="players_input_container">
 
                         <div class="form_player_add">
                             <label>Number</label>
@@ -140,13 +148,13 @@
                             <input type="text" placeholder="50" size="2"></input>
                             <label>Name</label>
                             <input type="text" placeholder="John Doe" size="15"></input>
-                            <button type="button">+Player</button>
+                            <button type="button" class="new_player">+Player</button>
                         </div>
                     </div>
 
-                    <button type="button" class="save_players_form">Save</button>
+                    <a href="#" class="save_players_form">Save</a>
                     <br>
-                    <button type="button" class="saved_teams" id="home_saved_teams">Saved Teams</button>
+                    <button type="button" class="saved_teams" id="home_saved_teams">Load Saved Teams</button>
                 </form>
 
                 <div class="local_storage_teams">

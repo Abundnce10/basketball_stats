@@ -258,6 +258,7 @@ div.score p.score_team {
 
 
 
+
 .roster {
     list-style-type: none;
     margin: 0;
@@ -319,12 +320,6 @@ div.score p.score_team {
 
 
 
-
-
-
-
-
-
 /* Roster Input Form */
 #rosters_container {
     width: 800px;
@@ -344,7 +339,7 @@ div.score p.score_team {
     text-align: center;
 }
 
-.team_name {
+.team_abbreviation {
     margin-bottom: 1em;
 }
 
@@ -367,6 +362,24 @@ div.score p.score_team {
     display: inline-block;
     font-size: 1.3em;
     margin: 0;
+}
+
+.save_players_form {
+    display: block;
+    background-color: green;
+    width: 50%;
+    text-align: center;
+    font-size: 1.3em;
+    color: white;
+    text-decoration: none;
+    margin: 0.8em auto 0 auto;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+}
+
+.save_players_form:hover {
+    background-color: lightGreen;
+    color: black;
 }
 
 .local_storage_team {
