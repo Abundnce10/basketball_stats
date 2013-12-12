@@ -26,8 +26,8 @@ var createRosterHtml = function(teamName, playersArray, homeAway) {
 
 
 var localStorageTeamsToHtml = function(teamNames) {
-    var openDiv = "<a href='#' class='local_storage_team'>";
-    var closeDiv = "</a>";
+    var openDiv = "<div class='local_storage_team_container'><a href='#' class='local_storage_team'>";
+    var closeDiv = "</a><a href='#' class='local_storage_delete'>delete</a></div>";
     var html = '';
     for (var i=0; i<teamNames.length; i++) {
         html += openDiv + teamNames[i] + closeDiv;
@@ -73,11 +73,9 @@ $(document).ready(function(e) {
 
         // determine which team (home or away) was saved
         var team = ($(this).closest('form').attr('id')).split('_')[0];
-        console.log(team);
 
         // save team name
         teamObj.teamName = $('#'+team+'_form .team_name input').val();
-
 
         // save team abbreviation
         teamObj.teamAbbreviation = $('#'+team+'_form .team_abbreviation input').val();
@@ -125,8 +123,6 @@ $(document).ready(function(e) {
 
         });
 
-        console.log(teams);
-
         // Disable Selection of Player Roster
         $(".roster").disableSelection();
 
@@ -146,6 +142,8 @@ $(document).ready(function(e) {
         var teams;
 
         console.log(roster);
+
+        $(this).hide();
 
         if (typeof(Storage) !== "undefined") {
             teams = JSON.parse(localStorage.getItem("teams"));
@@ -175,14 +173,15 @@ $(document).ready(function(e) {
 
 
     // Populate roster from localStorage
-    $('.local_storage_teams').on("click", "a", function(e) {
+    $('.local_storage_teams').on("click", ".local_storage_team", function(e) {
 
         rostersSubmitted += 1;
 
         var teamName = $(this).html();
         //console.log(teamName);
 
-        var roster = $(this).parent().parent().attr('id');
+        // determine which roster
+        var roster = $(this).parent().parent().parent().attr('id');
         console.log(roster);
 
         var homeAway = roster.split('_')[0]
@@ -265,6 +264,41 @@ $(document).ready(function(e) {
         // place cursor in new player field
         homeAwayForm.children().last().children().eq(1).focus();
         
+
+    });
+
+
+    // Delete team from localStorage
+    $(".local_storage_teams").on("click", ".local_storage_delete", function(e) {
+
+        e.preventDefault();
+        var breakCheck = false;
+
+        // grab teamName
+        var teamName = $(this).siblings().html();
+
+        // remove team from localStorage object
+        var teams = JSON.parse(localStorage.getItem("teams"));
+        console.log(teams);
+
+        for (var i=0; i < teams.length; i++) {
+            if (teamName === teams[i]['teamName']) {
+                teams.splice(i, 1)
+                breakCheck = true;
+            }
+            if (breakCheck) { break; }
+        }
+
+        // save new teams object to localStorage
+        if (teams.length >= 1) {
+            localStorage.setItem('teams', JSON.stringify(teams));
+        // or delete it if there are no teams
+        } else {
+            localStorage.removeItem('teams');
+        }
+
+        // hide that team
+        $(this).parent().hide();
 
     });
 

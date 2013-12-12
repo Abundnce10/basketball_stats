@@ -382,20 +382,43 @@ div.score p.score_team {
     color: black;
 }
 
-.local_storage_team {
+.local_storage_team_container {
     display: block;
+    width: 80%;
+    margin: 0.5em auto 0.5em auto;
+}
+
+a.local_storage_team {
+    display: inline-block;
     background-color: green;
     width: 80%;
     text-align: center;
     color: white;
     text-decoration: none;
-    margin: 0.4em auto 0 auto;
+    margin-left: 1em;
+    padding: 0.1em 0 0.1em 0;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 a.local_storage_team:hover {
     background-color: lightGreen;
     color: black;
 }
+
+a.local_storage_delete {
+    display: inline-block;
+    text-decoration: underline;
+    font-size: 0.9em;
+    color: blue;
+    margin-left: 0.6em;
+}
+
+a.local_storage_delete:hover {
+    font-weight: bold;
+}
+
+
 
 #start_resume_button_container a {
     display: block;
