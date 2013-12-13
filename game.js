@@ -43,6 +43,8 @@ $(document).ready(function(e) {
 
     console.log('load');
 
+    $("#rosters_container").hide();
+/*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -54,11 +56,16 @@ $(document).ready(function(e) {
     // Hide #game div
     $("#game").hide();
 
+*/
+
     // teams object, away/home
     var teams = {};
 
     // Submitted Rosters
     var rostersSubmitted = 0;
+
+    // Selected Player
+    var selectedPlayer = { team: '', number: '' };
 
 
     // Store Team to localStorage
@@ -141,8 +148,6 @@ $(document).ready(function(e) {
         var teamNames = [];
         var localStorageTeams;
 
-        console.log(roster);
-
         $(this).hide();
 
         // if browser supports localStorage
@@ -183,17 +188,14 @@ $(document).ready(function(e) {
 
         // determine which roster
         var roster = $(this).parent().parent().parent().attr('id');
-        console.log(roster);
 
         var homeAway = roster.split('_')[0]
 
         var teamObj = { players: [] };
         teamObj.teamName = teamName;
-        //console.log(teamObj);
 
         // find team in localStorage
         var localStorageTeams = JSON.parse(localStorage.getItem("teams"));
-        //console.log(teams);
 
         for (var i=0; i < localStorageTeams.length; i++) {
             if (teamName === localStorageTeams[i]['teamName']) {
@@ -204,8 +206,6 @@ $(document).ready(function(e) {
 
         // store teamObj into global team
         teams[homeAway] = teamObj;
-
-        console.log(teams)
 
         // Remove Form and display team roster
         $('#'+roster).empty();
@@ -237,31 +237,7 @@ $(document).ready(function(e) {
     });
 
 
-    $('#start_resume_button_container').on("click", "#start_game", function(e) {
-  
-        e.preventDefault();
-
-        console.log(teams);
-
-        // show court and hide roster view
-        $("#rosters_container").hide();
-        $("#game").show();
-
-        // show buttons in 
-        $("#game_review").show();
-        $("#game_input").show();
-        $("#substitute").show();
-        $("#timeout").show();
-
-        // populate team name abbreviations
-        $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
-        $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
-
-
-
-    });
-
-
+    // Add new player to Roster
     $('.players_input_container').on("click", ".new_player", function(e) {
         
         var newPlayerHtml = '<div class="form_player_add"><label>Number&nbsp;</label><input type="text" placeholder="50" size="2"></input><label>&nbsp;Name&nbsp;</label><input type="text" placeholder="John Doe" size="15"></input><button type="button" class="new_player">+Player</button></div>';
@@ -293,7 +269,6 @@ $(document).ready(function(e) {
 
         // remove team from localStorage object
         var teams = JSON.parse(localStorage.getItem("teams"));
-        console.log(teams);
 
         for (var i=0; i < teams.length; i++) {
             if (teamName === teams[i]['teamName']) {
@@ -317,6 +292,46 @@ $(document).ready(function(e) {
     });
 
 
+
+    // Start Game
+    $('#start_resume_button_container').on("click", "#start_game", function(e) {
+  
+        e.preventDefault();
+
+
+        // show court and hide roster view
+        $("#rosters_container").hide();
+        $("#game").show();
+
+        // show buttons in 
+        $("#game_review").show();
+        $("#game_input").show();
+        $("#substitute").show();
+        $("#timeout").show();
+
+        // populate team name abbreviations
+        $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
+        $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
+
+    });
+
+
+    // Click on Player
+    $(".players_wrapper").on("click", ".player_border_container", function(e) {
+        
+        // Remove class from previously selected player
+        $(".player_border_container").removeClass("selected");
+
+        // Add selected class
+        $(this).addClass("selected");
+
+        // Update selectedPlayer obj
+        selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
+        selectedPlayer.number = $(this).children().last().html().substring(1);
+
+        console.log(selectedPlayer);
+
+    });
 
 
 
