@@ -139,20 +139,21 @@ $(document).ready(function(e) {
     $(".saved_teams").one("click", function() {
         var roster = $(this).parent().parent().attr("id");
         var teamNames = [];
-        var teams;
+        var localStorageTeams;
 
         console.log(roster);
 
         $(this).hide();
 
+        // if browser supports localStorage
         if (typeof(Storage) !== "undefined") {
-            teams = JSON.parse(localStorage.getItem("teams"));
+            localStorageTeams = JSON.parse(localStorage.getItem("teams"));
 
             // if teams exist
-            if (teams !== null) {
+            if (localStorageTeams !== null) {
 
-                for (var i=0; i < teams.length; i++) {
-                    teamNames.push(teams[i]['teamName']);
+                for (var i=0; i < localStorageTeams.length; i++) {
+                    teamNames.push(localStorageTeams[i]['teamName']);
                 }
 
                 var html = localStorageTeamsToHtml(teamNames);
@@ -186,24 +187,29 @@ $(document).ready(function(e) {
 
         var homeAway = roster.split('_')[0]
 
-        var team = { players: [] };
-        team.teamName = teamName;
-        //console.log(team);
+        var teamObj = { players: [] };
+        teamObj.teamName = teamName;
+        //console.log(teamObj);
 
         // find team in localStorage
-        var teams = JSON.parse(localStorage.getItem("teams"));
-        console.log(teams);
+        var localStorageTeams = JSON.parse(localStorage.getItem("teams"));
+        //console.log(teams);
 
-        for (var i=0; i < teams.length; i++) {
-            if (teamName === teams[i]['teamName']) {
-                team.players = teams[i]['players'];
-                team.teamAbbreviation = teams[i]['teamAbbreviation'];
+        for (var i=0; i < localStorageTeams.length; i++) {
+            if (teamName === localStorageTeams[i]['teamName']) {
+                teamObj.players = localStorageTeams[i]['players'];
+                teamObj.teamAbbreviation = localStorageTeams[i]['teamAbbreviation'];
             }
         }
 
+        // store teamObj into global team
+        teams[homeAway] = teamObj;
+
+        console.log(teams)
+
         // Remove Form and display team roster
         $('#'+roster).empty();
-        $('#'+roster).append(createRosterHtml(team.teamName, team.players, homeAway));
+        $('#'+roster).append(createRosterHtml(teamObj.teamName, teamObj.players, homeAway));
 
 
         // Sort Roster Event Handler
@@ -231,10 +237,13 @@ $(document).ready(function(e) {
     });
 
 
-    $('#start_resume_button_container').on("click", "a", function(e) {
+    $('#start_resume_button_container').on("click", "#start_game", function(e) {
   
         e.preventDefault();
 
+        console.log(teams);
+
+        // show court and hide roster view
         $("#rosters_container").hide();
         $("#game").show();
 
@@ -243,6 +252,11 @@ $(document).ready(function(e) {
         $("#game_input").show();
         $("#substitute").show();
         $("#timeout").show();
+
+        // populate team name abbreviations
+        $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
+        $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
+
 
 
     });

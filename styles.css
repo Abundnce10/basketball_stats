@@ -335,6 +335,10 @@ div.score p.score_team {
     vertical-align: top;
 }
 
+.team_roster li:hover {
+    cursor: move;
+}
+
 .team_roster_header {
     text-align: center;
 }
