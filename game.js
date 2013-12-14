@@ -61,6 +61,9 @@ $(document).ready(function(e) {
     // teams object, away/home
     var teams = {};
 
+    // shots object, away/home
+    var shots = { away: {}, home: {} };
+
     // Submitted Rosters
     var rostersSubmitted = 0;
 
@@ -316,7 +319,7 @@ $(document).ready(function(e) {
     });
 
 
-    // Click on Player
+    // Click on Player, add selected class
     $(".players_wrapper").on("click", ".player_border_container", function(e) {
         
         // Remove class from previously selected player
@@ -331,6 +334,12 @@ $(document).ready(function(e) {
 
         console.log(selectedPlayer);
 
+    });
+
+
+    // Click on SVG to input shot
+    $('#basketball_court').on('click', function(e) {
+        
     });
 
 
