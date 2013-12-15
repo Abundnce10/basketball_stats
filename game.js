@@ -41,8 +41,6 @@ var localStorageTeamsToHtml = function(teamNames) {
 
 $(document).ready(function(e) {
 
-    console.log('load');
-
     $("#rosters_container").hide();
 /*
     // Hide input buttons
@@ -69,6 +67,12 @@ $(document).ready(function(e) {
 
     // Selected Player
     var selectedPlayer = { team: '', number: '' };
+
+    // Test for double click (Shot) variables
+    var DELAY = 225,
+        clicks = 0,
+        timer = null;
+
 
 
     // Store Team to localStorage
@@ -322,25 +326,84 @@ $(document).ready(function(e) {
     // Click on Player, add selected class
     $(".players_wrapper").on("click", ".player_border_container", function(e) {
         
+
+    /*
         // Remove class from previously selected player
         $(".player_border_container").removeClass("selected");
 
         // Add selected class
         $(this).addClass("selected");
+    */
+
+        // Remove hidden & selected class (click 2 diff players consec)
+        $(".player_border_container").each(function() {
+            $(this).removeClass("hidden").removeClass("selected");
+        });
+
+        // Blur other players
+        $(".player_border_container").each(function() {
+            $(this).addClass("hidden");
+        });
+
+        // Only show player that was selected
+        $(this).removeClass("hidden").addClass("selected");
+
 
         // Update selectedPlayer obj
         selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
         selectedPlayer.number = $(this).children().last().html().substring(1);
 
-        console.log(selectedPlayer);
+        //console.log(selectedPlayer);
 
     });
 
 
     // Click on SVG to input shot
     $('#basketball_court').on('click', function(e) {
-        
+
+        clicks++;
+
+        var shotSuccess = false;
+
+        // Get position of parent coords
+        var posX = $(this.parentNode).offset().left;
+        var posY = $(this.parentNode).offset().top;
+
+
+        // Remove hidden & selected class
+        $(".player_border_container").each(function() {
+            $(this).removeClass("hidden").removeClass("selected");
+        });
+
+
+        // shot location
+
+
+
+        // If 1 click => Miss
+        if (clicks === 1) {
+            timer = setTimeout(function() {
+                clicks = 0;
+                console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+
+
+
+            }, DELAY);
+        } else {
+            clearTimeout(timer);
+            clicks = 0;
+            shotSuccess = true;
+            console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+
+
+        }
+
+    })
+    .on("dblclick", function(e) {
+        // cancel system double click event
+        e.preventDefault();
     });
+
 
 
 

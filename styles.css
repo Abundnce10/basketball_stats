@@ -161,6 +161,10 @@ div#game_input_buttons button {
     border-width: 3px;
 }
 
+.player_border_container.hidden {
+    opacity: 0.3;
+}
+
 
 
 
