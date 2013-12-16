@@ -361,40 +361,58 @@ $(document).ready(function(e) {
     // Click on SVG to input shot
     $('#basketball_court').on('click', function(e) {
 
-        clicks++;
 
-        var shotSuccess = false;
-
-        // Get position of parent coords
-        var posX = $(this.parentNode).offset().left;
-        var posY = $(this.parentNode).offset().top;
+        // if user has selected a player, allow the input for shot
+        var intendedShot = selectedPlayer.team.length > 0 || selectedPlayer.number.length > 0
 
 
-        // Remove hidden & selected class
-        $(".player_border_container").each(function() {
-            $(this).removeClass("hidden").removeClass("selected");
-        });
+        if (intendedShot) {
+
+            clicks++;
+
+            var shotSuccess = false;
+
+            // Get position of parent coords
+            var posX = $(this.parentNode).offset().left;
+            var posY = $(this.parentNode).offset().top;
 
 
-        // shot location
+            // Remove hidden & selected class
+            $(".player_border_container").each(function() {
+                $(this).removeClass("hidden").removeClass("selected");
+            });
+
+
+            // shot location
 
 
 
-        // If 1 click => Miss
-        if (clicks === 1) {
-            timer = setTimeout(function() {
+            // If 1 click => Miss
+            if (clicks === 1) {
+                timer = setTimeout(function() {
+                    clicks = 0;
+                    console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+
+                    // save shot
+
+                    // dislpaly shot
+
+                    // reset selectedPlayer
+                    selectedPlayer.number = ''; selectedPlayer.team = '';
+                }, DELAY);
+            } else {
+                clearTimeout(timer);
                 clicks = 0;
-                console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+                shotSuccess = true;
+                console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
+                // save shot
 
+                // display shot
 
-            }, DELAY);
-        } else {
-            clearTimeout(timer);
-            clicks = 0;
-            shotSuccess = true;
-            console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
-
+                // reset selectedPlayer
+                    selectedPlayer.number = ''; selectedPlayer.team = '';
+            }
 
         }
 

@@ -52,6 +52,10 @@ header #header_left button {
     font-weight: bold;
 }
 
+header button:hover {
+    cursor: pointer;
+}
+
 .view_button {
     border-radius: 7px;
 }
@@ -153,6 +157,10 @@ div#game_input_buttons button {
     font-size: 18px;
     text-align: center;
     width: 100%;
+}
+
+.player_border_container:hover {
+    cursor: pointer;
 }
 
 .player_border_container.selected {
