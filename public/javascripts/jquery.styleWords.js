@@ -1,0 +1,3 @@
+$.fn.styleWords = function() {
+	
+}

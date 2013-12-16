@@ -37,12 +37,11 @@ var localStorageTeamsToHtml = function(teamNames) {
 
 
 
-
-
 $(document).ready(function(e) {
 
+
     $("#rosters_container").hide();
-/*
+    /*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -54,7 +53,7 @@ $(document).ready(function(e) {
     // Hide #game div
     $("#game").hide();
 
-*/
+    */
 
     // teams object, away/home
     var teams = {};
@@ -302,7 +301,7 @@ $(document).ready(function(e) {
 
     // Start Game
     $('#start_resume_button_container').on("click", "#start_game", function(e) {
-  
+
         e.preventDefault();
 
 
@@ -421,7 +420,6 @@ $(document).ready(function(e) {
         // cancel system double click event
         e.preventDefault();
     });
-
 
 
 
