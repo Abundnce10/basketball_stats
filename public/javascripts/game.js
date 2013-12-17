@@ -451,6 +451,7 @@ $(document).ready(function(e) {
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
         }
 
+
         // if the shot was successful
         if (shotSuccess) {
             // place successful shot marker
@@ -465,20 +466,6 @@ $(document).ready(function(e) {
             d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
         }
 
-        // determine shot distance
-        if (team == 'home') {
-            // Determine length of shot
-            var shotDistancePixels = shotDistanceInPixels(homeHoopX, homeHoopY, shotX, shotY);
-            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
-            console.log(shotDistancePixels);
-            console.log(shotDistanceFeet);
-        } else {
-            // Determine length of shot
-            var shotDistancePixels = shotDistanceInPixels(awayHoopX, awayHoopY, shotX, shotY);
-            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
-            console.log(shotDistancePixels);
-            console.log(shotDistanceFeet);
-        }
 
         // save shot to shots object
         shots[team].push( { 
@@ -489,7 +476,7 @@ $(document).ready(function(e) {
         } );
 
 
-        console.log(shots);
+        //console.log(shots);
 
     });
 
