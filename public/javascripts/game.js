@@ -1,3 +1,21 @@
+var shotDistanceInPixels = function(x1, y1, x2, y2) {
+    // returns a string in feet w/ 1 decimal place
+    return Number(Math.sqrt(Math.pow((x1 - x2),2) + Math.pow((y1 - y2),2)).toFixed(1));
+}
+
+var pixelsToFeet = function(shotDistance) {
+    multiplier = 6/72;
+    return Number((multiplier * shotDistance).toFixed(1));
+}
+
+var shotPoints = function(shotDistance) {
+    if (shotDistance > 266.0) {
+        return 3;
+    } else {
+        return 2;
+    }
+}
+
 var createRosterHtml = function(teamName, playersArray, homeAway) {
     var htmlString = '';
 
@@ -59,7 +77,7 @@ $(document).ready(function(e) {
     var teams = {};
 
     // shots object, away/home
-    var shots = { away: {}, home: {} };
+    var shots = { away: [], home: [] };
 
     // Submitted Rosters
     var rostersSubmitted = 0;
@@ -71,6 +89,14 @@ $(document).ready(function(e) {
     var DELAY = 225,
         clicks = 0,
         timer = null;
+
+    // svg court dimensions
+    var svgWidth = $('#basketball_court').attr('width'),
+        svgHeight = $('#basketball_court').attr('height'),
+        awayHoopX = 49,
+        awayHoopY = 302,
+        homeHoopX = 1086,
+        homeHoopY = 302;
 
 
 
@@ -324,15 +350,6 @@ $(document).ready(function(e) {
 
     // Click on Player, add selected class
     $(".players_wrapper").on("click", ".player_border_container", function(e) {
-        
-
-    /*
-        // Remove class from previously selected player
-        $(".player_border_container").removeClass("selected");
-
-        // Add selected class
-        $(this).addClass("selected");
-    */
 
         // Remove hidden & selected class (click 2 diff players consec)
         $(".player_border_container").each(function() {
@@ -371,30 +388,27 @@ $(document).ready(function(e) {
 
             var shotSuccess = false;
 
-            // Get position of parent coords
-            var posX = $(this.parentNode).offset().left;
-            var posY = $(this.parentNode).offset().top;
-
-
             // Remove hidden & selected class
             $(".player_border_container").each(function() {
                 $(this).removeClass("hidden").removeClass("selected");
             });
 
+            // Get top-left position of parent in relation to window
+            var posX = $(this.parentNode).offset().left;
+            var posY = $(this.parentNode).offset().top;
 
-            // shot location
-
-
+            // shot location relative to top-left of court
+            var shotX = e.pageX - posX;
+            var shotY = e.pageY - posY;
 
             // If 1 click => Miss
             if (clicks === 1) {
                 timer = setTimeout(function() {
                     clicks = 0;
-                    console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+                    //console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
-                    // save shot
-
-                    // dislpaly shot
+                    // send shot details to placeMarker handler
+                    $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
 
                     // reset selectedPlayer
                     selectedPlayer.number = ''; selectedPlayer.team = '';
@@ -403,14 +417,13 @@ $(document).ready(function(e) {
                 clearTimeout(timer);
                 clicks = 0;
                 shotSuccess = true;
-                console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+                //console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
-                // save shot
-
-                // display shot
+                // send shot details to placeMarker handler
+                $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
 
                 // reset selectedPlayer
-                    selectedPlayer.number = ''; selectedPlayer.team = '';
+                selectedPlayer.number = ''; selectedPlayer.team = '';
             }
 
         }
@@ -419,6 +432,65 @@ $(document).ready(function(e) {
     .on("dblclick", function(e) {
         // cancel system double click event
         e.preventDefault();
+    });
+
+
+
+    // place shot marker and save shot details
+    $("#basketball_court").on('placeMarker', function(e, shotSuccess, team, number, shotX, shotY) {
+        e.preventDefault();
+
+        // determine shot distance
+        if (team == 'home') {
+            // Determine length of shot
+            var shotDistancePixels = shotDistanceInPixels(homeHoopX, homeHoopY, shotX, shotY);
+            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+        } else {
+            // Determine length of shot
+            var shotDistancePixels = shotDistanceInPixels(awayHoopX, awayHoopY, shotX, shotY);
+            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+        }
+
+        // if the shot was successful
+        if (shotSuccess) {
+            // place successful shot marker
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
+
+            // update score widget
+            var previousScore = parseInt( $('#'+team+'_team_score').text() );
+            $("#"+team+"_team_score").html( previousScore + shotPoints(shotDistancePixels) );
+
+        } else {
+            // place missed shot marker
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
+        }
+
+        // determine shot distance
+        if (team == 'home') {
+            // Determine length of shot
+            var shotDistancePixels = shotDistanceInPixels(homeHoopX, homeHoopY, shotX, shotY);
+            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+            console.log(shotDistancePixels);
+            console.log(shotDistanceFeet);
+        } else {
+            // Determine length of shot
+            var shotDistancePixels = shotDistanceInPixels(awayHoopX, awayHoopY, shotX, shotY);
+            var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+            console.log(shotDistancePixels);
+            console.log(shotDistanceFeet);
+        }
+
+        // save shot to shots object
+        shots[team].push( { 
+            'playerNumber': parseInt(number),
+            'shotSuccess': shotSuccess,
+            'distanceFeet': shotDistanceFeet,
+            'points': shotPoints(shotDistancePixels)
+        } );
+
+
+        console.log(shots);
+
     });
 
 
