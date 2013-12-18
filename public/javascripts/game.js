@@ -436,17 +436,20 @@ $(document).ready(function(e) {
             var shotX = e.pageX - posX;
             var shotY = e.pageY - posY;
 
-            // send shot details to placeMarker handler
+            // create initial missed shot marker
             $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+
 
             // If 1 click => Miss
             if (clicks === 1) {
                 timer = setTimeout(function() {
                     
+                    // reset clicks counter
                     clicks = 0;
 
-                    //console.log('shot');
+
                     console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+
 
                     // save missed shot
                     $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
@@ -458,12 +461,18 @@ $(document).ready(function(e) {
             // else 2 clicks => Make
             } else {
 
+                // reset timer
                 clearTimeout(timer);
+
+                // reset clicks counter
                 clicks = 0;
+
+                // mark shot as successful
                 shotSuccess = true;
                 
-                //console.log('shot');
+
                 console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+
 
                 // place successful marker over inital missed marker
                 $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
@@ -505,7 +514,7 @@ $(document).ready(function(e) {
     });
 
 
-    // save shot, then update score widget
+    // save shot, then update score widget if it was successful
     $("#basketball_court").on("saveShot", function(e, shotSuccess, team, number, shotX, shotY) {
 
         e.preventDefault();
@@ -529,6 +538,7 @@ $(document).ready(function(e) {
             'points': shotPoints(shotDistancePixels)
         } );
 
+
         // if shot was successful
         if (shotSuccess) {
             // update score widget
@@ -536,8 +546,7 @@ $(document).ready(function(e) {
         }
 
 
-        //console.log('called saveShot');
-        //console.log(shots);
+        console.log(shots);
 
     });
 
