@@ -127,6 +127,15 @@ div#game_input_buttons button {
     margin: 0 0.2em 0 0.2em;
 }
 
+.hidden {
+    opacity: 0.3;
+}
+
+.partially_hidden {
+    opacity: 0.55;
+}
+
+
 
 
 

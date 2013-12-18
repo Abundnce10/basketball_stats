@@ -98,6 +98,9 @@ $(document).ready(function(e) {
         homeHoopX = 1086,
         homeHoopY = 302;
 
+    // secondary stat active
+    var secondaryStat = '';
+
 
 
     // Store Team to localStorage
@@ -351,25 +354,51 @@ $(document).ready(function(e) {
     // Click on Player, add selected class
     $(".players_wrapper").on("click", ".player_border_container", function(e) {
 
-        // Remove hidden & selected class (click 2 diff players consec)
-        $(".player_border_container").each(function() {
-            $(this).removeClass("hidden").removeClass("selected");
-        });
+        // intended shot
+        if (secondaryStat.length === 0) {
 
-        // Blur other players
-        $(".player_border_container").each(function() {
-            $(this).addClass("hidden");
-        });
+            // Remove hidden & selected class (click 2 diff players consec)
+            $(".player_border_container").each(function() {
+                $(this).removeClass("hidden").removeClass("selected");
+            });
 
-        // Only show player that was selected
-        $(this).removeClass("hidden").addClass("selected");
+            // Blur other players
+            $(".player_border_container").each(function() {
+                $(this).addClass("hidden");
+            });
+
+            // Only show player that was selected
+            $(this).removeClass("hidden").addClass("selected");
 
 
-        // Update selectedPlayer obj
-        selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
-        selectedPlayer.number = $(this).children().last().html().substring(1);
+            // Update selectedPlayer obj
+            selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
+            selectedPlayer.number = $(this).children().last().html().substring(1);
 
-        //console.log(selectedPlayer);
+            //console.log(selectedPlayer);
+
+
+        // intended secondary stat
+        } else if ( secondaryStat.length > 0 ) {
+
+            // unfade all button in game_input_buttons container
+            $("#game_input_buttons").children().each(function() {
+                $(this).removeClass('hidden');
+            });
+
+            // Grab player team and name
+            var team = $(this).parent().parent().attr('id').split('_')[0];
+            var number = $(this).children().last().html().substring(1);
+            
+            console.log(secondaryStat + ': ' + team + ' - ' + number)
+
+
+            // reset secondaryStat global var back to empty string
+            secondaryStat = '';
+
+        }
+
+
 
     });
 
@@ -379,10 +408,7 @@ $(document).ready(function(e) {
 
 
         // if user has selected a player, allow the input for shot
-        var intendedShot = selectedPlayer.team.length > 0 || selectedPlayer.number.length > 0
-
-
-        if (intendedShot) {
+        if ( selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0 ) {
 
             clicks++;
 
@@ -404,7 +430,10 @@ $(document).ready(function(e) {
             // If 1 click => Miss
             if (clicks === 1) {
                 timer = setTimeout(function() {
+                    
                     clicks = 0;
+
+                    console.log('shot');
                     //console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
                     // send shot details to placeMarker handler
@@ -414,10 +443,13 @@ $(document).ready(function(e) {
                     selectedPlayer.number = ''; selectedPlayer.team = '';
                 }, DELAY);
             } else {
+
                 clearTimeout(timer);
                 clicks = 0;
                 shotSuccess = true;
+                
                 //console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+                console.log('shot');
 
                 // send shot details to placeMarker handler
                 $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
@@ -426,7 +458,9 @@ $(document).ready(function(e) {
                 selectedPlayer.number = ''; selectedPlayer.team = '';
             }
 
-        }
+        } 
+
+
 
     })
     .on("dblclick", function(e) {
@@ -479,6 +513,38 @@ $(document).ready(function(e) {
         //console.log(shots);
 
     });
+
+
+
+    //
+    $("#game_input_buttons").on("click", "button", function(e) {
+        //console.log('click secondary stats');
+
+        // Fade all secondary stat buttons
+        $("#game_input_buttons").children().each(function() {
+            $(this).addClass('hidden');
+        });
+
+        // Highlight chosen stat
+        $(this).removeClass('hidden');
+
+        // Fade basketball court, encourage click on player
+        $("#basketball_court").parent().addClass('partially_hidden');
+
+
+        // Highlight player wrappers with border
+        
+
+
+        // Enable court click listener; global var
+        secondaryStat = $(this).text();
+
+        //console.log(secondaryStat);
+
+
+    });
+
+
 
 
 
