@@ -386,6 +386,17 @@ $(document).ready(function(e) {
                 $(this).removeClass('hidden');
             });
 
+            // unfade the #basketball_court parent
+            $("#basketball_court").parent().removeClass('partially_hidden');
+
+            // unfade player_border_container's
+            $('.player_border_container').each(function() { 
+                $(this).removeClass('selected'); 
+            })
+
+            // revert Foul drop-down to default value
+            $('select').val('');
+
             // Grab player team and name
             var team = $(this).parent().parent().attr('id').split('_')[0];
             var number = $(this).children().last().html().substring(1);
@@ -397,8 +408,6 @@ $(document).ready(function(e) {
             secondaryStat = '';
 
         }
-
-
 
     });
 
@@ -458,8 +467,7 @@ $(document).ready(function(e) {
                 selectedPlayer.number = ''; selectedPlayer.team = '';
             }
 
-        } 
-
+        }
 
 
     })
@@ -533,11 +541,11 @@ $(document).ready(function(e) {
 
 
         // Highlight player wrappers with border
-        
+        $('.player_border_container').each(function() { $(this).addClass('selected'); })
 
 
         // Enable court click listener; global var
-        secondaryStat = $(this).text();
+        secondaryStat = $(this).attr('id');
 
         //console.log(secondaryStat);
 
@@ -545,6 +553,28 @@ $(document).ready(function(e) {
     });
 
 
+
+    // Clicking on Foul drop-down menu
+    $("#foul").on("click", function(e) {
+        
+        // Fade all secondary stat buttons
+        $("#game_input_buttons").children().each(function() {
+            $(this).addClass('hidden');
+        });
+        
+        // Highlight chosen stat
+        $(this).removeClass('hidden');
+
+        // Add foul to secondaryStat var
+        secondaryStat = $('select').val();
+
+        // Highlight players
+        $(".player_border_container").each(function() {
+            $(this).addClass('selected');
+        });        
+
+
+    });
 
 
 
