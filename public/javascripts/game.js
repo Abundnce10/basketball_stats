@@ -409,12 +409,12 @@ $(document).ready(function(e) {
 
         }
 
+
     });
 
 
-    // Click on SVG to input shot
+    // Click on SVG to input shot location
     $('#basketball_court').on('click', function(e) {
-
 
         // if user has selected a player, allow the input for shot
         if ( selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0 ) {
@@ -436,32 +436,40 @@ $(document).ready(function(e) {
             var shotX = e.pageX - posX;
             var shotY = e.pageY - posY;
 
+            // send shot details to placeMarker handler
+            $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+
             // If 1 click => Miss
             if (clicks === 1) {
                 timer = setTimeout(function() {
                     
                     clicks = 0;
 
-                    console.log('shot');
-                    //console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
+                    //console.log('shot');
+                    console.log("Miss: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
-                    // send shot details to placeMarker handler
-                    $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+                    // save missed shot
+                    $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
 
                     // reset selectedPlayer
                     selectedPlayer.number = ''; selectedPlayer.team = '';
                 }, DELAY);
+
+            // else 2 clicks => Make
             } else {
 
                 clearTimeout(timer);
                 clicks = 0;
                 shotSuccess = true;
                 
-                //console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
-                console.log('shot');
+                //console.log('shot');
+                console.log("Make: " + selectedPlayer.team + ' #' + selectedPlayer.number);
 
-                // send shot details to placeMarker handler
+                // place successful marker over inital missed marker
                 $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+
+                // save made shot, then update widget
+                $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
 
                 // reset selectedPlayer
                 selectedPlayer.number = ''; selectedPlayer.team = '';
@@ -478,8 +486,28 @@ $(document).ready(function(e) {
 
 
 
-    // place shot marker and save shot details
+    // place shot marker, shot already saved
     $("#basketball_court").on('placeMarker', function(e, shotSuccess, team, number, shotX, shotY) {
+        e.preventDefault();
+
+        // if the shot was successful
+        if (shotSuccess) {
+
+            // place successful shot marker
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
+
+        } else {
+
+            // place missed shot marker
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
+        }
+
+    });
+
+
+    // save shot, then update score widget
+    $("#basketball_court").on("saveShot", function(e, shotSuccess, team, number, shotX, shotY) {
+
         e.preventDefault();
 
         // determine shot distance
@@ -493,22 +521,6 @@ $(document).ready(function(e) {
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
         }
 
-
-        // if the shot was successful
-        if (shotSuccess) {
-            // place successful shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
-
-            // update score widget
-            var previousScore = parseInt( $('#'+team+'_team_score').text() );
-            $("#"+team+"_team_score").html( previousScore + shotPoints(shotDistancePixels) );
-
-        } else {
-            // place missed shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
-        }
-
-
         // save shot to shots object
         shots[team].push( { 
             'playerNumber': parseInt(number),
@@ -517,8 +529,27 @@ $(document).ready(function(e) {
             'points': shotPoints(shotDistancePixels)
         } );
 
+        // if shot was successful
+        if (shotSuccess) {
+            // update score widget
+            $('#basketball_court').trigger('updateScore', [team, shotPoints(shotDistancePixels)])
+        }
 
+
+        //console.log('called saveShot');
         //console.log(shots);
+
+    });
+
+    
+    // update score
+    $("#basketball_court").on("updateScore", function(e, team, points) {
+
+        e.preventDefault();
+
+        // update score widget
+        var previousScore = parseInt( $('#'+team+'_team_score').text() );
+        $("#"+team+"_team_score").html( previousScore + points );
 
     });
 
