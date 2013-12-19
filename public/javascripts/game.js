@@ -106,7 +106,7 @@ $(document).ready(function(e) {
         };
 
     // Active secondary stat 
-    var secondaryStat = '';
+    //var secondaryStat = '';
 
     // Submitted Rosters
     var rostersSubmitted = 0;
@@ -380,29 +380,29 @@ $(document).ready(function(e) {
     // Click on Player, add selected class
     $(".players_wrapper").on("click", ".player_border_container", function(e) {
 
-        // intended shot
-        if (secondaryStat.length === 0) {
+        // Remove hidden & selected class (i.e. click 2 diff players consec)
+        $(".player_border_container").each(function() {
+            $(this).removeClass("hidden").removeClass("selected");
+        });
 
-            // Remove hidden & selected class (click 2 diff players consec)
-            $(".player_border_container").each(function() {
-                $(this).removeClass("hidden").removeClass("selected");
-            });
+        // Blur other players
+        $(".player_border_container").each(function() {
+            $(this).addClass("hidden");
+        });
 
-            // Blur other players
-            $(".player_border_container").each(function() {
-                $(this).addClass("hidden");
-            });
-
-            // Only show player that was selected
-            $(this).removeClass("hidden").addClass("selected");
+        // Only show player that was selected
+        $(this).removeClass("hidden").addClass("selected");
 
 
-            // Update selectedPlayer obj
-            selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
-            selectedPlayer.number = $(this).children().last().html().substring(1);
+        // Update selectedPlayer obj
+        selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
+        selectedPlayer.number = $(this).children().last().html().substring(1);
 
-            //console.log(selectedPlayer);
+        //console.log(selectedPlayer);
 
+
+
+        /*
 
         // save secondary stat
         } else if ( secondaryStat.length > 0 ) {
@@ -439,6 +439,8 @@ $(document).ready(function(e) {
 
         }
 
+        */
+
 
     });
 
@@ -446,8 +448,8 @@ $(document).ready(function(e) {
     // Click on SVG to input shot location
     $('#basketball_court').on('click', function(e) {
 
-        // if user has selected a player, allow the input for shot
-        if ( selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0 ) {
+        // If a player is selected
+        if (selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0) {
 
             clicks++;
 
@@ -515,7 +517,6 @@ $(document).ready(function(e) {
             }
 
         }
-
 
     })
     .on("dblclick", function(e) {
@@ -601,26 +602,31 @@ $(document).ready(function(e) {
     $("#game_input_buttons").on("click", "button", function(e) {
         //console.log('click secondary stats');
 
-        // Fade all secondary stat buttons
-        $("#game_input_buttons").children().each(function() {
-            $(this).addClass('hidden');
-        });
 
-        // Highlight chosen stat
-        $(this).removeClass('hidden');
+        // If a player is selected
+        if (selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0) {
 
-        // Fade basketball court, encourage click on player
-        $("#basketball_court").parent().addClass('partially_hidden');
+            // unfade player_border_container's
+            $('.player_border_container').each(function() { 
+                $(this).removeClass('selected').removeClass('hidden');
+            })
 
+            // highlight button briefly to indicate successful save
+            $(this).effect("highlight", {color: "009933"}, 400);
 
-        // Highlight player wrappers with border
-        $('.player_border_container').each(function() { $(this).addClass('selected'); })
+            // Which stat did they select
+            var secondaryStat = $(this).attr('id');
 
+            // Save stat
+            secondaryStats[selectedPlayer.team][secondaryStat].push( { 'playerNumber': parseInt(selectedPlayer.number), 'time': '12:00 1st Quarter' } );
 
-        // Enable court click listener; global var
-        secondaryStat = $(this).attr('id');
+    
+            //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
+            //console.log(secondaryStats);
 
-        //console.log(secondaryStat);
+            console.log(secondaryStats);
+
+        }
 
 
     });
@@ -629,23 +635,35 @@ $(document).ready(function(e) {
 
     // Clicking on Foul drop-down menu
     $("#foul").on("click", function(e) {
-        
-        // Fade all secondary stat buttons
-        $("#game_input_buttons").children().each(function() {
-            $(this).addClass('hidden');
-        });
-        
-        // Highlight chosen stat
-        $(this).removeClass('hidden');
+    
+        // If a player is selected
+        if (selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0) {
 
-        // Add foul to secondaryStat var
-        secondaryStat = $('select').val();
+            // unfade player_border_container's
+            $('.player_border_container').each(function() { 
+                $(this).removeClass('selected').removeClass('hidden');
+            })
 
-        // Highlight players
-        $(".player_border_container").each(function() {
-            $(this).addClass('selected');
-        });        
+            // highlight button briefly to indicate successful save
+            $(this).effect("highlight", {color: "009933"}, 400);
 
+            // Which fould did they choose?
+            var secondaryStat = $('select').val();
+
+            // Save stat
+            secondaryStats[selectedPlayer.team][secondaryStat].push( { 'playerNumber': parseInt(selectedPlayer.number), 'time': '12:00 1st Quarter' } );
+
+
+            //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
+            //console.log(secondaryStats);
+
+            // revert Foul drop-down to default value
+            $('select').val('');
+                  
+
+            console.log(secondaryStats);
+
+        }
 
     });
 
