@@ -618,7 +618,13 @@ $(document).ready(function(e) {
             var secondaryStat = $(this).attr('id');
 
             // Save stat
-            secondaryStats[selectedPlayer.team][secondaryStat].push( { 'playerNumber': parseInt(selectedPlayer.number), 'time': '12:00 1st Quarter' } );
+            secondaryStats[selectedPlayer.team][secondaryStat].push( 
+                { 
+                    'playerNumber': parseInt(selectedPlayer.number), 
+                    'quarter': 1,
+                    'lastSubstitution': '12:00' 
+                }
+            );
 
     
             //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
@@ -651,8 +657,13 @@ $(document).ready(function(e) {
             var secondaryStat = $('select').val();
 
             // Save stat
-            secondaryStats[selectedPlayer.team][secondaryStat].push( { 'playerNumber': parseInt(selectedPlayer.number), 'time': '12:00 1st Quarter' } );
-
+            secondaryStats[selectedPlayer.team][secondaryStat].push( 
+                { 
+                    'playerNumber': parseInt(selectedPlayer.number), 
+                    'quarter': 1,
+                    'lastSubstitution': '12:00' 
+                }
+            );
 
             //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
             //console.log(secondaryStats);
