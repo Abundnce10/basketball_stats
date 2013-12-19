@@ -73,11 +73,40 @@ $(document).ready(function(e) {
 
     */
 
-    // teams object, away/home
+    // Teams object, away/home
     var teams = {};
 
-    // shots object, away/home
+    // Shots object, away/home
     var shots = { away: [], home: [] };
+
+    // Secondary stats (rebounds, assists, etc.), away/home
+    var secondaryStats = { 
+            away: {
+                rebound: [],
+                steal: [],
+                assist: [],
+                block: [],
+                turnover: [],
+                shooting_foul: [],
+                non_shooting_foul: [],
+                technical: [],
+                flagrant: []
+            }, 
+            home: {
+                rebound: [],
+                steal: [],
+                assist: [],
+                block: [],
+                turnover: [],
+                shooting_foul: [],
+                non_shooting_foul: [],
+                technical: [],
+                flagrant: []
+            } 
+        };
+
+    // Active secondary stat 
+    var secondaryStat = '';
 
     // Submitted Rosters
     var rostersSubmitted = 0;
@@ -97,9 +126,6 @@ $(document).ready(function(e) {
         awayHoopY = 302,
         homeHoopX = 1086,
         homeHoopY = 302;
-
-    // secondary stat active
-    var secondaryStat = '';
 
 
 
@@ -378,10 +404,10 @@ $(document).ready(function(e) {
             //console.log(selectedPlayer);
 
 
-        // intended secondary stat
+        // save secondary stat
         } else if ( secondaryStat.length > 0 ) {
 
-            // unfade all button in game_input_buttons container
+            // unfade all buttons in game_input_buttons container
             $("#game_input_buttons").children().each(function() {
                 $(this).removeClass('hidden');
             });
@@ -394,15 +420,19 @@ $(document).ready(function(e) {
                 $(this).removeClass('selected'); 
             })
 
-            // revert Foul drop-down to default value
-            $('select').val('');
-
             // Grab player team and name
             var team = $(this).parent().parent().attr('id').split('_')[0];
             var number = $(this).children().last().html().substring(1);
-            
-            console.log(secondaryStat + ': ' + team + ' - ' + number)
 
+            // Save stat
+            secondaryStats[team][secondaryStat].push( { 'playerNumber': parseInt(number), 'time': '12:00 1st Quarter' } );
+
+            
+            //console.log(secondaryStat + ': ' + team + ' - ' + number)
+            console.log(secondaryStats);
+
+            // revert Foul drop-down to default value
+            $('select').val('');
 
             // reset secondaryStat global var back to empty string
             secondaryStat = '';
@@ -535,7 +565,10 @@ $(document).ready(function(e) {
             'playerNumber': parseInt(number),
             'shotSuccess': shotSuccess,
             'distanceFeet': shotDistanceFeet,
-            'points': shotPoints(shotDistancePixels)
+            'points': shotPoints(shotDistancePixels),
+            'direction': team,
+            'shotX': shotX,
+            'shotY': shotY
         } );
 
 
