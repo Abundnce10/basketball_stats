@@ -16,8 +16,10 @@ var shotPoints = function(shotDistance) {
     }
 }
 
+
 var createRosterHtml = function(teamName, playersArray, homeAway) {
     var htmlString = '';
+    var spacer = '&nbsp;-&nbsp;';
 
     // add team name
     htmlString += '<h2 class="team_roster_header">'+teamName+'</h2>';
@@ -28,12 +30,13 @@ var createRosterHtml = function(teamName, playersArray, homeAway) {
     // add all players
     htmlString += '<ul class="roster">';
     for (var i = 0; i < playersArray.length; i++) {
-        var spacer = '&nbsp;-&nbsp;';
+        
         if (playersArray[i].length == 1) {
             "&nbsp:".concat(spacer);
         }
-        htmlString += '<li id="' + homeAway + '_' + playersArray[i]['number'] + '">#';
-        htmlString += playersArray[i]['number'] + spacer + playersArray[i]['name'];
+        htmlString += '<li id="' + playersArray[i]['number'] + '">#';
+        htmlString += '<span class="player_number">' + playersArray[i]['number'] + '</span>' + spacer;
+        htmlString += '<span class="player_name">' + playersArray[i]['name'] + '</span>';
         htmlString += '</li>';
     }
 
