@@ -78,12 +78,12 @@ var populateInGamePlayers = function() {
 
     // populate away players in #game
     $("#away_players_wrapper .player_border_container").each(function() {
-        $(this).find('.player_number_wrapper').text(awayPlayers.shift().number)
+        $(this).find('.player_number_wrapper').text('#' + awayPlayers.shift().number)
     })
 
     // populate home players in #game
     $("#home_players_wrapper .player_border_container").each(function() {
-        $(this).find('.player_number_wrapper').text(homePlayers.shift().number)
+        $(this).find('.player_number_wrapper').text('#' + homePlayers.shift().number)
     })
 
 
