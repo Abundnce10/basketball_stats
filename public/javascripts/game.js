@@ -57,6 +57,39 @@ var localStorageTeamsToHtml = function(teamNames) {
 }
 
 
+var populateInGamePlayers = function() {
+    // grab players from away roster
+    var awayPlayers = [];
+    $("#away_roster ul li").slice(0, 5).each(function() {
+        var player = {};
+        player.name = $(this).find('.player_name').text();
+        player.number = $(this).attr('id');
+        awayPlayers.push(player);
+    });
+
+    // grab players from home roster
+    var homePlayers = [];
+    $("#home_roster ul li").slice(0, 5).each(function() {
+        var player = {};
+        player.name = $(this).find('.player_name').text();
+        player.number = $(this).attr('id');
+        homePlayers.push(player);
+    });
+
+    // populate away players in #game
+    $("#away_players_wrapper .player_border_container").each(function() {
+        $(this).find('.player_number_wrapper').text(awayPlayers.shift().number)
+    })
+
+    // populate home players in #game
+    $("#home_players_wrapper .player_border_container").each(function() {
+        $(this).find('.player_number_wrapper').text(homePlayers.shift().number)
+    })
+
+
+}
+
+
 
 $(document).ready(function(e) {
 
@@ -379,7 +412,7 @@ $(document).ready(function(e) {
         $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
 
         // populate in-game players from roster
-
+        populateInGamePlayers();
 
         // hide start game button
         $("#start_game").hide();
@@ -720,8 +753,10 @@ $(document).ready(function(e) {
         e.preventDefault();
 
         // update players in the game
+        populateInGamePlayers();
 
         // update time/quarter
+
 
         // hide roster
         $("#rosters_container").hide();
@@ -746,8 +781,10 @@ $(document).ready(function(e) {
         e.preventDefault();
 
         // update players in the game
+        populateInGamePlayers();
 
         // update time/quarter
+        
 
         // hide roster
         $("#rosters_container").hide();
