@@ -58,8 +58,9 @@ var localStorageTeamsToHtml = function(teamNames) {
 $(document).ready(function(e) {
 
 
-    $("#rosters_container").hide();
-    /*
+    //$("#rosters_container").hide();
+
+    
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -71,7 +72,7 @@ $(document).ready(function(e) {
     // Hide #game div
     $("#game").hide();
 
-    */
+    
 
     // Teams object, away/home
     var teams = {};
@@ -374,6 +375,15 @@ $(document).ready(function(e) {
         $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
         $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
 
+        // populate in-game players from roster
+
+
+        // hide start game button
+        $("#start_game").hide();
+
+        // show resume game button
+        $("#resume_game").show();
+
     });
 
 
@@ -675,6 +685,80 @@ $(document).ready(function(e) {
             console.log(secondaryStats);
 
         }
+
+    });
+
+
+    // Sub in new players
+    $('header').on("click", "#substitute", function(e) {
+
+        // show roster
+        $("#rosters_container").show();
+
+        // hide game
+        $("#game").hide();
+
+        // remove button_class from all header buttons
+        $("header button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // highlight this button
+        $(this).addClass('button_selected');
+
+
+
+    });
+
+
+    // Return to game input view
+    $("header").on("click", "#game_input", function(e) {
+
+        e.preventDefault();
+
+        // update players in the game
+
+        // update time/quarter
+
+        // hide roster
+        $("#rosters_container").hide();
+
+        // show game input view
+        $("#game").show();
+
+        // remove button_class from all header buttons
+        $("header button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // highlight input button
+        $("#game_input").addClass('button_selected');
+
+    });
+
+
+    // Return to game input view
+    $("#rosters_container").on("click", "#resume_game", function(e) {
+
+        e.preventDefault();
+
+        // update players in the game
+
+        // update time/quarter
+
+        // hide roster
+        $("#rosters_container").hide();
+
+        // show game input view
+        $("#game").show();
+
+        // remove button_class from all header buttons
+        $("header button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // highlight input button
+        $("#game_input").addClass('button_selected');
 
     });
 
