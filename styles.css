@@ -109,12 +109,22 @@ div#game_input_buttons {
 
 #away_score_wrapper div {
     float: left;
-
 }
 
 #home_score_wrapper div {
     float: right;
+}
 
+.recent_score {
+    font-size: 1.0em;
+    font-weight: bold;
+
+    color: green;
+
+}
+
+.recent_score p {
+    margin: 0;
 }
 
 .reset div {

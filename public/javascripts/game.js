@@ -86,7 +86,11 @@ var populateInGamePlayers = function() {
         $(this).find('.player_number_wrapper').text('#' + homePlayers.shift().number)
     })
 
+}
 
+
+var highlightShotPoints = function(team, points) {
+    $("#" + team + "_score_wrapper .recent_score").find('p').fadeIn(50).text('+' + points).fadeOut(2000);
 }
 
 
@@ -594,6 +598,10 @@ $(document).ready(function(e) {
         if (shotSuccess) {
             // update score widget
             $('#basketball_court').trigger('updateScore', [team, shotPoints(shotDistancePixels)])
+
+            // highlight how many points the shot was worth
+            highlightShotPoints(team, shotPoints(shotDistancePixels));
+
         }
 
 
@@ -809,11 +817,11 @@ $(document).ready(function(e) {
             $("#seconds").val('00');
             
         }
-        
-
-
 
     });
+
+
+
 
 
 
