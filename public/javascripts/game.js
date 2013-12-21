@@ -96,7 +96,7 @@ $(document).ready(function(e) {
 
     //$("#rosters_container").hide();
 
-    
+
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -109,6 +109,9 @@ $(document).ready(function(e) {
     $("#game").hide();
 
     
+
+    // game reset
+    var gameReset = { quarter:'1', minutes:'8', seconds:'00' }
 
     // Teams object, away/home
     var teams = {};
@@ -396,6 +399,15 @@ $(document).ready(function(e) {
 
         e.preventDefault();
 
+        // instantiate gameReset object
+        var quarter = $("#quarter_buttons .button_selected").attr('id');
+        var minutes = $("#minutes").val();
+        var seconds = $("#seconds").val();
+        gameReset.quarter = quarter;
+        gameReset.minutes = minutes;
+        gameReset.seconds = seconds;
+        console.log(gameReset);
+
 
         // show court and hide roster view
         $("#rosters_container").hide();
@@ -445,47 +457,6 @@ $(document).ready(function(e) {
         selectedPlayer.number = $(this).children().last().html().substring(1);
 
         //console.log(selectedPlayer);
-
-
-
-        /*
-
-        // save secondary stat
-        } else if ( secondaryStat.length > 0 ) {
-
-            // unfade all buttons in game_input_buttons container
-            $("#game_input_buttons").children().each(function() {
-                $(this).removeClass('hidden');
-            });
-
-            // unfade the #basketball_court parent
-            $("#basketball_court").parent().removeClass('partially_hidden');
-
-            // unfade player_border_container's
-            $('.player_border_container').each(function() { 
-                $(this).removeClass('selected'); 
-            })
-
-            // Grab player team and name
-            var team = $(this).parent().parent().attr('id').split('_')[0];
-            var number = $(this).children().last().html().substring(1);
-
-            // Save stat
-            secondaryStats[team][secondaryStat].push( { 'playerNumber': parseInt(number), 'time': '12:00 1st Quarter' } );
-
-            
-            //console.log(secondaryStat + ': ' + team + ' - ' + number)
-            console.log(secondaryStats);
-
-            // revert Foul drop-down to default value
-            $('select').val('');
-
-            // reset secondaryStat global var back to empty string
-            secondaryStat = '';
-
-        }
-
-        */
 
 
     });
@@ -699,8 +670,8 @@ $(document).ready(function(e) {
             // highlight button briefly to indicate successful save
             $(this).effect("highlight", {color: "009933"}, 400);
 
-            // Which fould did they choose?
-            var secondaryStat = $('select').val();
+            // Which foul did they choose?
+            var secondaryStat = $('#foul').val();
 
             // Save stat
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
@@ -715,7 +686,7 @@ $(document).ready(function(e) {
             //console.log(secondaryStats);
 
             // revert Foul drop-down to default value
-            $('select').val('');
+            $('#foul').val('');
                   
 
             console.log(secondaryStats);
@@ -756,6 +727,13 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
+        var quarter = $("#quarter_buttons .button_selected").attr('id');
+        var minutes = $("#minutes").val();
+        var seconds = $("#seconds").val();
+        gameReset.quarter = quarter;
+        gameReset.minutes = minutes;
+        gameReset.seconds = seconds;
+        console.log(gameReset);
 
 
         // hide roster
@@ -784,7 +762,13 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
-        
+        var quarter = $("#quarter_buttons .button_selected").attr('id');
+        var minutes = $("#minutes").val();
+        var seconds = $("#seconds").val();
+        gameReset.quarter = quarter;
+        gameReset.minutes = minutes;
+        gameReset.seconds = seconds;
+        console.log(gameReset);
 
         // hide roster
         $("#rosters_container").hide();
@@ -799,6 +783,35 @@ $(document).ready(function(e) {
 
         // highlight input button
         $("#game_input").addClass('button_selected');
+
+    });
+
+
+    $("#quarter_minutes").on("click", "button", function(e) {
+
+        // remove button_selected class
+        $("#quarter_minutes button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // add button_selected class
+        $(this).addClass('button_selected');
+
+
+        // click next quarter, reset time to 8:00
+        var newQuarter = $("#quarter_buttons .button_selected").attr('id');
+        if ( parseInt(newQuarter) === parseInt(gameReset.quarter) + 1 ) {
+            
+            // reset minutes
+            $("#minutes").val('8');
+            
+            // reset seconds
+            $("#seconds").val('00');
+            
+        }
+        
+
+
 
     });
 

@@ -298,6 +298,33 @@ svg .white_line {
     margin: 0 auto 0 auto;
 }
 
+#quarter_minutes {
+    text-align: center;
+    margin-top: 1em;
+}
+
+#quarter_minutes div {
+    display: inline-block;
+}
+
+#quarter_minutes span {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+#quarter_minutes #spacer {
+    padding: 0 10px 0 10px;
+}
+
+#quarter_minutes button {
+    margin: 0;
+}
+
+#quarter_minutes button:hover {
+    cursor: pointer;
+}
+
 .team_roster {
     display:inline-block;
     width: 390px;
@@ -329,13 +356,13 @@ svg .white_line {
 
 .player_number {
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.1em;
     margin: 0;
 }
 
 .player_name {
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.1em;
     margin: 0;
 }
 
