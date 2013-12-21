@@ -123,6 +123,9 @@ $(document).ready(function(e) {
     // Shots object, away/home
     var shots = { away: [], home: [] };
 
+    // Free Throws object, away/home
+    var freeThrows = { away: [], home: [] };
+
     // Secondary stats (rebounds, assists, etc.), away/home
     var secondaryStats = { 
             away: {
@@ -588,7 +591,7 @@ $(document).ready(function(e) {
             'shotSuccess': shotSuccess,
             'distanceFeet': shotDistanceFeet,
             'points': shotPoints(shotDistancePixels),
-            'direction': team,
+            'direction': '',
             'shotX': shotX,
             'shotY': shotY
         } );
@@ -598,10 +601,6 @@ $(document).ready(function(e) {
         if (shotSuccess) {
             // update score widget
             $('#basketball_court').trigger('updateScore', [team, shotPoints(shotDistancePixels)])
-
-            // highlight how many points the shot was worth
-            highlightShotPoints(team, shotPoints(shotDistancePixels));
-
         }
 
 
@@ -619,14 +618,16 @@ $(document).ready(function(e) {
         var previousScore = parseInt( $('#'+team+'_team_score').text() );
         $("#"+team+"_team_score").html( previousScore + points );
 
+        // highlight how many points the shot was worth
+        highlightShotPoints(team, points);
+
+
     });
 
 
 
     //
     $("#game_input_buttons").on("click", "button", function(e) {
-        //console.log('click secondary stats');
-
 
         // If a player is selected
         if (selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0) {
@@ -651,12 +652,19 @@ $(document).ready(function(e) {
                 }
             );
 
-    
-            //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
-            //console.log(secondaryStats);
+            // reset selectedPlayer
+            selectedPlayer.number = ''; selectedPlayer.team = '';
+
 
             console.log(secondaryStats);
 
+
+        // no player is selected
+        } else {
+
+            // highlight button briefly to indicate UNsuccessful save
+            $(this).effect("highlight", {color: "FF0000"}, 400);
+            
         }
 
 
@@ -690,15 +698,88 @@ $(document).ready(function(e) {
                 }
             );
 
-            //console.log(secondaryStat + ': ' + selectedPlayer.team + ' - ' + selectedPlayer.number);
-            //console.log(secondaryStats);
-
             // revert Foul drop-down to default value
             $('#foul').val('');
+
+            // reset selectedPlayer
+            selectedPlayer.number = ''; selectedPlayer.team = '';
                   
 
             console.log(secondaryStats);
 
+
+        // no player is selected
+        } else {
+
+            // revert Foul drop-down to default value
+            $('#foul').val('');
+
+            // highlight button briefly to indicate UNsuccessful save
+            $(this).effect("highlight", {color: "FF0000"}, 400);
+        }
+
+    });
+
+
+    // Clicking on the Free Throw drop-down menu
+    $("#free_throw").on("click", function(e) {
+
+        // If a player is selected
+        if (selectedPlayer.team.length > 0 && selectedPlayer.number.length > 0) {
+
+            // unfade player_border_container's
+            $('.player_border_container').each(function() { 
+                $(this).removeClass('selected').removeClass('hidden');
+            })
+
+            // highlight button briefly to indicate successful save
+            $(this).effect("highlight", {color: "009933"}, 400);
+
+            // Which foul did they choose?
+            var points = $('#free_throw').val();
+
+            // Determine if shot was success
+            var shotSuccess;
+            if (points === '1') {
+
+                shotSuccess = true;
+
+                // update score widget
+                $('#basketball_court').trigger('updateScore', [selectedPlayer.team, 1])
+
+            } else {
+                shotSuccess = false;
+            }
+
+
+            // save free throw
+            freeThrows[selectedPlayer.team].push(
+                {   
+                    'playerNumber': parseInt(selectedPlayer.number),
+                    'shotSuccess': shotSuccess,
+                    'points': parseInt(points),
+                    'direction': ''
+                }
+            );
+
+            // revert Free Throw drop-down to default value
+            $('#free_throw').val('');
+
+            // reset selectedPlayer
+            selectedPlayer.number = ''; selectedPlayer.team = '';
+                  
+
+            console.log(freeThrows);
+
+
+        // no player is selected
+        } else {
+
+            // revert Free Throw drop-down to default value
+            $('#free_throw').val('');
+
+            // highlight button briefly to indicate UNsuccessful save
+            $(this).effect("highlight", {color: "FF0000"}, 400);
         }
 
     });

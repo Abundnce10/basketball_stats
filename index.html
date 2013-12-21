@@ -292,17 +292,25 @@
                 </div>
 
                 <div id="away_reset" class="reset">
+                    <!--
                     <div class="timeouts">
                         <span>Timeouts</span>
                         <span>3</span>
                     </div>
+                    -->
                     <div class="fouls">
                         <span>Fouls</span>
                         <span>8</span>
                     </div>
+                    
                 </div>
 
                 <div id="game_input_buttons">
+                    <select id="free_throw">
+                        <option value="" style="display:none" selected="selected">FreeThrow</option>
+                        <option value="1">Make</option>
+                        <option value="0">Miss</option>
+                    </select>
                     <button id="turnover">Turnover</button>
                     <button id="steal">Steal</button>
                     <button id="rebound">Rebound</button>
@@ -322,10 +330,12 @@
                         <span>Fouls</span>
                         <span>7</span>
                     </div>
+                    <!-- 
                     <div class="timeouts">
                         <span>Timeouts</span>
                         <span>1</span>
                     </div>
+                    -->
                 </div>
 
                 <div id="home_score_wrapper" class="score_wrapper">

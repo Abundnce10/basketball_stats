@@ -71,6 +71,14 @@ header button:hover {
     font-weight: 600;
 }
 
+#free_throw {
+    width: 106px;
+    height: 28px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+
 
 
 
@@ -91,12 +99,12 @@ div.score_wrapper {
     padding: 0 0.2em 0 0.2em;
 }
 
-div.reset {
-    width: 13%;
+.reset {
+    width: 7%;
 }
 
-div#game_input_buttons {
-    width: 46%;
+#game_input_buttons {
+    width: 58%;
     text-align: center;
 
 }
@@ -118,9 +126,7 @@ div#game_input_buttons {
 .recent_score {
     font-size: 1.0em;
     font-weight: bold;
-
     color: green;
-
 }
 
 .recent_score p {
@@ -132,7 +138,7 @@ div#game_input_buttons {
     margin: 0 0.2em 0 0.2em;
 }
 
-div#game_input_buttons button {
+#game_input_buttons button {
     font-size: 1.2em;
     margin: 0 0.2em 0 0.2em;
 }
