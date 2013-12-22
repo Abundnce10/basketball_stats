@@ -980,13 +980,18 @@ $(document).ready(function(e) {
         // Or switch to other side of the court
 
 
-
-
     });
 
 
 
 
+/*
+    // Alert user before reloading/leaving page
+    $(window).bind('beforeunload', function(){
 
+        return 'Are you sure you want to leave?';
+
+    });
+*/
 
 });
