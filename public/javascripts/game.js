@@ -434,19 +434,12 @@ $(document).ready(function(e) {
         $("#substitute").show();
         $("#timeout").show();
 
-/*
-        // populate team name abbreviations
-        $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
-        $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
-*/
-
         // populate team name abbreviations
         $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
         $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
 
         // populate in-game players from roster
         populateInGamePlayers();
-
 
         // hide start game button
         $("#start_game").hide();
@@ -836,6 +829,10 @@ $(document).ready(function(e) {
 
         e.preventDefault();
 
+        // update team abbreviations
+        $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
+        $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
+
         // update players in the game
         populateInGamePlayers();
 
@@ -870,6 +867,10 @@ $(document).ready(function(e) {
     $("#rosters_container").on("click", "#resume_game", function(e) {
 
         e.preventDefault();
+
+        // update team abbreviations
+        $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
+        $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
 
         // update players in the game
         populateInGamePlayers();
@@ -951,7 +952,7 @@ $(document).ready(function(e) {
             currentDirection.left = 'away';
 
             // float the away roster to the left
-            $("#away_roster").removeClass('float_right');
+            $("#away_roster").removeClass('float_away_roster_right');
 
         } else {
 
@@ -962,8 +963,14 @@ $(document).ready(function(e) {
             currentDirection.left = 'home';
 
             // float the away roster to the right
-            $("#away_roster").addClass('float_right');
+            $("#away_roster").addClass('float_away_roster_right');
         }
+
+
+        // Remove previous shots from SVG
+        // Or switch to other side of the court
+
+
 
 
     });
