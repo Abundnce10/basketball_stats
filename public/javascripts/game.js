@@ -77,20 +77,20 @@ var populateInGamePlayers = function() {
     });
 
     // populate away players in #game
-    $("#away_players_wrapper .player_border_container").each(function() {
+    $("#"+ currentDirection.away +"_players_wrapper .player_border_container").each(function() {
         $(this).find('.player_number_wrapper').text('#' + awayPlayers.shift().number)
     })
 
     // populate home players in #game
-    $("#home_players_wrapper .player_border_container").each(function() {
+    $("#"+ currentDirection.home +"_players_wrapper .player_border_container").each(function() {
         $(this).find('.player_number_wrapper').text('#' + homePlayers.shift().number)
     })
 
 }
 
 
-var highlightShotPoints = function(team, points) {
-    $("#" + team + "_score_wrapper .recent_score").find('p').fadeIn(50).text('+' + points).fadeOut(2000);
+var highlightShotPoints = function(direction, points) {
+    $("#" + direction + "_score_wrapper .recent_score").find('p').fadeIn(50).text('+' + points).fadeOut(2000);
 }
 
 
@@ -126,6 +126,9 @@ $(document).ready(function(e) {
     // Free Throws object, away/home
     var freeThrows = { away: [], home: [] };
 
+    // Score
+    var score = { away: 0, home: 0 };
+
     // Secondary stats (rebounds, assists, etc.), away/home
     var secondaryStats = { 
             away: {
@@ -152,14 +155,19 @@ $(document).ready(function(e) {
             } 
         };
 
-    // Active secondary stat 
-    //var secondaryStat = '';
+    // Attacking which hoop?
+    currentDirection = {
+        home: 'right',
+        away: 'left',
+        right: 'home',
+        left: 'away'
+    }
 
     // Submitted Rosters
     var rostersSubmitted = 0;
 
     // Selected Player
-    var selectedPlayer = { team: '', number: '' };
+    var selectedPlayer = { team: '', number: '', direction: '' };
 
     // Test for double click (Shot) variables
     var DELAY = 225,
@@ -169,10 +177,10 @@ $(document).ready(function(e) {
     // svg court dimensions
     var svgWidth = $('#basketball_court').attr('width'),
         svgHeight = $('#basketball_court').attr('height'),
-        awayHoopX = 49,
-        awayHoopY = 302,
-        homeHoopX = 1086,
-        homeHoopY = 302;
+        leftHoopX = 49,
+        leftHoopY = 302,
+        rightHoopX = 1086,
+        rightHoopY = 302;
 
 
 
@@ -312,7 +320,7 @@ $(document).ready(function(e) {
             }
         }
 
-        // store teamObj into global team
+        // store teamObj into global teams
         teams[homeAway] = teamObj;
 
         // Remove Form and display team roster
@@ -426,12 +434,19 @@ $(document).ready(function(e) {
         $("#substitute").show();
         $("#timeout").show();
 
+/*
         // populate team name abbreviations
         $("#away_score_wrapper .team_name_abbrev").children().text(teams.away.teamAbbreviation);
         $("#home_score_wrapper .team_name_abbrev").children().text(teams.home.teamAbbreviation);
+*/
+
+        // populate team name abbreviations
+        $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
+        $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
 
         // populate in-game players from roster
         populateInGamePlayers();
+
 
         // hide start game button
         $("#start_game").hide();
@@ -460,7 +475,8 @@ $(document).ready(function(e) {
 
 
         // Update selectedPlayer obj
-        selectedPlayer.team = $(this).parent().parent().attr('id').split('_')[0];
+        selectedPlayer.direction = $(this).parent().parent().attr('id').split('_')[0];
+        selectedPlayer.team = currentDirection[selectedPlayer.direction];
         selectedPlayer.number = $(this).children().last().html().substring(1);
 
         //console.log(selectedPlayer);
@@ -508,10 +524,10 @@ $(document).ready(function(e) {
 
 
                     // save missed shot
-                    $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+                    $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, selectedPlayer.direction, shotX, shotY]);
 
                     // reset selectedPlayer
-                    selectedPlayer.number = ''; selectedPlayer.team = '';
+                    selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
                 }, DELAY);
 
             // else 2 clicks => Make
@@ -534,10 +550,10 @@ $(document).ready(function(e) {
                 $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
 
                 // save made shot, then update widget
-                $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+                $('#basketball_court').trigger("saveShot", [shotSuccess, selectedPlayer.team, selectedPlayer.number, selectedPlayer.direction, shotX, shotY]);
 
                 // reset selectedPlayer
-                selectedPlayer.number = ''; selectedPlayer.team = '';
+                selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
             }
 
         }
@@ -570,18 +586,19 @@ $(document).ready(function(e) {
 
 
     // save shot, then update score widget if it was successful
-    $("#basketball_court").on("saveShot", function(e, shotSuccess, team, number, shotX, shotY) {
+    $("#basketball_court").on("saveShot", function(e, shotSuccess, team, number, direction, shotX, shotY) {
 
         e.preventDefault();
 
+
         // determine shot distance
-        if (team == 'home') {
+        if (direction == 'right') {
             // Determine length of shot
-            var shotDistancePixels = shotDistanceInPixels(homeHoopX, homeHoopY, shotX, shotY);
+            var shotDistancePixels = shotDistanceInPixels(rightHoopX, rightHoopY, shotX, shotY);
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
         } else {
             // Determine length of shot
-            var shotDistancePixels = shotDistanceInPixels(awayHoopX, awayHoopY, shotX, shotY);
+            var shotDistancePixels = shotDistanceInPixels(leftHoopX, leftHoopY, shotX, shotY);
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
         }
 
@@ -591,7 +608,7 @@ $(document).ready(function(e) {
             'shotSuccess': shotSuccess,
             'distanceFeet': shotDistanceFeet,
             'points': shotPoints(shotDistancePixels),
-            'direction': '',
+            'direction': direction,
             'shotX': shotX,
             'shotY': shotY
         } );
@@ -599,8 +616,10 @@ $(document).ready(function(e) {
 
         // if shot was successful
         if (shotSuccess) {
+
             // update score widget
-            $('#basketball_court').trigger('updateScore', [team, shotPoints(shotDistancePixels)])
+            $('#basketball_court').trigger('updateScore', [direction, shotPoints(shotDistancePixels)])
+
         }
 
 
@@ -610,17 +629,22 @@ $(document).ready(function(e) {
 
     
     // update score
-    $("#basketball_court").on("updateScore", function(e, team, points) {
+    $("#basketball_court").on("updateScore", function(e, direction, points) {
 
         e.preventDefault();
 
         // update score widget
-        var previousScore = parseInt( $('#'+team+'_team_score').text() );
-        $("#"+team+"_team_score").html( previousScore + points );
+        var previousScore = parseInt( $('#'+direction+'_team_score').text() );
+        $("#"+direction+"_team_score").html( previousScore + points );
 
         // highlight how many points the shot was worth
-        highlightShotPoints(team, points);
+        highlightShotPoints(direction, points);
 
+        // update global score var
+        score[currentDirection[direction]] += points;
+
+
+        //console.log(score);
 
     });
 
@@ -653,7 +677,7 @@ $(document).ready(function(e) {
             );
 
             // reset selectedPlayer
-            selectedPlayer.number = ''; selectedPlayer.team = '';
+            selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
 
 
             console.log(secondaryStats);
@@ -702,7 +726,7 @@ $(document).ready(function(e) {
             $('#foul').val('');
 
             // reset selectedPlayer
-            selectedPlayer.number = ''; selectedPlayer.team = '';
+            selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
                   
 
             console.log(secondaryStats);
@@ -745,7 +769,7 @@ $(document).ready(function(e) {
                 shotSuccess = true;
 
                 // update score widget
-                $('#basketball_court').trigger('updateScore', [selectedPlayer.team, 1])
+                $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1])
 
             } else {
                 shotSuccess = false;
@@ -758,7 +782,7 @@ $(document).ready(function(e) {
                     'playerNumber': parseInt(selectedPlayer.number),
                     'shotSuccess': shotSuccess,
                     'points': parseInt(points),
-                    'direction': ''
+                    'direction': selectedPlayer.direction
                 }
             );
 
@@ -766,7 +790,7 @@ $(document).ready(function(e) {
             $('#free_throw').val('');
 
             // reset selectedPlayer
-            selectedPlayer.number = ''; selectedPlayer.team = '';
+            selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
                   
 
             console.log(freeThrows);

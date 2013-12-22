@@ -115,11 +115,11 @@ div.score_wrapper {
     margin-left: 0.4em;
 }
 
-#away_score_wrapper div {
+#left_score_wrapper div {
     float: left;
 }
 
-#home_score_wrapper div {
+#right_score_wrapper div {
     float: right;
 }
 
