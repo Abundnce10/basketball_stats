@@ -832,6 +832,10 @@ $(document).ready(function(e) {
         // update team abbreviations
         $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
         $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
+        
+        // update team scores
+        $("#left_team_score").text(score[currentDirection.left]);
+        $("#right_team_score").text(score[currentDirection.right]);
 
         // update players in the game
         populateInGamePlayers();
@@ -871,6 +875,11 @@ $(document).ready(function(e) {
         // update team abbreviations
         $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
         $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
+
+        // update team scores
+        $("#left_team_score").text(score[currentDirection.left]);
+        $("#right_team_score").text(score[currentDirection.right]);
+
 
         // update players in the game
         populateInGamePlayers();
