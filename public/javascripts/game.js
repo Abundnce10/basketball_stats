@@ -268,6 +268,7 @@ $(document).ready(function(e) {
 
         // if browser supports localStorage
         if (typeof(Storage) !== "undefined") {
+
             localStorageTeams = JSON.parse(localStorage.getItem("teams"));
 
             // if teams exist
@@ -277,14 +278,30 @@ $(document).ready(function(e) {
                     teamNames.push(localStorageTeams[i]['teamName']);
                 }
 
+                // Create links with each team name
                 var html = localStorageTeamsToHtml(teamNames);
 
                 // insert into .saved_teams div
                 $('#'+ roster +' .local_storage_teams').append(html);
 
-            // if teams don't exist
+            // if teams don't exist (ile. first time visiting site)
             } else {
-                $('#'+ roster +' .local_storage_teams').append("<div>No Teams Available</div>");
+
+                // Seed with 1996 NBA Finals Teams
+                var defaultTeams = ["Chicago Bulls", "Seattle SuperSonics"];
+                var defaultLocalStorageTeams = [{'players':[{'number':'9','name':'Ron Harper'},{'number':'23','name':'Michael Jordan'},{'number':'33','name':'Scottie Pippen'},{'number':'7','name':'Toni Kukoc'},{'number':'91','name':'Dennis Rodman'},{'number':'0','name':'Randy Brown'},{'number':'30','name':'Jud Buechler'},{'number':'35','name':'Jason Caffey'},{'number':'53','name':'James Edwards'},{'number':'54','name':'Jack Haley'},{'number':'25','name':'Steve Kerr'},{'number':'13','name':'Luc Longley'},{'number':'22','name':'John Salley'},{'number':'8','name':'Dickey Simpkins'},{'number':'34','name':'BillWennington'}],'teamName':'Chicago Bulls','teamAbbreviation':'CHI'},{'players':[{'number':'20','name':'Gary Payton'},{'number':'33','name':'Hershey Hawkins'},{'number':'11','name':'Detlef Schrempf'},{'number':'40','name':'Shawn Kemp'},{'number':'50','name':'Ervin Johnson'},{'number':'2','name':'Vincent Askew'},{'number':'34','name':'Frank Brickowski'},{'number':'1','name':'Sherrell Ford'},{'number':'10','name':'Nate McMillan'},{'number':'14','name':'Sam Perkins'},{'number':'55','name':'Steve Scheffler'},{'number':'3','name':'Eric Snow'},{'number':'25','name':'David Wingate'}],'teamName':'Seattle SuperSonics','teamAbbreviation':'SEA'}];
+
+                // Save them to localStorage
+                localStorage.setItem('teams', JSON.stringify(defaultLocalStorageTeams));
+
+                // Create links with each team name
+                var html = localStorageTeamsToHtml(defaultTeams);
+
+                // insert into .saved_teams div
+                $('#'+ roster +' .local_storage_teams').append(html);
+
+
+                //$('#'+ roster +' .local_storage_teams').append("<div>No Teams Available</div>");
             }
 
         } else {
