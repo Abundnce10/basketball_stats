@@ -926,6 +926,49 @@ $(document).ready(function(e) {
     });
 
 
+    $("#home_direction").on("click", "button", function(e) {
+
+        e.preventDefault();
+
+        // remove button_selected class
+        $("#home_direction button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // add button_selected class
+        $(this).addClass('button_selected');
+
+        // update currentDirections object
+        var newDirection = $(this).attr('id');
+        
+        // if home team is going right
+        if (newDirection === 'right') {
+
+            // update the currentDirection object
+            currentDirection.home = 'right';
+            currentDirection.away = 'left';
+            currentDirection.right = 'home';
+            currentDirection.left = 'away';
+
+            // float the away roster to the left
+            $("#away_roster").removeClass('float_right');
+
+        } else {
+
+            // update the currentDirection object
+            currentDirection.home = 'left';
+            currentDirection.away = 'right';
+            currentDirection.right = 'away';
+            currentDirection.left = 'home';
+
+            // float the away roster to the right
+            $("#away_roster").addClass('float_right');
+        }
+
+
+    });
+
+
 
 
 

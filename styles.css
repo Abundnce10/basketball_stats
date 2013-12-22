@@ -306,14 +306,7 @@ svg .white_line {
 
 
 
-
-/* Roster Input Form */
-#rosters_container {
-    width: 800px;
-    padding: 0;
-    margin: 0 auto 0 auto;
-}
-
+/* Above Roster Form */
 #quarter_minutes {
     text-align: center;
     margin-top: 1em;
@@ -339,6 +332,41 @@ svg .white_line {
 
 #quarter_minutes button:hover {
     cursor: pointer;
+}
+
+#direction_container {
+    text-align: center;
+    margin-top: 0.4em;
+}
+
+#direction_container div {
+    display: inline-block;
+}
+
+#direction_container span {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+#direction_container button {
+    margin: 0;
+}
+
+#direction_container button:hover {
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+/* Roster Input Form */
+#rosters_container {
+    width: 800px;
+    padding: 0;
+    margin: 0 auto 0 auto;
 }
 
 .team_roster {
@@ -435,6 +463,12 @@ a.local_storage_delete {
 a.local_storage_delete:hover {
     font-weight: bold;
 }
+
+.float_right {
+    float: right;
+}
+
+
 
 
 
