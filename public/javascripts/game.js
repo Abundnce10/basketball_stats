@@ -687,8 +687,8 @@ $(document).ready(function(e) {
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
-                    'quarter': 1,
-                    'lastSubstitution': '12:00' 
+                    'quarter': parseInt(gameReset.quarter),
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
 
@@ -733,8 +733,8 @@ $(document).ready(function(e) {
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
-                    'quarter': 1,
-                    'lastSubstitution': '12:00' 
+                    'quarter': parseInt(gameReset.quarter),
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
 
@@ -798,7 +798,9 @@ $(document).ready(function(e) {
                     'playerNumber': parseInt(selectedPlayer.number),
                     'shotSuccess': shotSuccess,
                     'points': parseInt(points),
-                    'direction': selectedPlayer.direction
+                    'direction': selectedPlayer.direction,
+                    'quarter': parseInt(gameReset.quarter),
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
 
@@ -864,12 +866,9 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
-        var quarter = $("#quarter_buttons .button_selected").attr('id');
-        var minutes = $("#minutes").val();
-        var seconds = $("#seconds").val();
-        gameReset.quarter = quarter;
-        gameReset.minutes = minutes;
-        gameReset.seconds = seconds;
+        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.minutes = $("#minutes").val();
+        gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
 
 
@@ -908,12 +907,9 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
-        var quarter = $("#quarter_buttons .button_selected").attr('id');
-        var minutes = $("#minutes").val();
-        var seconds = $("#seconds").val();
-        gameReset.quarter = quarter;
-        gameReset.minutes = minutes;
-        gameReset.seconds = seconds;
+        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.minutes = $("#minutes").val();
+        gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
 
         // hide roster
