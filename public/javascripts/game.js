@@ -624,7 +624,9 @@ $(document).ready(function(e) {
             'points': shotPoints(shotDistancePixels),
             'direction': direction,
             'shotX': shotX,
-            'shotY': shotY
+            'shotY': shotY,
+            'quarter': parseInt(gameReset.quarter),
+            'time': ''.concat(gameReset.minutes, ':', gameReset.seconds)
         } );
 
 
