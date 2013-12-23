@@ -184,11 +184,12 @@ $(document).ready(function(e) {
 
 
 
-    // Store Team to localStorage
+    // User adds team/players to roster and clicks save
     $(".save_players_form").on("click", function(e) {
 
         e.preventDefault();
 
+        // if 2 teams are saved, show start game button
         rostersSubmitted += 1;
 
         // localStorage Object
@@ -197,62 +198,129 @@ $(document).ready(function(e) {
         // determine which team (home or away) was saved
         var team = ($(this).closest('form').attr('id')).split('_')[0];
 
-        // save team name
-        teamObj.teamName = $('#'+team+'_form .team_name input').val();
+        // capture team name and validate it's not blank
+        var teamName = $('#'+team+'_form .team_name input').val();
 
-        // save team abbreviation
-        teamObj.teamAbbreviation = $('#'+team+'_form .team_abbreviation input').val();
+        if (teamName == '' || teamName == null) {
+            alert('Please provide a name for the '+team+' team.');
+            return;
+        }
 
-        // save player objects into array
+
+        // capture team abbrev and validate it's less than 4 chars
+        var teamAbbreviation = $('#'+team+'_form .team_abbreviation input').val().toUpperCase();
+
+        if (teamAbbreviation == '') {
+            alert('Please provide an abbreviation for the '+team+' team.');
+            return false;
+        } else if (teamAbbreviation.length > 3) {
+            alert('Please provide an abbreviation of 3 or less characters for the '+team+' team.');
+            return false;
+        }
+
+
+        // valid player variables
+        var validPlayers = true;
+        var validPlayersCount = 0;
+        var players = [];
+        var numbers = [];
+
+        // capture player objects, validate number, push into players array
         $('#'+team+'_form .form_player_add').each(function(ix, elem) {
             var i = $(elem).find('input');
-            teamObj.players.push( { number: i[0].value, name: i[1].value } );
+
+            // if both number and name are blank, don't add ignore
+            if (i[0].value.length == 0 && i[1].value.length == 0) {
+                return;
+            }
+
+            // validate number is less than 100 and only 2 digits
+            if (isNaN(parseInt(i[0].value)) || i[0].value.length > 2) {
+                alert('Please provide a number for each '+team+' team player.');
+                validPlayers = false;
+                return false;
+            }
+
+            // push player object into players array
+            players.push( { number: i[0].value, name: i[1].value } );
+
+            // store number to validate each are unique
+            numbers.push(i[0].value);
+
+            validPlayersCount += 1;
         });
 
 
-        // Store team in global teams var
-        teams[team] = teamObj;
+        // Sort the numbers so you can validate uniqueness
+        var sortedNumbers = numbers.sort();
 
-        // Store in localStorage
-        if (typeof(Storage) !== "undefined") {
-            teamsLocalStorage = JSON.parse(localStorage.getItem("teams"));
-            // If doesn't exist
-            if (teamsLocalStorage == null) {
-                teamsLocalStorage = [];
-                teamsLocalStorage.push(teamObj);
-                localStorage.setItem('teams', JSON.stringify(teamsLocalStorage));
-            } else {
-                teamsLocalStorage.push(teamObj);
-                localStorage.setItem('teams', JSON.stringify(teamsLocalStorage));
+        // Validate each player's number is unique
+        for (var i = 0; i < sortedNumbers.length-1; i++) {
+            if (sortedNumbers[i + 1] == sortedNumbers[i]) {
+                validPlayers = false;
+                alert('Each '+team+' team player mush have a unique number');
+                return false;
             }
         }
-        
-
-        // Remove Form and display team
-        $('#'+team+'_roster').empty();
-        $('#'+team+'_roster').append(createRosterHtml(teams[team]['teamName'], teams[team]['players'], team));
 
 
-        // Sort Roster Event Handler
-        $(".roster").sortable({
-            start: function (event, ui) {
-                ui.item.css('border', '1px solid green').append('<span class="ui-icon ui-icon-check icons"></span>');
-            },
-            stop: function (event, ui) {
-                //reset to no border or whatever your desired default border is
-                ui.item.css('border', '');
-                ui.item.children('.icons').remove();
+        // Save roster only if all validations passed
+        if (validPlayers && validPlayersCount >= 5) {
+
+            // save team name into teamObj
+            teamObj.teamName = teamName;
+            // save team abbreviation
+            teamObj.teamAbbreviation = teamAbbreviation;
+            // save players
+            teamObj.players = players;
+            // Store team in global teams var
+            teams[team] = teamObj;
+
+            // Store in localStorage
+            if (typeof(Storage) !== "undefined") {
+                teamsLocalStorage = JSON.parse(localStorage.getItem("teams"));
+                // If doesn't exist
+                if (teamsLocalStorage == null) {
+                    teamsLocalStorage = [];
+                    teamsLocalStorage.push(teamObj);
+                    localStorage.setItem('teams', JSON.stringify(teamsLocalStorage));
+                } else {
+                    teamsLocalStorage.push(teamObj);
+                    localStorage.setItem('teams', JSON.stringify(teamsLocalStorage));
+                }
+            }
+            
+
+            // Remove Form and display team
+            $('#'+team+'_roster').empty();
+            $('#'+team+'_roster').append(createRosterHtml(teams[team]['teamName'], teams[team]['players'], team));
+
+
+            // Sort Roster Event Handler
+            $(".roster").sortable({
+                start: function (event, ui) {
+                    ui.item.css('border', '1px solid green').append('<span class="ui-icon ui-icon-check icons"></span>');
+                },
+                stop: function (event, ui) {
+                    //reset to no border or whatever your desired default border is
+                    ui.item.css('border', '');
+                    ui.item.children('.icons').remove();
+                }
+
+            });
+
+            // Disable Selection of Player Roster
+            $(".roster").disableSelection();
+
+            // show start_game button if both rosters are ready
+            if (rostersSubmitted === 2) {
+                $("#start_game").show();
             }
 
-        });
-
-        // Disable Selection of Player Roster
-        $(".roster").disableSelection();
-
-        // show start_game button if both rosters are ready
-        if (rostersSubmitted === 2) {
-            $("#start_game").show();
+        } else {
+            alert('Please provide at least 5 players.')
         }
+
 
     });
 
