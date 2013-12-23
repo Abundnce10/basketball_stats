@@ -520,6 +520,7 @@ $(document).ready(function(e) {
 
             // create initial missed shot marker
             $('#basketball_court').trigger("placeMarker", [shotSuccess, selectedPlayer.team, selectedPlayer.number, shotX, shotY]);
+            console.log('inital marker');
 
 
             // If 1 click => Miss
@@ -538,6 +539,7 @@ $(document).ready(function(e) {
 
                     // reset selectedPlayer
                     selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
+                
                 }, DELAY);
 
             // else 2 clicks => Make
@@ -584,13 +586,15 @@ $(document).ready(function(e) {
         if (shotSuccess) {
 
             // place successful shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1);
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1).attr('class', 'shot');
 
+        // missed shot
         } else {
 
             // place missed shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1);
+            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1).attr('class', 'shot');
         }
+
 
     });
 
@@ -994,7 +998,12 @@ $(document).ready(function(e) {
 
 
         // Remove previous shots from SVG
-        // Or switch to other side of the court
+        $("#basketball_court").find('circle').each(function() {
+            if ($(this).attr('class') === 'shot') {
+                $(this).remove();
+            }
+        });
+        
 
 
     });
