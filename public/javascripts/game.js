@@ -100,7 +100,7 @@ $(document).ready(function(e) {
 
     //$("#rosters_container").hide();
 
-
+/*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -111,7 +111,9 @@ $(document).ready(function(e) {
 
     // Hide #game div
     $("#game").hide();
-
+*/
+    $("#rosters_container").hide();
+    $("#game").hide();
     
 
     // game reset
@@ -1171,6 +1173,33 @@ $(document).ready(function(e) {
         }
 
         // Nothing to change for OT minutes
+
+    });
+
+
+
+    // Clicking "Review" button
+
+
+
+    // Clicking a review tab
+    $("#review_tabs").on("click", "div", function(e) {
+        e.preventDefault();
+
+        // Remove tab_selected class, add tab class
+        $("#review_tabs div").each(function() {
+            $(this).removeClass('tab_selected').addClass('tab');
+        });
+
+        // Add tab_selected class, remove tab class
+        $(this).addClass('tab_selected').removeClass('tab');
+
+
+
+        // Hide review divs
+
+
+        // Show this div
 
     });
 

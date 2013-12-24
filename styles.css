@@ -374,7 +374,7 @@ svg .white_line {
 #settings_container {
     border-style: solid;
     border-width: 1px;
-    border-color: grey;
+    border-color: #B2B2B2;
 }
 
 #periods_container button:hover {
@@ -518,7 +518,46 @@ a.local_storage_delete:hover {
 
 
 
+/* Review Tabs */
+#review {
+    margin-top: .5em;
+}
+
+#review_tabs div {
+    display: inline-block;
+    font-size: 1.4em;
+    padding: .2em;
 
 
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
 
+    -webkit-border-top-left-radius: .2em;
+    -webkit-border-top-right-radius: .2em;
+    -moz-border-radius-topleft: .2em;
+    -moz-border-radius-topright: .2em;
+    border-top-left-radius: .2em;
+    border-top-right-radius: .2em;
 
+    -webkit-border-bottom-left-radius: -.2em;
+    -webkit-border-bottom-right-radius: -.2em;
+    -moz-border-radius-bottomleft: -.2em;
+    -moz-border-radius-bottomright: -.2em;
+    border-bottom-left-radius: -.2em;
+    border-bottom-right-radius: -.2em;
+
+}
+
+#review_tabs div:hover {
+    cursor: pointer;
+}
+
+.tab_selected {
+    border-bottom-style: none !important;
+
+}
+
+.tab {
+    background-color: #D6E0F5;
+}
