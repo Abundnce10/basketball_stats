@@ -115,7 +115,9 @@ $(document).ready(function(e) {
     
 
     // game reset
-    var gameReset = { quarter:'1', minutes:'8', seconds:'00' }
+    var gameReset = { quarter:'1', minutes:'8', seconds:'00' };
+    var defaultSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' };
+    var gameSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' };
 
     // Teams object, away/home
     var teams = {};
@@ -1069,13 +1071,87 @@ $(document).ready(function(e) {
                 $(this).remove();
             }
         });
-        
+
+    });
+
+
+    // Settings accordian
+    $( "#settings" ).accordion({
+      collapsible: true,
+      active: false
+    });
+
+    // Add button_selected class to button user clicks
+    $("#periods_container").on("click", "button", function(e) {
+        e.preventDefault();
+
+        // remove button_selected class
+        $("#periods_container button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // add button_selected class
+        $(this).addClass('button_selected');
+
+
+    });
+
+    // Saving settings
+    $("#save_settings").on("click", "button", function(e) {
+        e.preventDefault();
+
+        var periods;
+
+        // capture periods
+        $("#periods_container button").each(function() {
+            if ( $(this).attr('class') == 'button_selected' ) {
+                periods = $(this).attr('id');
+            }
+        });
+
+        // capture minutes per period
+        var minutesPerPeriod = $("#settings_minutes").val();
+
+        // capture OT minutes
+        var overtimeMinutes = $("#settings_overtime").val();
+
+        // update gameSettings variable
+        gameSettings.periods = periods;
+        gameSettings.minutesPerPeriod = minutesPerPeriod;
+        gameSettings.overtimeMinutes = overtimeMinutes;
+
+        // update quarter_minutes UI
+        $("#quarter_minutes").trigger("updateSettings", [periods, minutesPerPeriod, overtimeMinutes]);
+
+        // collapse accordion
+        $("#settings").accordion('option', 'active', false);
+
+    });
+
+    $("#quarter_minutes").on("updateSettings", function(e, periods, minutesPerPeriod, overtimeMinutes) {
+        e.preventDefault();
+
+        // if they chose 2 periods, update
+        if (periods !== defaultSettings.periods) {
+            console.log('changed periods')
+        }
+
+        // if they changed the default minutes
+        if (minutesPerPeriod !== defaultSettings.minutesPerPeriod) {
+            console.log('changed minutes per period')
+        }
+
+        // if they changed the overtime setting
+        if (overtimeMinutes !== defaultSettings.minutesPerPeriod) {
+            console.log('changed OT minutes')
+        }
 
 
     });
 
 
 
+ 
 
 /*
     // Alert user before reloading/leaving page

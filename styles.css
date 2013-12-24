@@ -356,6 +356,30 @@ svg .white_line {
     cursor: pointer;
 }
 
+#settings {
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+}
+
+#settings_header {
+    margin-top: .3em;
+    margin-bottom: .3em;
+}
+
+#settings_header:hover {
+    cursor: pointer;
+}
+
+#settings_container {
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey;
+}
+
+#periods_container button:hover {
+    cursor: pointer;
+}
 
 
 
