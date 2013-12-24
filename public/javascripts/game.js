@@ -115,9 +115,9 @@ $(document).ready(function(e) {
     
 
     // game reset
-    var gameReset = { quarter:'1', minutes:'8', seconds:'00' };
-    var defaultSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' };
+    var defaultSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' }; // HS settings
     var gameSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' };
+    var gameReset = { quarter:'1', minutes:'8', seconds:'00' };
 
     // Teams object, away/home
     var teams = {};
@@ -502,12 +502,9 @@ $(document).ready(function(e) {
         e.preventDefault();
 
         // instantiate gameReset object
-        var quarter = $("#quarter_buttons .button_selected").attr('id');
-        var minutes = $("#minutes").val();
-        var seconds = $("#seconds").val();
-        gameReset.quarter = quarter;
-        gameReset.minutes = minutes;
-        gameReset.seconds = seconds;
+        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.minutes = $("#minutes").val();
+        gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
 
 
@@ -530,6 +527,9 @@ $(document).ready(function(e) {
 
         // hide start game button
         $("#start_game").hide();
+
+        // hide settings button
+        $("#settings").hide();
 
         // show resume game button
         $("#resume_game").show();
@@ -1015,7 +1015,7 @@ $(document).ready(function(e) {
         if ( parseInt(newQuarter) === parseInt(gameReset.quarter) + 1 ) {
             
             // reset minutes
-            $("#minutes").val('8');
+            $("#minutes").val(gameSettings.minutesPerPeriod);
             
             // reset seconds
             $("#seconds").val('00');
@@ -1115,11 +1115,6 @@ $(document).ready(function(e) {
         // capture OT minutes
         var overtimeMinutes = $("#settings_overtime").val();
 
-        // update gameSettings variable
-        gameSettings.periods = periods;
-        gameSettings.minutesPerPeriod = minutesPerPeriod;
-        gameSettings.overtimeMinutes = overtimeMinutes;
-
         // update quarter_minutes UI
         $("#quarter_minutes").trigger("updateSettings", [periods, minutesPerPeriod, overtimeMinutes]);
 
@@ -1131,21 +1126,51 @@ $(document).ready(function(e) {
     $("#quarter_minutes").on("updateSettings", function(e, periods, minutesPerPeriod, overtimeMinutes) {
         e.preventDefault();
 
-        // if they chose 2 periods, update
+        // update gameSettings for this current game, leave defaultGameSettings alone
+        gameSettings.periods = periods;
+        gameSettings.minutesPerPeriod = minutesPerPeriod;
+        gameSettings.overtimeMinutes = overtimeMinutes;
+
+        // if they chose 2 periods, remove 3rd and 4th quarter buttons
         if (periods !== defaultSettings.periods) {
-            console.log('changed periods')
+            $("#quarter_buttons #3").remove()
+            $("#quarter_buttons #4").remove()
         }
 
         // if they changed the default minutes
         if (minutesPerPeriod !== defaultSettings.minutesPerPeriod) {
-            console.log('changed minutes per period')
+
+            // Add addition minute options above 8
+            if (parseInt(minutesPerPeriod) > parseInt(defaultSettings.minutesPerPeriod)) {
+
+                // prepend minute options
+                for (var i = 9; i <= parseInt(minutesPerPeriod); i++) {
+                    $("#minutes").prepend("<option>"+i.toString()+"</option>");
+                }
+
+                // set largest as default option
+                $('#minutes').val(minutesPerPeriod);
+
+            // Remove minutes above new minutesPerPeriod
+            } else {
+
+                // remove options if minutesPerPeriod below 8
+                for (var i = 8; i > minutesPerPeriod; i--) {
+                    $("#minutes option").each(function() {
+                        if ($(this).val() == parseInt(i)) {
+                            $(this).remove();
+                        }
+                    });
+                }
+
+                // set minutesPerPeriod as default in dropdown
+                $("#minutes").val(minutesPerPeriod);
+
+            }
+
         }
 
-        // if they changed the overtime setting
-        if (overtimeMinutes !== defaultSettings.minutesPerPeriod) {
-            console.log('changed OT minutes')
-        }
-
+        // Nothing to change for OT minutes
 
     });
 
