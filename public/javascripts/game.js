@@ -117,7 +117,7 @@ $(document).ready(function(e) {
     // game reset
     var defaultSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' }; // HS settings
     var gameSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' };
-    var gameReset = { quarter:'1', minutes:'8', seconds:'00' };
+    var gameReset = { period:'1', minutes:'8', seconds:'00' };
 
     // Teams object, away/home
     var teams = {};
@@ -502,7 +502,7 @@ $(document).ready(function(e) {
         e.preventDefault();
 
         // instantiate gameReset object
-        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.period = $("#quarter_buttons .button_selected").attr('id');
         gameReset.minutes = $("#minutes").val();
         gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
@@ -695,7 +695,7 @@ $(document).ready(function(e) {
             'direction': direction,
             'shotX': shotX,
             'shotY': shotY,
-            'quarter': parseInt(gameReset.quarter),
+            'quarter': parseInt(gameReset.period),
             'time': ''.concat(gameReset.minutes, ':', gameReset.seconds)
         } );
 
@@ -757,7 +757,7 @@ $(document).ready(function(e) {
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
-                    'quarter': parseInt(gameReset.quarter),
+                    'quarter': parseInt(gameReset.period),
                     'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
@@ -803,7 +803,7 @@ $(document).ready(function(e) {
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
-                    'quarter': parseInt(gameReset.quarter),
+                    'quarter': parseInt(gameReset.period),
                     'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
@@ -869,7 +869,7 @@ $(document).ready(function(e) {
                     'shotSuccess': shotSuccess,
                     'points': parseInt(points),
                     'direction': selectedPlayer.direction,
-                    'quarter': parseInt(gameReset.quarter),
+                    'quarter': parseInt(gameReset.period),
                     'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
@@ -936,7 +936,7 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
-        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.period = $("#quarter_buttons .button_selected").attr('id');
         gameReset.minutes = $("#minutes").val();
         gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
@@ -977,7 +977,7 @@ $(document).ready(function(e) {
         populateInGamePlayers();
 
         // update time/quarter
-        gameReset.quarter = $("#quarter_buttons .button_selected").attr('id');
+        gameReset.period = $("#quarter_buttons .button_selected").attr('id');
         gameReset.minutes = $("#minutes").val();
         gameReset.seconds = $("#seconds").val();
         console.log(gameReset);
@@ -1011,8 +1011,8 @@ $(document).ready(function(e) {
 
 
         // click next quarter, reset time to 8:00
-        var newQuarter = $("#quarter_buttons .button_selected").attr('id');
-        if ( parseInt(newQuarter) === parseInt(gameReset.quarter) + 1 ) {
+        var newPeriod = $("#quarter_buttons .button_selected").attr('id');
+        if ( parseInt(newPeriod) === parseInt(gameReset.period) + 1 ) {
             
             // reset minutes
             $("#minutes").val(gameSettings.minutesPerPeriod);
