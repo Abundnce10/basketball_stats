@@ -117,6 +117,9 @@ $(document).ready(function(e) {
     // Hide #game div
     $("#game").hide();
 
+    // Hide #review div
+    $("#review").hide();
+
 /*
     $("#rosters_container").hide();
     $("#game").hide();
@@ -1285,7 +1288,25 @@ $(document).ready(function(e) {
 
 
     // Clicking "Review" button
+    $('header').on("click", "#game_review", function(e) {
 
+        // show review div
+        $("#review").show();
+
+        // hide game
+        $("#game").hide();
+
+        // remove button_class from all header buttons
+        $("header button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // highlight this button
+        $(this).addClass('button_selected');
+
+
+
+    });
 
 
     // Clicking a review tab
