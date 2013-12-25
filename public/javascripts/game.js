@@ -936,8 +936,26 @@ $(document).ready(function(e) {
                 // update score widget
                 $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1])
 
+
+
+                // update shotCounter obj (FTM/FTA), update review_summary table
+                shotCounter[selectedPlayer.team]["FTM"] += 1;
+                shotCounter[selectedPlayer.team]["FTA"] += 1;
+
+                // update table
+                $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
+
             } else {
                 shotSuccess = false;
+
+                // update shotCounter obj (FTA), update review_summary table
+                shotCounter[selectedPlayer.team]["FTA"] += 1;
+
+                // update table
+                $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
+
+
+
             }
 
 
@@ -952,6 +970,12 @@ $(document).ready(function(e) {
                     'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
+
+
+
+
+
+
 
             // revert Free Throw drop-down to default value
             $('#free_throw').val('');
