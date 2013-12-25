@@ -94,6 +94,12 @@ var highlightShotPoints = function(direction, points) {
 }
 
 
+var reviewSummaryTableToPercentage = function(made, missed) {
+    return (made/missed * 100.0).toFixed(1) + "%";
+}
+
+
+
 
 $(document).ready(function(e) {
 
@@ -127,6 +133,26 @@ $(document).ready(function(e) {
 
     // Shots object, away/home
     var shots = { away: [], home: [] };
+
+    // FGs, 3PTs, FTs
+    var shotCounter = {
+        away: {
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0
+        },
+        home: {
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0
+        }
+    };
 
     // Free Throws object, away/home
     var freeThrows = { away: [], home: [] };
@@ -707,8 +733,6 @@ $(document).ready(function(e) {
             'time': ''.concat(gameReset.minutes, ':', gameReset.seconds)
         } );
 
-        // update 
-
 
         // if shot was successful
         if (shotSuccess) {
@@ -716,9 +740,50 @@ $(document).ready(function(e) {
             // update score widget
             $('#basketball_court').trigger('updateScore', [direction, shotPoints(shotDistancePixels)])
 
+
+            // update shotCounter obj (FGM/FGA), update review_summary table
+            shotCounter[currentDirection[direction]]["FGM"] += 1;
+            shotCounter[currentDirection[direction]]["FGA"] += 1;
+
+            // update table
+            $("#review_game_stats #"+ currentDirection[direction] +" #FG").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["FGM"], shotCounter[currentDirection[direction]]["FGA"]));
+
+    
+            // if 3pt, update shotCounter (3PTM/3PTA), update table
+            if (shotPoints(shotDistancePixels) == 3) {
+                
+                shotCounter[currentDirection[direction]]["3PTM"] += 1;
+                shotCounter[currentDirection[direction]]["3PTA"] += 1;
+
+                // update table
+                $("#review_game_stats #"+ currentDirection[direction] +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["3PTM"], shotCounter[currentDirection[direction]]["3PTA"]));
+
+            }
+
+
+        // missed shot
+        } else {
+
+            // update shotCounter obj (FGA), update review_summary table
+            shotCounter[currentDirection[direction]]["FGA"] += 1;
+
+            // update table
+            $("#review_game_stats #"+ currentDirection[direction] +" #FG").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["FGM"], shotCounter[currentDirection[direction]]["FGA"]));
+
+
+            // if 3pt, update shotCounter (3PTA), update table
+            if (shotPoints(shotDistancePixels) == 3) {
+                
+                shotCounter[currentDirection[direction]]["3PTA"] += 1;
+
+                // update table
+                $("#review_game_stats #"+ currentDirection[direction] +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["3PTM"], shotCounter[currentDirection[direction]]["3PTA"]));
+
+            }
         }
 
 
+        console.log(shotCounter);
         console.log(shots);
 
     });
@@ -744,12 +809,7 @@ $(document).ready(function(e) {
         $("#review_scores #"+ currentDirection[direction] +" #"+gameReset.period).text(scores[gameReset.period][currentDirection[direction]]);
 
         // update the review_summary final score
-        $("#review_scores #"+ currentDirection[direction] +" #F").text(scores[currentDirection[direction]]);        
-
-
-        console.log(scores[gameReset.period][currentDirection[direction]]);
-        console.log(currentDirection[direction]);
-        console.log(gameReset.period);
+        $("#review_scores #"+ currentDirection[direction] +" #F").text(scores[currentDirection[direction]]);
 
     });
 
