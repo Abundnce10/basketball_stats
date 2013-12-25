@@ -841,6 +841,13 @@ $(document).ready(function(e) {
                 }
             );
 
+
+            // update review_summary table
+            $("#review_game_stats #"+ selectedPlayer.team +" #"+ secondaryStat).text(secondaryStats[selectedPlayer.team][secondaryStat].length);
+
+
+
+
             // reset selectedPlayer
             selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
 
@@ -935,8 +942,6 @@ $(document).ready(function(e) {
 
                 // update score widget
                 $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1])
-
-
 
                 // update shotCounter obj (FTM/FTA), update review_summary table
                 shotCounter[selectedPlayer.team]["FTM"] += 1;
