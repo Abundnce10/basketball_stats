@@ -561,3 +561,61 @@ a.local_storage_delete:hover {
 .tab {
     background-color: #D6E0F5;
 }
+
+
+/* Review - Summary */
+#review_summary {
+    margin-top: 2em;
+}
+
+#review_summary div {
+    display: inline-block;
+    margin-left: 4em;
+}
+
+#review_summary table {
+    border-collapse:collapse;
+    text-align: center;
+    vertical-align: center;
+}
+
+#review_scores thead th {
+    background-color: #E6E6E6;
+    font-size: 1.4em;
+    padding: .05em .5em;
+}
+
+#review_game_stats thead th {
+    background-color: #E6E6E6;
+    font-size: 1.3em;
+    padding: .05em .5em;
+
+}
+
+#review_game_stats span {
+    font-size: .8em;
+    vertical-align: top;
+}
+
+.table_team {
+    width: 3em;
+    font-size: 1.6em;
+    text-align: left;
+    padding-left: .5em;
+}
+
+.table_quarter {
+    font-size: 1.3em;
+    font-weight: normal;
+}
+
+.table_final {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.table_stat {
+    font-size: 1.3em;
+    font-weight: normal;
+}
+
