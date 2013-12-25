@@ -602,6 +602,7 @@ a.local_storage_delete:hover {
     font-size: 1.6em;
     text-align: left;
     padding-left: .5em;
+    font-weight: bold;
 }
 
 .table_quarter {

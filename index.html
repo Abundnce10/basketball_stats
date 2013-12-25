@@ -558,98 +558,101 @@
                 </div>
             </div>
 
+            <div id="review_views_container">
 
-            <div id="review_summary">
-                <div id="review_scores_container">
-                    <table id="review_scores">
-                        <thead>
-                            <tr>
-                                <th class="table_team"></th>
-                                <th class="table_quarter">1</th>
-                                <th class="table_quarter">2</th>
-                                <th class="table_quarter">3</th>
-                                <th class="table_quarter">4</th>
-                                <th class="table_final">F</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="away">
-                                <td class="table_team">CHI</td>
-                                <td class="table_quarter">18</td>
-                                <td class="table_quarter">24</td>
-                                <td class="table_quarter">18</td>
-                                <td class="table_quarter">18</td>
-                                <td class="table_final">78</td>
-                            </tr>
-                            <tr id="home">
-                                <td class="table_team">SEA</td>
-                                <td class="table_quarter">18</td>
-                                <td class="table_quarter">25</td>
-                                <td class="table_quarter">19</td>
-                                <td class="table_quarter">27</td>
-                                <td class="table_final">89</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="review_game_stats_container">
-                    <table id="review_game_stats">
-                        <thead>
-                            <tr>
-                                <th class="table_team"></th>
-                                <th class="table_stat">FG<span>%</span></th>
-                                <th class="table_stat">3PT<span>%</span></th>
-                                <th class="table_stat">FT<span>%</span></th>
-                                <th class="table_stat">REB</th>
-                                <th class="table_stat">AST</th>
-                                <th class="table_stat">STL</th>
-                                <th class="table_stat">BLK</th>
-                                <th class="table_stat">TO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="away">
-                                <td class="table_team">CHI</td>
-                                <td class="table_stat">48.1<span>%</span></td>
-                                <td class="table_stat">11.5<span>%</span></td>
-                                <td class="table_stat">72.2<span>%</span></td>
-                                <td class="table_stat">44</td>
-                                <td class="table_stat">13</td>
-                                <td class="table_stat">6</td>
-                                <td class="table_stat">4</td>
-                                <td class="table_stat">13</td>
-                            </tr>
-                            <tr id="home">
-                                <td class="table_team">SEA</td>
-                                <td class="table_stat">58.2<span>%</span></td>
-                                <td class="table_stat">24.1<span>%</span></td>
-                                <td class="table_stat">68.5<span>%</span></td>
-                                <td class="table_stat">52</td>
-                                <td class="table_stat">19</td>
-                                <td class="table_stat">5</td>
-                                <td class="table_stat">6</td>
-                                <td class="table_stat">10</td>
-                            </tr>
-                        <tbody>
-                    </table>
-                </div>
-            </div><!-- id="review_summary" -->
-
-
-
+                <div id="review_summary">
+                    <div id="review_scores_container">
+                        <table id="review_scores">
+                            <thead>
+                                <tr>
+                                    <th class="table_team"></th>
+                                    <th class="table_quarter">1</th>
+                                    <th class="table_quarter">2</th>
+                                    <th class="table_quarter">3</th>
+                                    <th class="table_quarter">4</th>
+                                    <th class="table_final">F</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="away">
+                                    <td class="table_team">CHI</td>
+                                    <td id="1" class="table_quarter">-</td>
+                                    <td id="2" class="table_quarter">-</td>
+                                    <td id="3" class="table_quarter">-</td>
+                                    <td id="4" class="table_quarter">-</td>
+                                    <td id="F" class="table_final">-</td>
+                                </tr>
+                                <tr id="home">
+                                    <td class="table_team">SEA</td>
+                                    <td id="1" class="table_quarter">-</td>
+                                    <td id="2" class="table_quarter">-</td>
+                                    <td id="3" class="table_quarter">-</td>
+                                    <td id="4" class="table_quarter">-</td>
+                                    <td id="F" class="table_final">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="review_game_stats_container">
+                        <table id="review_game_stats">
+                            <thead>
+                                <tr>
+                                    <th class="table_team"></th>
+                                    <th class="table_stat">FG<span>%</span></th>
+                                    <th class="table_stat">3PT<span>%</span></th>
+                                    <th class="table_stat">FT<span>%</span></th>
+                                    <th class="table_stat">REB</th>
+                                    <th class="table_stat">AST</th>
+                                    <th class="table_stat">STL</th>
+                                    <th class="table_stat">BLK</th>
+                                    <th class="table_stat">TO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="away">
+                                    <td class="table_team">CHI</td>
+                                    <td class="table_stat">48.1<span>%</span></td>
+                                    <td class="table_stat">11.5<span>%</span></td>
+                                    <td class="table_stat">72.2<span>%</span></td>
+                                    <td class="table_stat">44</td>
+                                    <td class="table_stat">13</td>
+                                    <td class="table_stat">6</td>
+                                    <td class="table_stat">4</td>
+                                    <td class="table_stat">13</td>
+                                </tr>
+                                <tr id="home">
+                                    <td class="table_team">SEA</td>
+                                    <td class="table_stat">58.2<span>%</span></td>
+                                    <td class="table_stat">24.1<span>%</span></td>
+                                    <td class="table_stat">68.5<span>%</span></td>
+                                    <td class="table_stat">52</td>
+                                    <td class="table_stat">19</td>
+                                    <td class="table_stat">5</td>
+                                    <td class="table_stat">6</td>
+                                    <td class="table_stat">10</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                    </div>
+                </div><!-- id="review_summary" -->
 
 
 
+                <div id="review_box_score">
 
-            <div id="review_box_score">
+                </div><!-- id="review_box_score" -->
+                
+                <div id="review_shot_chart">
 
-            </div><!-- id="review_box_score" -->
-            <div id="review_shot_chart">
+                </div><!-- id="review_shot_chart" -->
+                
+                <div id="review_play-by-play">
 
-            </div><!-- id="review_shot_chart" -->
-            <div id="review_play_by_play">
+                </div><!-- id="review_play_by_play" -->
 
-            </div><!-- id="review_play_by_play" -->
+
+
+            <div><!-- id="review_views_container" -->
         </div><!-- id="review" -->
 
 

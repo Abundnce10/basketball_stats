@@ -100,7 +100,6 @@ $(document).ready(function(e) {
 
     //$("#rosters_container").hide();
 
-/*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -111,10 +110,12 @@ $(document).ready(function(e) {
 
     // Hide #game div
     $("#game").hide();
-*/
+
+/*
     $("#rosters_container").hide();
     $("#game").hide();
-    
+*/  
+
 
     // game reset
     var defaultSettings = { periods: '4', minutesPerPeriod: '8', overtimeMinutes: '4' }; // HS settings
@@ -130,8 +131,13 @@ $(document).ready(function(e) {
     // Free Throws object, away/home
     var freeThrows = { away: [], home: [] };
 
-    // Score
-    var score = { away: 0, home: 0 };
+    // Scores
+    var scores = { away: 0, home: 0, 
+        '1': {away: 0, home: 0},
+        '2': {away: 0, home: 0},
+        '3': {away: 0, home: 0},
+        '4': {away: 0, home: 0},
+    };
 
     // Secondary stats (rebounds, assists, etc.), away/home
     var secondaryStats = { 
@@ -701,6 +707,8 @@ $(document).ready(function(e) {
             'time': ''.concat(gameReset.minutes, ':', gameReset.seconds)
         } );
 
+        // update 
+
 
         // if shot was successful
         if (shotSuccess) {
@@ -721,7 +729,7 @@ $(document).ready(function(e) {
 
         e.preventDefault();
 
-        // update score widget
+        // update input score widget
         var previousScore = parseInt( $('#'+direction+'_team_score').text() );
         $("#"+direction+"_team_score").html( previousScore + points );
 
@@ -729,10 +737,19 @@ $(document).ready(function(e) {
         highlightShotPoints(direction, points);
 
         // update global score var
-        score[currentDirection[direction]] += points;
+        scores[currentDirection[direction]] += points;
+        scores[gameReset.period][currentDirection[direction]] += points
+
+        // update the review_summary for current quarter
+        $("#review_scores #"+ currentDirection[direction] +" #"+gameReset.period).text(scores[gameReset.period][currentDirection[direction]]);
+
+        // update the review_summary final score
+        $("#review_scores #"+ currentDirection[direction] +" #F").text(scores[currentDirection[direction]]);        
 
 
-        //console.log(score);
+        console.log(scores[gameReset.period][currentDirection[direction]]);
+        console.log(currentDirection[direction]);
+        console.log(gameReset.period);
 
     });
 
@@ -931,8 +948,8 @@ $(document).ready(function(e) {
         $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
         
         // update team scores
-        $("#left_team_score").text(score[currentDirection.left]);
-        $("#right_team_score").text(score[currentDirection.right]);
+        $("#left_team_score").text(scores[currentDirection.left]);
+        $("#right_team_score").text(scores[currentDirection.right]);
 
         // update players in the game
         populateInGamePlayers();
@@ -971,8 +988,8 @@ $(document).ready(function(e) {
         $("#right_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.right].teamAbbreviation);
 
         // update team scores
-        $("#left_team_score").text(score[currentDirection.left]);
-        $("#right_team_score").text(score[currentDirection.right]);
+        $("#left_team_score").text(scores[currentDirection.left]);
+        $("#right_team_score").text(scores[currentDirection.right]);
 
 
         // update players in the game
@@ -1195,11 +1212,16 @@ $(document).ready(function(e) {
         $(this).addClass('tab_selected').removeClass('tab');
 
 
-
         // Hide review divs
-
+        $("#review_views_container div").each(function() {
+            $(this).hide()
+        });
 
         // Show this div
+        var tabId = $(this).find('span').text().replace(' ','_').toLowerCase();
+        $("#review_"+tabId).show();
+
+
 
     });
 
