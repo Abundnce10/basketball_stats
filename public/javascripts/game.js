@@ -562,6 +562,14 @@ $(document).ready(function(e) {
         // populate in-game players from roster
         populateInGamePlayers();
 
+        // populate team names in review_summary tables
+        $("#review_scores #away td").first().text(teams.away.teamAbbreviation);
+        $("#review_scores #home td").first().text(teams.home.teamAbbreviation);
+        $("#review_game_stats #away td").first().text(teams.away.teamAbbreviation);
+        $("#review_game_stats #home td").first().text(teams.home.teamAbbreviation);
+
+
+
         // hide start game button
         $("#start_game").hide();
 
