@@ -1329,17 +1329,16 @@ $(document).ready(function(e) {
         // Add tab_selected class, remove tab class
         $(this).addClass('tab_selected').removeClass('tab');
 
-
         // Hide review divs
-        $("#review_views_container div").each(function() {
-            $(this).hide()
+        $("#review_views_container").children().each(function() {
+            $(this).hide();
         });
 
         // Show this div
         var tabId = $(this).find('span').text().replace(' ','_').toLowerCase();
         $("#review_"+tabId).show();
 
-
+        console.log(tabId);
 
     });
 
