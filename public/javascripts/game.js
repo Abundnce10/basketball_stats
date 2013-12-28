@@ -108,7 +108,7 @@ var populateBoxScore = function() {
         var number = $(this).attr('id');
         
         var trClass = 'starter';
-        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var openHTML = '<tr class="'+ trClass +'" id="'+ number +'"><td class="player_name">';
         var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
 
         var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
@@ -126,7 +126,7 @@ var populateBoxScore = function() {
         var number = $(this).attr('id');
         
         var trClass = 'bench';
-        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var openHTML = '<tr class="'+ trClass +'" id="'+ number +'"><td class="player_name">';
         var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
 
         var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
@@ -144,8 +144,9 @@ var populateBoxScore = function() {
         
         var name = $(this).find('.player_name').text();
         var number = $(this).attr('id');
-        
-        var openHTML = '<tr class="starter"><td class="player_name">';
+
+        var trClass = 'starter';
+        var openHTML = '<tr class="'+ trClass +'" id="'+ number +'"><td class="player_name">';
         var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
 
         var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
@@ -162,7 +163,7 @@ var populateBoxScore = function() {
         var number = $(this).attr('id');
         
         var trClass = 'bench';
-        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var openHTML = '<tr class="'+ trClass +'" id="'+ number +'"><td class="player_name">';
         var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
 
         var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
