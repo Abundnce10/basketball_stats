@@ -422,13 +422,13 @@ svg .white_line {
     
 }
 
-.player_number {
+.players_input_container .player_number {
     display: inline-block;
     font-size: 1.1em;
     margin: 0;
 }
 
-.player_name {
+.players_input_container .player_name {
     display: inline-block;
     font-size: 1.1em;
     margin: 0;

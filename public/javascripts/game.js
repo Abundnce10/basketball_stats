@@ -99,11 +99,87 @@ var reviewSummaryTableToPercentage = function(made, missed) {
 }
 
 
+var populateBoxScore = function() {
+
+    // populate away start players
+    $("#away_roster ul li").slice(0, 5).each(function() {
+        
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+        
+        var trClass = 'starter';
+        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
+
+        var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
+
+        // insert into table
+        $("#away_box_score .players_starters tbody").append(finalHTML);
+
+    });
+
+
+    // populate away bench players
+    $("#away_roster ul li").slice(5).each(function() {
+        
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+        
+        var trClass = 'bench';
+        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
+
+        var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
+
+        // insert into table
+        $("#away_box_score .players_bench tbody").append(finalHTML);
+
+    });
+
+
+
+
+    // populate home start players
+    $("#home_roster ul li").slice(0, 5).each(function() {
+        
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+        
+        var openHTML = '<tr class="starter"><td class="player_name">';
+        var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
+
+        var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
+
+        // insert into table
+        $("#home_box_score .players_starters tbody").append(finalHTML);
+
+    });
+
+    // populate home bench players
+    $("#home_roster ul li").slice(5).each(function() {
+        
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+        
+        var trClass = 'bench';
+        var openHTML = '<tr class="' + trClass + '"><td class="player_name">';
+        var closeHTML = '</td><td>0</td><td>0-0</td><td>0-0</td><td>0-0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
+
+        var finalHTML = "".concat(openHTML, name, ', ', number, closeHTML);
+
+        // insert into table
+        $("#home_box_score .players_bench tbody").append(finalHTML);
+
+    });
+
+}
+
+
 
 
 $(document).ready(function(e) {
 
-/*
+
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -118,10 +194,10 @@ $(document).ready(function(e) {
     // Hide #review div
     $("#review").hide();
 
-*/
+/*
     $("#rosters_container").hide();
     $("#game").hide();
-  
+*/  
 
 
     // game reset
@@ -567,18 +643,13 @@ $(document).ready(function(e) {
         $("#review_game_stats #home td").first().text(teams.home.teamAbbreviation);
 
         // populate team name in review_box_score tables
-        $("#review_box_score #away_team_name").text(teams.away.teamName)
-        $("#review_box_score #home_team_name").text(teams.home.teamName)
+        $("#review_box_score #away_team_name").text(teams.away.teamName);
+        $("#review_box_score #home_team_name").text(teams.home.teamName);
 
 
-        // populate away start players
 
-        // populate away bench players
-
-
-        // populate home start players
-
-        // populate home bench players
+        // populate review_box_score tables
+        populateBoxScore();
 
 
         // hide start game button
