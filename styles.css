@@ -583,13 +583,16 @@ a.local_storage_delete:hover {
     background-color: #E6E6E6;
     font-size: 1.4em;
     padding: .05em .5em;
+    border-bottom:1px solid #666666;
+    border-top:1px solid #666666;
 }
 
 #review_game_stats thead th {
     background-color: #E6E6E6;
     font-size: 1.3em;
     padding: .05em .5em;
-
+    border-bottom:1px solid #666666;
+    border-top:1px solid #666666;
 }
 
 #review_game_stats span {
@@ -619,4 +622,60 @@ a.local_storage_delete:hover {
     font-size: 1.3em;
     font-weight: normal;
 }
+
+
+
+
+/* Box Score */
+#review_box_score {
+    margin-top: 1em;
+}
+
+#review_box_score div {
+    margin-left: 1em;
+}
+
+#review_box_score h2 {
+    margin-bottom: 0px;
+    margin-left: 1em;
+}
+
+#review_box_score table {
+    border-collapse:collapse;
+    text-align: center;
+    vertical-align: center;
+}
+
+#review_box_score thead th {
+    background-color: #E6E6E6;
+    font-size: 1.3em;
+    padding: .05em .5em;
+    border-bottom:1px solid #666666;
+    border-top:1px solid #666666;
+}
+
+#review_box_score .box_score_summary thead th {
+    background-color: #B2B2B2;
+}
+
+#review_box_score th:first-child {
+    width: 210px;
+    
+}
+
+#review_box_score td.player_name {
+    width: 210px;
+    font-size: 1.2em;
+    text-align: left;
+    padding-left: .5em;
+}
+
+#review_box_score td {
+    font-size: 1.2em;
+}
+
+#review_box_score .players_starters {
+    border-top: 2px solid blue;
+}
+
 

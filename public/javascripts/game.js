@@ -103,9 +103,7 @@ var reviewSummaryTableToPercentage = function(made, missed) {
 
 $(document).ready(function(e) {
 
-
-    //$("#rosters_container").hide();
-
+/*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -120,10 +118,10 @@ $(document).ready(function(e) {
     // Hide #review div
     $("#review").hide();
 
-/*
+*/
     $("#rosters_container").hide();
     $("#game").hide();
-*/  
+  
 
 
     // game reset
