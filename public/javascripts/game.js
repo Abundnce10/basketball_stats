@@ -292,6 +292,11 @@ var populateBoxScore = function() {
 }
 
 
+var madeAttemptedToHtml = function(made, attempted) {
+    return "".concat(made.toString(), "-", attempted.toString());
+}
+
+
 
 
 $(document).ready(function(e) {
@@ -772,13 +777,8 @@ $(document).ready(function(e) {
         $("#review_box_score #away_team_name").text(teams.away.teamName);
         $("#review_box_score #home_team_name").text(teams.home.teamName);
 
-
-
         // populate review_box_score tables & boxScore obj
         boxScore = populateBoxScore();
-
-        console.log(boxScore);
-
 
         // hide start game button
         $("#start_game").hide();
@@ -959,25 +959,45 @@ $(document).ready(function(e) {
         if (shotSuccess) {
 
             // update score widget
-            $('#basketball_court').trigger('updateScore', [direction, shotPoints(shotDistancePixels)])
-
+            $('#basketball_court').trigger('updateScore', [direction, shotPoints(shotDistancePixels), number])
 
             // update shotCounter obj (FGM/FGA), update review_summary table
-            shotCounter[currentDirection[direction]]["FGM"] += 1;
-            shotCounter[currentDirection[direction]]["FGA"] += 1;
+            shotCounter[team]["FGM"] += 1;
+            shotCounter[team]["FGA"] += 1;
 
-            // update table
-            $("#review_game_stats #"+ currentDirection[direction] +" #FG").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["FGM"], shotCounter[currentDirection[direction]]["FGA"]));
+            // update review_summary table
+            $("#review_game_stats #"+ team +" #FG").text(reviewSummaryTableToPercentage(shotCounter[team]["FGM"], shotCounter[currentDirection[direction]]["FGA"]));
+
+            // update boxScore obj (team/indiv.)
+            boxScore[team]['total']['FGM'] += 1;
+            boxScore[team]['total']['FGA'] += 1;
+            boxScore[team][number]['FGM'] += 1;
+            boxScore[team][number]['FGA'] += 1;
+
+            // update box_score table
+            $("#review_box_score #"+ team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[team]['total']['FGM'], boxScore[team]['total']['FGA']))
+            $("#review_box_score #"+ team +"_box_score #"+number).children().eq(2).text(madeAttemptedToHtml(boxScore[team][number]['FGM'], boxScore[team][number]['FGA']));
 
     
             // if 3pt, update shotCounter (3PTM/3PTA), update table
             if (shotPoints(shotDistancePixels) == 3) {
                 
-                shotCounter[currentDirection[direction]]["3PTM"] += 1;
-                shotCounter[currentDirection[direction]]["3PTA"] += 1;
+                // update shotCounter obj
+                shotCounter[team]["3PTM"] += 1;
+                shotCounter[team]["3PTA"] += 1;
 
-                // update table
-                $("#review_game_stats #"+ currentDirection[direction] +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["3PTM"], shotCounter[currentDirection[direction]]["3PTA"]));
+                // update review_summary table
+                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PTM"], shotCounter[team]["3PTA"]));
+
+                // update boxScore obj (team/indiv.)
+                boxScore[team]['total']['3PTM'] += 1;
+                boxScore[team]['total']['3PTA'] += 1;
+                boxScore[team][number]['3PTM'] += 1;
+                boxScore[team][number]['3PTA'] += 1;
+
+                // update box_score table (team/indiv.)
+                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PTM'], boxScore[team]['total']['3PTA']));
+                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PTM'], boxScore[team][number]['3PTA']));
 
             }
 
@@ -986,32 +1006,51 @@ $(document).ready(function(e) {
         } else {
 
             // update shotCounter obj (FGA), update review_summary table
-            shotCounter[currentDirection[direction]]["FGA"] += 1;
+            shotCounter[team]["FGA"] += 1;
 
-            // update table
-            $("#review_game_stats #"+ currentDirection[direction] +" #FG").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["FGM"], shotCounter[currentDirection[direction]]["FGA"]));
+            // update review_summary table
+            $("#review_game_stats #"+ team +" #FG").text(reviewSummaryTableToPercentage(shotCounter[team]["FGM"], shotCounter[team]["FGA"]));
+
+
+            // update boxScore obj (team/indiv.)
+            boxScore[team]['total']['FGA'] += 1;
+            boxScore[team][number]['FGA'] += 1;
+
+            // update box_score table (team/indiv.)
+            $("#review_box_score #"+ team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[team]['total']['FGM'], boxScore[team]['total']['FGA']));
+            $("#review_box_score #"+ team +"_box_score #"+number).children().eq(2).text(madeAttemptedToHtml(boxScore[team][number]['FGM'], boxScore[team][number]['FGA']));
 
 
             // if 3pt, update shotCounter (3PTA), update table
             if (shotPoints(shotDistancePixels) == 3) {
                 
-                shotCounter[currentDirection[direction]]["3PTA"] += 1;
+                // update shotCounter obj
+                shotCounter[team]["3PTA"] += 1;
 
-                // update table
-                $("#review_game_stats #"+ currentDirection[direction] +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[currentDirection[direction]]["3PTM"], shotCounter[currentDirection[direction]]["3PTA"]));
+                // update review summary table
+                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PTM"], shotCounter[team]["3PTA"]));
+
+                // update boxScore obj (team/indiv.)
+                boxScore[team]['total']['3PTA'] += 1;
+                boxScore[team][number]['3PTA'] += 1;
+
+                // update box_score table (team/indiv.)
+                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PTM'], boxScore[team]['total']['3PTA']));
+                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PTM'], boxScore[team][number]['3PTA']));
+
 
             }
         }
 
 
-        console.log(shotCounter);
-        console.log(shots);
+        //console.log(shotCounter);
+        //console.log(shots);
 
     });
 
     
     // update score
-    $("#basketball_court").on("updateScore", function(e, direction, points) {
+    $("#basketball_court").on("updateScore", function(e, direction, points, number) {
 
         e.preventDefault();
 
@@ -1024,13 +1063,23 @@ $(document).ready(function(e) {
 
         // update global score var
         scores[currentDirection[direction]] += points;
-        scores[gameReset.period][currentDirection[direction]] += points
+        scores[gameReset.period][currentDirection[direction]] += points;
 
         // update the review_summary for current quarter
         $("#review_scores #"+ currentDirection[direction] +" #"+gameReset.period).text(scores[gameReset.period][currentDirection[direction]]);
 
         // update the review_summary final score
         $("#review_scores #"+ currentDirection[direction] +" #F").text(scores[currentDirection[direction]]);
+
+        // update boxScore var (team/indiv.)
+        boxScore[currentDirection[direction]]['total']['PTS'] += points;
+        boxScore[currentDirection[direction]][number]['PTS'] += points;
+
+        // update box_score table (team/indiv)
+        $("#review_box_score #"+ currentDirection[direction] +"_box_score #summary").children().eq(12).text(boxScore[currentDirection[direction]]['total']['PTS']);
+        $("#review_box_score #"+ currentDirection[direction] +"_box_score #"+number).children().eq(12).text(boxScore[currentDirection[direction]][number]['PTS']);
+
+
 
     });
 
