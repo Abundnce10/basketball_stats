@@ -101,6 +101,45 @@ var reviewSummaryTableToPercentage = function(made, missed) {
 
 var populateBoxScore = function() {
 
+    var boxScore = {
+        away: {
+            total: {
+                MIN: 0,
+                FGM: 0,
+                FGA: 0,
+                '3PTM': 0,
+                '3PTA': 0,
+                FTM: 0,
+                FTA: 0,
+                REB: 0,
+                AST: 0,
+                STL: 0,
+                BLK: 0,
+                TO: 0,
+                PF: 0,
+                PTS: 0            
+            }
+        },
+        home: {
+            total: {
+                MIN: 0,
+                FGM: 0,
+                FGA: 0,
+                '3PTM': 0,
+                '3PTA': 0,
+                FTM: 0,
+                FTA: 0,
+                REB: 0,
+                AST: 0,
+                STL: 0,
+                BLK: 0,
+                TO: 0,
+                PF: 0,
+                PTS: 0            
+            }
+        }
+    };
+
     // populate away start players
     $("#away_roster ul li").slice(0, 5).each(function() {
         
@@ -115,6 +154,25 @@ var populateBoxScore = function() {
 
         // insert into table
         $("#away_box_score .players_starters tbody").append(finalHTML);
+
+        // Add player into global boxScore obj
+        boxScore.away[number] = {
+            name: name,
+            MIN: 0,
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0,
+            REB: 0,
+            AST: 0,
+            STL: 0,
+            BLK: 0,
+            TO: 0,
+            PF: 0,
+            PTS: 0            
+        };
 
     });
 
@@ -134,6 +192,25 @@ var populateBoxScore = function() {
         // insert into table
         $("#away_box_score .players_bench tbody").append(finalHTML);
 
+        // Add player into global boxScore obj
+        boxScore.away[number] = {
+            name: name,
+            MIN: 0,
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0,
+            REB: 0,
+            AST: 0,
+            STL: 0,
+            BLK: 0,
+            TO: 0,
+            PF: 0,
+            PTS: 0            
+        };
+
     });
 
 
@@ -152,6 +229,25 @@ var populateBoxScore = function() {
         // insert into table
         $("#home_box_score .players_starters tbody").append(finalHTML);
 
+        // Add player into global boxScore obj
+        boxScore.home[number] = {
+            name: name,
+            MIN: 0,
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0,
+            REB: 0,
+            AST: 0,
+            STL: 0,
+            BLK: 0,
+            TO: 0,
+            PF: 0,
+            PTS: 0            
+        };
+
     });
 
     // populate home bench players
@@ -169,7 +265,29 @@ var populateBoxScore = function() {
         // insert into table
         $("#home_box_score .players_bench tbody").append(finalHTML);
 
+        // Add player into global boxScore obj
+        boxScore.home[number] = {
+            name: name,
+            MIN: 0,
+            FGM: 0,
+            FGA: 0,
+            '3PTM': 0,
+            '3PTA': 0,
+            FTM: 0,
+            FTA: 0,
+            REB: 0,
+            AST: 0,
+            STL: 0,
+            BLK: 0,
+            TO: 0,
+            PF: 0,
+            PTS: 0            
+        };
+
     });
+
+    
+    return boxScore;
 
 }
 
@@ -272,6 +390,9 @@ $(document).ready(function(e) {
                 flagrant: []
             } 
         };
+
+    // Box Score aggregator variable
+    var boxScore;
 
     // Attacking which hoop?
     currentDirection = {
@@ -653,8 +774,10 @@ $(document).ready(function(e) {
 
 
 
-        // populate review_box_score tables
-        populateBoxScore();
+        // populate review_box_score tables & boxScore obj
+        boxScore = populateBoxScore();
+
+        console.log(boxScore);
 
 
         // hide start game button
