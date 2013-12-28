@@ -566,6 +566,19 @@ $(document).ready(function(e) {
         $("#review_game_stats #away td").first().text(teams.away.teamAbbreviation);
         $("#review_game_stats #home td").first().text(teams.home.teamAbbreviation);
 
+        // populate team name in review_box_score tables
+        $("#review_box_score #away_team_name").text(teams.away.teamName)
+        $("#review_box_score #home_team_name").text(teams.home.teamName)
+
+
+        // populate away start players
+
+        // populate away bench players
+
+
+        // populate home start players
+
+        // populate home bench players
 
 
         // hide start game button
