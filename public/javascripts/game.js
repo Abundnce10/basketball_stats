@@ -137,8 +137,6 @@ var populateBoxScore = function() {
     });
 
 
-
-
     // populate home start players
     $("#home_roster ul li").slice(0, 5).each(function() {
         
@@ -194,6 +192,12 @@ $(document).ready(function(e) {
 
     // Hide #review div
     $("#review").hide();
+
+    // Hide other review tabs
+    $("#review_box_score").hide();
+    $("#review_shot_chart").hide();
+    $("#review_play-by-play").hide();
+
 
 /*
     $("#rosters_container").hide();
