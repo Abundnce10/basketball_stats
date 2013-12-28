@@ -394,7 +394,25 @@ $(document).ready(function(e) {
                 technical: [],
                 flagrant: []
             } 
-        };
+    };
+
+    //
+    var statAbbreiationLookup = {    
+            rebound: "REB",
+            steal: "STL",
+            assist: "AST",
+            block: "BLK",
+            turnover: "TO"
+    };
+
+    // 
+    var statIndexLookup = {
+            rebound: 5,
+            assist: 6,
+            steal: 7,
+            block: 8,
+            turnover: 9
+    };
 
     // Box Score aggregator variable
     var boxScore;
@@ -1115,11 +1133,20 @@ $(document).ready(function(e) {
             // update review_summary table
             $("#review_game_stats #"+ selectedPlayer.team +" #"+ secondaryStat).text(secondaryStats[selectedPlayer.team][secondaryStat].length);
 
+            // update boxScore obj (team/indiv.)
+            boxScore[selectedPlayer.team]['total'][statAbbreiationLookup[secondaryStat]] += 1;
+            boxScore[selectedPlayer.team][selectedPlayer.number][statAbbreiationLookup[secondaryStat]] += 1;
+
+            // update box_score table (team/indiv)
+            $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(statIndexLookup[secondaryStat]).text(boxScore[selectedPlayer.team]['total'][statAbbreiationLookup[secondaryStat]]);
+            $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(statIndexLookup[secondaryStat]).text(boxScore[selectedPlayer.team][selectedPlayer.number][statAbbreiationLookup[secondaryStat]]);
+
+
             // reset selectedPlayer
             selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
 
 
-            console.log(secondaryStats);
+            //console.log(secondaryStats);
 
 
         // no player is selected
