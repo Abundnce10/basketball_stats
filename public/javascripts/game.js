@@ -1115,9 +1115,6 @@ $(document).ready(function(e) {
             // update review_summary table
             $("#review_game_stats #"+ selectedPlayer.team +" #"+ secondaryStat).text(secondaryStats[selectedPlayer.team][secondaryStat].length);
 
-
-
-
             // reset selectedPlayer
             selectedPlayer.number = ''; selectedPlayer.team = ''; selectedPlayer.direction = '';
 
@@ -1211,14 +1208,35 @@ $(document).ready(function(e) {
                 shotSuccess = true;
 
                 // update score widget
-                $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1])
+                $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1, selectedPlayer.number])
 
                 // update shotCounter obj (FTM/FTA), update review_summary table
                 shotCounter[selectedPlayer.team]["FTM"] += 1;
                 shotCounter[selectedPlayer.team]["FTA"] += 1;
 
-                // update table
+                // update review_summary table
                 $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
+
+/*
+                // update boxScore obj PTS (team/indiv)
+                boxScore[selectedPlayer.team]['total']['PTS'] += 1;
+                boxScore[selectedPlayer.team][selectedPlayer.number]['PTS'] += 1;
+
+                // update box_score table PTS (team/indiv)
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(12).text(boxScore[selectedPlayer.team]['total']['PTS']);
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(12).text(boxScore[selectedPlayer.team][selectedPlayer.number]['PTS']);
+*/
+
+                // update boxScore obj FTM/FTA (team/indiv)
+                boxScore[selectedPlayer.team]['total']['FTM'] += 1;
+                boxScore[selectedPlayer.team]['total']['FTA'] += 1;
+                boxScore[selectedPlayer.team][selectedPlayer.number]['FTM'] += 1;
+                boxScore[selectedPlayer.team][selectedPlayer.number]['FTA'] += 1;
+
+                // update box_score table FTM-A (team/indiv)
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[selectedPlayer.team]['total']['FTM'], boxScore[selectedPlayer.team]['total']['FTA']))
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(4).text(madeAttemptedToHtml(boxScore[selectedPlayer.team][selectedPlayer.number]['FTM'], boxScore[selectedPlayer.team][selectedPlayer.number]['FTA']));
+
 
             } else {
                 shotSuccess = false;
@@ -1229,6 +1247,13 @@ $(document).ready(function(e) {
                 // update table
                 $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
 
+                // update boxScore obj FTM/FTA (team/indiv)
+                boxScore[selectedPlayer.team]['total']['FTA'] += 1;
+                boxScore[selectedPlayer.team][selectedPlayer.number]['FTA'] += 1;
+
+                // update box_score table FTM-A (team/indiv)
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[selectedPlayer.team]['total']['FTM'], boxScore[selectedPlayer.team]['total']['FTA']))
+                $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(4).text(madeAttemptedToHtml(boxScore[selectedPlayer.team][selectedPlayer.number]['FTM'], boxScore[selectedPlayer.team][selectedPlayer.number]['FTA']));
 
 
             }
@@ -1245,11 +1270,6 @@ $(document).ready(function(e) {
                     'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
                 }
             );
-
-
-
-
-
 
 
             // revert Free Throw drop-down to default value
