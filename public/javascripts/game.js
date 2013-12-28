@@ -1161,6 +1161,16 @@ $(document).ready(function(e) {
                 }
             );
 
+
+            // update boxScore obj FTM/FTA (team/indiv)
+            boxScore[selectedPlayer.team]['total']['PF'] += 1;
+            boxScore[selectedPlayer.team][selectedPlayer.number]['PF'] += 1;
+
+            // update box_score table FTM-A (team/indiv)
+            $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(10).text(boxScore[selectedPlayer.team]['total']['PF']);
+            $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(10).text(boxScore[selectedPlayer.team][selectedPlayer.number]['PF']);
+
+
             // revert Foul drop-down to default value
             $('#foul').val('');
 
@@ -1207,7 +1217,7 @@ $(document).ready(function(e) {
 
                 shotSuccess = true;
 
-                // update score widget
+                // update score widget, review_summary table, and box_score table
                 $('#basketball_court').trigger('updateScore', [selectedPlayer.direction, 1, selectedPlayer.number])
 
                 // update shotCounter obj (FTM/FTA), update review_summary table
@@ -1217,15 +1227,6 @@ $(document).ready(function(e) {
                 // update review_summary table
                 $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
 
-/*
-                // update boxScore obj PTS (team/indiv)
-                boxScore[selectedPlayer.team]['total']['PTS'] += 1;
-                boxScore[selectedPlayer.team][selectedPlayer.number]['PTS'] += 1;
-
-                // update box_score table PTS (team/indiv)
-                $("#review_box_score #"+ selectedPlayer.team +"_box_score #summary").children().eq(12).text(boxScore[selectedPlayer.team]['total']['PTS']);
-                $("#review_box_score #"+ selectedPlayer.team +"_box_score #"+selectedPlayer.number).children().eq(12).text(boxScore[selectedPlayer.team][selectedPlayer.number]['PTS']);
-*/
 
                 // update boxScore obj FTM/FTA (team/indiv)
                 boxScore[selectedPlayer.team]['total']['FTM'] += 1;
@@ -1244,7 +1245,7 @@ $(document).ready(function(e) {
                 // update shotCounter obj (FTA), update review_summary table
                 shotCounter[selectedPlayer.team]["FTA"] += 1;
 
-                // update table
+                // update review_summary table
                 $("#review_game_stats #"+ selectedPlayer.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[selectedPlayer.team]["FTM"], shotCounter[selectedPlayer.team]["FTA"]));
 
                 // update boxScore obj FTM/FTA (team/indiv)
