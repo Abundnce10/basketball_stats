@@ -3,10 +3,12 @@ var shotDistanceInPixels = function(x1, y1, x2, y2) {
     return Number(Math.sqrt(Math.pow((x1 - x2),2) + Math.pow((y1 - y2),2)).toFixed(1));
 }
 
+
 var pixelsToFeet = function(shotDistance) {
     multiplier = 6/72;
     return Number((multiplier * shotDistance).toFixed(1));
 }
+
 
 var shotPoints = function(shotDistance) {
     if (shotDistance > 266.0) {
@@ -107,8 +109,8 @@ var populateBoxScore = function() {
                 MIN: 0,
                 FGM: 0,
                 FGA: 0,
-                '3PTM': 0,
-                '3PTA': 0,
+                '3PM': 0,
+                '3PA': 0,
                 FTM: 0,
                 FTA: 0,
                 REB: 0,
@@ -125,8 +127,8 @@ var populateBoxScore = function() {
                 MIN: 0,
                 FGM: 0,
                 FGA: 0,
-                '3PTM': 0,
-                '3PTA': 0,
+                '3PM': 0,
+                '3PA': 0,
                 FTM: 0,
                 FTA: 0,
                 REB: 0,
@@ -161,8 +163,8 @@ var populateBoxScore = function() {
             MIN: 0,
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0,
             REB: 0,
@@ -198,8 +200,8 @@ var populateBoxScore = function() {
             MIN: 0,
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0,
             REB: 0,
@@ -235,8 +237,8 @@ var populateBoxScore = function() {
             MIN: 0,
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0,
             REB: 0,
@@ -271,8 +273,8 @@ var populateBoxScore = function() {
             MIN: 0,
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0,
             REB: 0,
@@ -344,16 +346,16 @@ $(document).ready(function(e) {
         away: {
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0
         },
         home: {
             FGM: 0,
             FGA: 0,
-            '3PTM': 0,
-            '3PTA': 0,
+            '3PM': 0,
+            '3PA': 0,
             FTM: 0,
             FTA: 0
         }
@@ -997,25 +999,25 @@ $(document).ready(function(e) {
             $("#review_box_score #"+ team +"_box_score #"+number).children().eq(2).text(madeAttemptedToHtml(boxScore[team][number]['FGM'], boxScore[team][number]['FGA']));
 
     
-            // if 3pt, update shotCounter (3PTM/3PTA), update table
+            // if 3pt, update shotCounter (3PM/3PA), update table
             if (shotPoints(shotDistancePixels) == 3) {
                 
                 // update shotCounter obj
-                shotCounter[team]["3PTM"] += 1;
-                shotCounter[team]["3PTA"] += 1;
+                shotCounter[team]["3PM"] += 1;
+                shotCounter[team]["3PA"] += 1;
 
                 // update review_summary table
-                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PTM"], shotCounter[team]["3PTA"]));
+                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PM"], shotCounter[team]["3PA"]));
 
                 // update boxScore obj (team/indiv.)
-                boxScore[team]['total']['3PTM'] += 1;
-                boxScore[team]['total']['3PTA'] += 1;
-                boxScore[team][number]['3PTM'] += 1;
-                boxScore[team][number]['3PTA'] += 1;
+                boxScore[team]['total']['3PM'] += 1;
+                boxScore[team]['total']['3PA'] += 1;
+                boxScore[team][number]['3PM'] += 1;
+                boxScore[team][number]['3PA'] += 1;
 
                 // update box_score table (team/indiv.)
-                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PTM'], boxScore[team]['total']['3PTA']));
-                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PTM'], boxScore[team][number]['3PTA']));
+                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PM'], boxScore[team]['total']['3PA']));
+                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PM'], boxScore[team][number]['3PA']));
 
             }
 
@@ -1039,22 +1041,22 @@ $(document).ready(function(e) {
             $("#review_box_score #"+ team +"_box_score #"+number).children().eq(2).text(madeAttemptedToHtml(boxScore[team][number]['FGM'], boxScore[team][number]['FGA']));
 
 
-            // if 3pt, update shotCounter (3PTA), update table
+            // if 3pt, update shotCounter (3PA), update table
             if (shotPoints(shotDistancePixels) == 3) {
                 
                 // update shotCounter obj
-                shotCounter[team]["3PTA"] += 1;
+                shotCounter[team]["3PA"] += 1;
 
                 // update review summary table
-                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PTM"], shotCounter[team]["3PTA"]));
+                $("#review_game_stats #"+ team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[team]["3PM"], shotCounter[team]["3PA"]));
 
                 // update boxScore obj (team/indiv.)
-                boxScore[team]['total']['3PTA'] += 1;
-                boxScore[team][number]['3PTA'] += 1;
+                boxScore[team]['total']['3PA'] += 1;
+                boxScore[team][number]['3PA'] += 1;
 
                 // update box_score table (team/indiv.)
-                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PTM'], boxScore[team]['total']['3PTA']));
-                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PTM'], boxScore[team][number]['3PTA']));
+                $("#review_box_score #"+ team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[team]['total']['3PM'], boxScore[team]['total']['3PA']));
+                $("#review_box_score #"+ team +"_box_score #"+number).children().eq(3).text(madeAttemptedToHtml(boxScore[team][number]['3PM'], boxScore[team][number]['3PA']));
 
 
             }
