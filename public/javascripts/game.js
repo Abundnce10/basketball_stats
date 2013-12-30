@@ -1175,7 +1175,8 @@ $(document).ready(function(e) {
                 objectType: 'secondaryStats',
                 statType: secondaryStat,
                 team: selectedPlayer.team,
-                playerNumber: selectedPlayer.number
+                playerNumber: selectedPlayer.number,
+                foul: false
             });
 
             // increment statId
@@ -1247,7 +1248,8 @@ $(document).ready(function(e) {
                 objectType: 'secondaryStats',
                 statType: secondaryStat,
                 team: selectedPlayer.team,
-                playerNumber: selectedPlayer.number
+                playerNumber: selectedPlayer.number,
+                foul: true
             });
 
             // increment statId
@@ -1899,13 +1901,6 @@ $(document).ready(function(e) {
                     // update the review_summary final score
                     $("#review_scores #"+ recentStat.team +" #F").text(scores[recentStat.team]);
 
-                    // update boxScore var (team/indiv.)
-                    boxScore[recentStat.team]['total']['PTS'] -= recentFreeThrow.points;
-                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentFreeThrow.points;
-
-                    // update box_score table (team/indiv)
-                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
-                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
 
 
 
@@ -1918,8 +1913,41 @@ $(document).ready(function(e) {
 
 
 
+
+
+
+                    // update boxScore var (team/indiv.)
+                    boxScore[recentStat.team]['total']['PTS'] -= recentFreeThrow.points;
+                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentFreeThrow.points;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
+
+
+
+
+                    // update boxScore obj FTM/FTA (team/indiv)
+                    boxScore[recentStat.team]['total']['FTM'] -= 1;
+                    boxScore[recentStat.team]['total']['FTA'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FTM'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FTA'] -= 1;
+
+                    // update box_score table FTM-A (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FTM'], boxScore[recentStat.team]['total']['FTA']))
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FTM'], boxScore[recentStat.team][recentStat.playerNumber]['FTA']));
+
+
+
                 // missed free throw
                 } else {
+
+                    // update boxScore var (team/indiv.)
+                    boxScore[recentStat.team]['total']['PTS'] -= recentFreeThrow.points;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FTM'], boxScore[recentStat.team]['total']['FTA']));
+
 
                     // update shotCounter obj (FTM/FTA), update review_summary table
                     shotCounter[recentStat.team]["FTA"] -= 1;
@@ -1931,13 +1959,54 @@ $(document).ready(function(e) {
 
 
 
+
+
+
             // secondaryStat
             } else {
                 
-                // remove from global variables
+                var recentSecondaryStat = secondaryStats[recentStat.team][recentStat.statType].pop();
+
+                console.log(recentStat);
+
+                // stat (i.e. REB, STL, AST)
+                if (recentStat.foul == false) {
+                
+                    console.log('secondayStat')
+                    console.log(recentSecondaryStat);
+
+                    // update review_summary table
+                    $("#review_game_stats #"+ recentStat.team +" #"+ recentStat.statType).text(secondaryStats[recentStat.team][recentStat.statType].length);
+
+                    // update boxScore obj (team/indiv.)
+                    boxScore[recentStat.team]['total'][statAbbreiationLookup[recentStat.statType]] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber][statAbbreiationLookup[recentStat.statType]] -= 1;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(statIndexLookup[recentStat.statType]).text(boxScore[recentStat.team]['total'][statAbbreiationLookup[recentStat.statType]]);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(statIndexLookup[recentStat.statType]).text(boxScore[recentStat.team][recentStat.playerNumber][statAbbreiationLookup[recentStat.statType]]);
+
+                    console.log(recentStat.playerNumber)
+                    console.log(recentStat.statType)
 
 
-                // update UI (input & UI)
+
+                // foul (i.e. Shooting, Flagrant, etc.)
+                } else {
+
+                    console.log('foul')
+                    console.log(recentSecondaryStat);
+
+                    // update boxScore obj FTM/FTA (team/indiv)
+                    boxScore[recentStat.team]['total']['PF'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['PF'] -= 1;
+
+                    // update box_score table FTM-A (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(10).text(boxScore[recentStat.team]['total']['PF']);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(10).text(boxScore[recentStat.team][recentStat.playerNumber]['PF']);
+
+
+                }
 
 
             }
@@ -1945,7 +2014,7 @@ $(document).ready(function(e) {
 
 
 
-        } // if (recentStats.length > 0)
+        } 
 
 
 
