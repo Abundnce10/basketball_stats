@@ -419,6 +419,12 @@ $(document).ready(function(e) {
     // Box Score aggregator variable
     var boxScore;
 
+    // Recent Stats array, allow for undu of recent actions
+    var recentStats = [];
+
+    // Global counter for each stat
+    var statId = 1;
+
     // Attacking which hoop?
     currentDirection = {
         home: 'right',
@@ -445,6 +451,8 @@ $(document).ready(function(e) {
         leftHoopY = 302,
         rightHoopX = 1086,
         rightHoopY = 302;
+
+
 
 
 
@@ -931,13 +939,29 @@ $(document).ready(function(e) {
         if (shotSuccess) {
 
             // place successful shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'green').attr("stroke","black").attr("stroke-width", 4).attr('opacity', 1).attr('class', 'shot');
+            d3.select("#basketball_court").append('circle')
+                .attr('cx', shotX)
+                .attr('cy', shotY)
+                .attr('r', 15)
+                .attr('fill', 'green')
+                .attr("stroke","black")
+                .attr("stroke-width", 4)
+                .attr('opacity', 1)
+                .attr('class', 'shot')
+                .attr('id', statId);
 
         // missed shot
         } else {
 
             // place missed shot marker
-            d3.select("#basketball_court").append('circle').attr('cx', shotX).attr('cy', shotY).attr('r', 15).attr('fill', 'red').attr('opacity', 1).attr('class', 'shot');
+            d3.select("#basketball_court").append('circle')
+                .attr('cx', shotX)
+                .attr('cy', shotY)
+                .attr('r', 15)
+                .attr('fill', 'red')
+                .attr('opacity', 1)
+                .attr('class', 'shot')
+                .attr('id', statId);
         }
 
 
@@ -971,8 +995,12 @@ $(document).ready(function(e) {
             'shotX': shotX,
             'shotY': shotY,
             'quarter': parseInt(gameReset.period),
-            'time': ''.concat(gameReset.minutes, ':', gameReset.seconds)
+            'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+            'statId': statId
         } );
+
+        // increment statId
+        statId += 1;
 
 
         // if shot was successful
@@ -1127,9 +1155,13 @@ $(document).ready(function(e) {
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
                     'quarter': parseInt(gameReset.period),
-                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+                    'statId': statId
                 }
             );
+
+            // increment statId
+            statId += 1;
 
 
             // update review_summary table
@@ -1186,9 +1218,13 @@ $(document).ready(function(e) {
                 { 
                     'playerNumber': parseInt(selectedPlayer.number), 
                     'quarter': parseInt(gameReset.period),
-                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+                    'statId': statId
                 }
             );
+
+            // increment statId
+            statId += 1;
 
 
             // update boxScore obj FTM/FTA (team/indiv)
@@ -1237,8 +1273,9 @@ $(document).ready(function(e) {
             // highlight button briefly to indicate successful save
             $(this).effect("highlight", {color: "009933"}, 400);
 
-            // Which foul did they choose?
+            // Did they make the free throw?
             var points = $('#free_throw').val();
+
 
             // Determine if shot was success
             var shotSuccess;
@@ -1297,9 +1334,13 @@ $(document).ready(function(e) {
                     'points': parseInt(points),
                     'direction': selectedPlayer.direction,
                     'quarter': parseInt(gameReset.period),
-                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds) 
+                    'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+                    'statId': statId
                 }
             );
+
+            // increment statId
+            statId += 1;
 
 
             // revert Free Throw drop-down to default value
