@@ -1942,12 +1942,16 @@ $(document).ready(function(e) {
                 // missed free throw
                 } else {
 
-                    // update boxScore var (team/indiv.)
-                    boxScore[recentStat.team]['total']['PTS'] -= recentFreeThrow.points;
+                    // update boxScore obj FTM/FTA (team/indiv)
+                    boxScore[recentStat.team]['total']['FTA'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FTA'] -= 1;
 
-                    // update box_score table (team/indiv)
-                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FTM'], boxScore[recentStat.team]['total']['FTA']));
+                    // update box_score table FTM-A (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FTM'], boxScore[recentStat.team]['total']['FTA']))
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(4).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FTM'], boxScore[recentStat.team][recentStat.playerNumber]['FTA']));
 
+
+                    
 
                     // update shotCounter obj (FTM/FTA), update review_summary table
                     shotCounter[recentStat.team]["FTA"] -= 1;
