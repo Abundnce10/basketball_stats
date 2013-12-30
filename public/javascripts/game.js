@@ -1764,8 +1764,8 @@ $(document).ready(function(e) {
 
 
                     // update input score widget
-                    var previousScore = parseInt( $('#'+recentStat.team+'_team_score').text() );
-                    $("#"+ recentStat.team +"_team_score").html( previousScore - recentShot.points );
+                    var previousScore = parseInt( $('#'+ currentDirection[recentStat.team] +'_team_score').text() );
+                    $("#"+ currentDirection[recentStat.team] +"_team_score").html( previousScore - recentShot.points );
 
                     // highlight how many points the shot was worth
                     //highlightShotPoints(direction, points);
@@ -1831,9 +1831,10 @@ $(document).ready(function(e) {
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
 
 
+/*
                     // update input score widget
-                    var previousScore = parseInt( $('#'+recentStat.team+'_team_score').text() );
-                    $("#"+ recentStat.team +"_team_score").html( previousScore - recentShot.points );
+                    var previousScore = parseInt( $('#'+ currentDirection[recentStat.team] +'_team_score').text() );
+                    $("#"+ currentDirection[recentStat.team] +"_team_score").html( previousScore - recentShot.points );
 
                     // highlight how many points the shot was worth
                     //highlightShotPoints(direction, points);
@@ -1857,7 +1858,7 @@ $(document).ready(function(e) {
                     // update box_score table (team/indiv)
                     $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
-
+*/
 
                     // 3 pointer
                     if (recentShot.points == 3) {
