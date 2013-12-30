@@ -999,6 +999,15 @@ $(document).ready(function(e) {
             'statId': statId
         } );
 
+        // add shot/stat to recentStats array
+        recentStats.push({
+            statId: statId,
+            objectType: 'shots',
+            team: team,
+            playerNumber: number,
+            shotSuccess: shotSuccess
+        });
+
         // increment statId
         statId += 1;
 
@@ -1160,6 +1169,15 @@ $(document).ready(function(e) {
                 }
             );
 
+            // add shot/stat to recentStats array
+            recentStats.push({
+                statId: statId,
+                objectType: 'secondaryStats',
+                statType: secondaryStat,
+                team: selectedPlayer.team,
+                playerNumber: selectedPlayer.number
+            });
+
             // increment statId
             statId += 1;
 
@@ -1223,9 +1241,19 @@ $(document).ready(function(e) {
                 }
             );
 
+            // add shot/stat to recentStats array
+            recentStats.push({
+                statId: statId,
+                objectType: 'secondaryStats',
+                statType: secondaryStat,
+                team: selectedPlayer.team,
+                playerNumber: selectedPlayer.number
+            });
+
             // increment statId
             statId += 1;
 
+            console.log(recentStats);
 
             // update boxScore obj FTM/FTA (team/indiv)
             boxScore[selectedPlayer.team]['total']['PF'] += 1;
@@ -1338,6 +1366,15 @@ $(document).ready(function(e) {
                     'statId': statId
                 }
             );
+
+            // add shot/stat to recentStats array
+            recentStats.push({
+                statId: statId,
+                objectType: 'freeThrows',
+                team: selectedPlayer.team,
+                playerNumber: selectedPlayer.number,
+                shotSuccess: shotSuccess
+            });
 
             // increment statId
             statId += 1;
