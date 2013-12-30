@@ -97,7 +97,11 @@ var highlightShotPoints = function(direction, points) {
 
 
 var reviewSummaryTableToPercentage = function(made, missed) {
-    return (made/missed * 100.0).toFixed(1) + "%";
+    if (missed != 0) {
+        return (made/missed * 100.0).toFixed(1) + "%";
+    } else {
+        return "-%";
+    }
 }
 
 
@@ -308,7 +312,8 @@ $(document).ready(function(e) {
     $("#game_review").hide();
     $("#game_input").hide();
     $("#substitute").hide();
-    $("#timeout").hide();
+    $("#undo").hide();
+    //$("#timeout").hide();
     $("#start_game").hide();
     $("#resume_game").hide();
 
@@ -786,7 +791,8 @@ $(document).ready(function(e) {
         $("#game_review").show();
         $("#game_input").show();
         $("#substitute").show();
-        $("#timeout").show();
+        $("#undo").show();
+        //$("#timeout").show();
 
         // populate team name abbreviations
         $("#left_score_wrapper .team_name_abbrev").children().text(teams[currentDirection.left].teamAbbreviation);
@@ -2012,17 +2018,13 @@ $(document).ready(function(e) {
 
                 }
 
-
             }
-
-
-
 
         } 
 
-
-
     });
+
+
 
 
 

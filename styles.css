@@ -22,7 +22,7 @@ header h1 {
 }
 
 #header_left {
-    width: 20%;
+    width: 10%;
     display: inline-block;
     vertical-align: bottom;
 }
@@ -33,7 +33,7 @@ header h1 {
 }
 
 #header_right {
-    width: 20%;
+    width: 30%;
     display: inline-block;
     vertical-align: bottom;
 }
