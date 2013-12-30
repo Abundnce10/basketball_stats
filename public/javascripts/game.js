@@ -1736,15 +1736,13 @@ $(document).ready(function(e) {
 
             var recentStat = recentStats.pop();
 
-            console.log(recentStat);
 
             // undo last shot
             if (recentStat.objectType == 'shots') {
 
                 // remove most recent shot from shots var
                 var recentShot = shots[recentStat.team].pop(); // validate it's correct, based on statId
-                
-                console.log(recentShot);
+
 
                 // made shot?
                 if (recentShot.shotSuccess == true) {
@@ -1763,11 +1761,6 @@ $(document).ready(function(e) {
                     // update box_score table
                     $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FGM'], boxScore[recentStat.team]['total']['FGA']))
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
-
-
-
-
-
 
 
                     // update input score widget
@@ -1796,10 +1789,6 @@ $(document).ready(function(e) {
                     // update box_score table (team/indiv)
                     $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
-
-
-
-
 
 
                     // 3 pointer
@@ -1822,9 +1811,8 @@ $(document).ready(function(e) {
                         $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['3PM'], boxScore[recentStat.team]['total']['3PA']));
                         $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['3PM'], boxScore[recentStat.team][recentStat.playerNumber]['3PA']));
 
-
-                    
                     } 
+
 
                 // missed shot
                 } else {
@@ -1841,11 +1829,6 @@ $(document).ready(function(e) {
                     // update box_score table
                     $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FGM'], boxScore[recentStat.team]['total']['FGA']))
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
-
-
-
-
-
 
 
                     // update input score widget
@@ -1876,10 +1859,6 @@ $(document).ready(function(e) {
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
 
 
-
-
-
-
                     // 3 pointer
                     if (recentShot.points == 3) {
 
@@ -1897,21 +1876,10 @@ $(document).ready(function(e) {
                         $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['3PM'], boxScore[recentStat.team]['total']['3PA']));
                         $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['3PM'], boxScore[recentStat.team][recentStat.playerNumber]['3PA']));
 
-
-                    
                     } 
 
 
-
-
-
-
-
                 }
-
-
-
-                
 
 
                 // update UI input
