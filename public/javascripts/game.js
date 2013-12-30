@@ -1372,7 +1372,8 @@ $(document).ready(function(e) {
                 objectType: 'freeThrows',
                 team: selectedPlayer.team,
                 playerNumber: selectedPlayer.number,
-                shotSuccess: shotSuccess
+                shotSuccess: shotSuccess,
+                points: 1
             });
 
             // increment statId
@@ -1763,7 +1764,7 @@ $(document).ready(function(e) {
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
 
 
-                    // update input score widget
+                    // reduce input score widget
                     var previousScore = parseInt( $('#'+ currentDirection[recentStat.team] +'_team_score').text() );
                     $("#"+ currentDirection[recentStat.team] +"_team_score").html( previousScore - recentShot.points );
 
@@ -1831,34 +1832,6 @@ $(document).ready(function(e) {
                     $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
 
 
-/*
-                    // update input score widget
-                    var previousScore = parseInt( $('#'+ currentDirection[recentStat.team] +'_team_score').text() );
-                    $("#"+ currentDirection[recentStat.team] +"_team_score").html( previousScore - recentShot.points );
-
-                    // highlight how many points the shot was worth
-                    //highlightShotPoints(direction, points);
-                    // need negativ highlight ^^^
-
-
-                    // update global score var
-                    scores[recentStat.team] -= recentShot.points;
-                    scores[gameReset.period][recentStat.team] -= recentShot.points;
-
-                    // update the review_summary for current quarter
-                    $("#review_scores #"+ recentStat.team +" #"+gameReset.period).text(scores[gameReset.period][recentStat.team]);
-
-                    // update the review_summary final score
-                    $("#review_scores #"+ recentStat.team +" #F").text(scores[recentStat.team]);
-
-                    // update boxScore var (team/indiv.)
-                    boxScore[recentStat.team]['total']['PTS'] -= recentShot.points;
-                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentShot.points;
-
-                    // update box_score table (team/indiv)
-                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
-                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
-*/
 
                     // 3 pointer
                     if (recentShot.points == 3) {
@@ -1899,9 +1872,63 @@ $(document).ready(function(e) {
             } else if (recentStat.objectType == 'freeThrows') {
                 
                 // remove from global variables
+                var recentFreeThrow = freeThrows[recentStat.team].pop();
+
+                
+
+                // made free throw
+                if (recentStat.shotSuccess == true) {
 
 
-                // update UI (input & UI)
+                    // reduce input score widget
+                    var previousScore = parseInt( $('#'+ currentDirection[recentStat.team] +'_team_score').text() );
+                    $("#"+ currentDirection[recentStat.team] +"_team_score").html( previousScore - recentFreeThrow.points );
+
+                    // highlight how many points the shot was worth
+                    //highlightShotPoints(direction, points);
+                    // need negativ highlight ^^^
+
+
+                    // update global score var
+                    scores[recentStat.team] -= recentFreeThrow.points;
+                    scores[gameReset.period][recentStat.team] -= recentFreeThrow.points;
+
+                    // update the review_summary for current quarter
+                    $("#review_scores #"+ recentStat.team +" #"+gameReset.period).text(scores[gameReset.period][recentStat.team]);
+
+                    // update the review_summary final score
+                    $("#review_scores #"+ recentStat.team +" #F").text(scores[recentStat.team]);
+
+                    // update boxScore var (team/indiv.)
+                    boxScore[recentStat.team]['total']['PTS'] -= recentFreeThrow.points;
+                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentFreeThrow.points;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
+
+
+
+                    // update shotCounter obj (FTM/FTA), update review_summary table
+                    shotCounter[recentStat.team]["FTM"] -= 1;
+                    shotCounter[recentStat.team]["FTA"] -= 1;
+
+                    // update review_summary table
+                    $("#review_game_stats #"+ recentStat.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["FTM"], shotCounter[recentStat.team]["FTA"]));
+
+
+
+                // missed free throw
+                } else {
+
+                    // update shotCounter obj (FTM/FTA), update review_summary table
+                    shotCounter[recentStat.team]["FTA"] -= 1;
+
+                    // update review_summary table
+                    $("#review_game_stats #"+ recentStat.team +" #FT").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["FTM"], shotCounter[recentStat.team]["FTA"]));
+
+                }
+
 
 
             // secondaryStat
@@ -1915,7 +1942,10 @@ $(document).ready(function(e) {
 
             }
 
-        }
+
+
+
+        } // if (recentStats.length > 0)
 
 
 
