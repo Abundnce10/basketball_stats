@@ -1253,7 +1253,6 @@ $(document).ready(function(e) {
             // increment statId
             statId += 1;
 
-            console.log(recentStats);
 
             // update boxScore obj FTM/FTA (team/indiv)
             boxScore[selectedPlayer.team]['total']['PF'] += 1;
@@ -1725,9 +1724,234 @@ $(document).ready(function(e) {
         var tabId = $(this).find('span').text().replace(' ','_').toLowerCase();
         $("#review_"+tabId).show();
 
-        console.log(tabId);
+        //console.log(tabId);
 
     });
+
+
+    $("#undo").on("click", function(e) {
+        e.preventDefault();
+
+            if (recentStats.length > 0) {
+
+            var recentStat = recentStats.pop();
+
+            console.log(recentStat);
+
+            // undo last shot
+            if (recentStat.objectType == 'shots') {
+
+                // remove most recent shot from shots var
+                var recentShot = shots[recentStat.team].pop(); // validate it's correct, based on statId
+                
+                console.log(recentShot);
+
+                // made shot?
+                if (recentShot.shotSuccess == true) {
+
+                    // reduce shotCounter obj (FGM/FGA), update review_summary table
+                    shotCounter[recentStat.team]["FGM"] -= 1;
+                    shotCounter[recentStat.team]["FGA"] -= 1;
+                    $("#review_game_stats #"+ recentStat.team +" #FG").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["FGM"], shotCounter[recentStat.team]["FGA"]));
+
+                    // reduce boxScore obj (team/indiv.)
+                    boxScore[recentStat.team]['total']['FGM'] -= 1;
+                    boxScore[recentStat.team]['total']['FGA'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FGM'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FGA'] -= 1;
+
+                    // update box_score table
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FGM'], boxScore[recentStat.team]['total']['FGA']))
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
+
+
+
+
+
+
+
+                    // update input score widget
+                    var previousScore = parseInt( $('#'+recentStat.team+'_team_score').text() );
+                    $("#"+ recentStat.team +"_team_score").html( previousScore - recentShot.points );
+
+                    // highlight how many points the shot was worth
+                    //highlightShotPoints(direction, points);
+                    // need negativ highlight ^^^
+
+
+                    // update global score var
+                    scores[recentStat.team] -= recentShot.points;
+                    scores[gameReset.period][recentStat.team] -= recentShot.points;
+
+                    // update the review_summary for current quarter
+                    $("#review_scores #"+ recentStat.team +" #"+gameReset.period).text(scores[gameReset.period][recentStat.team]);
+
+                    // update the review_summary final score
+                    $("#review_scores #"+ recentStat.team +" #F").text(scores[recentStat.team]);
+
+                    // update boxScore var (team/indiv.)
+                    boxScore[recentStat.team]['total']['PTS'] -= recentShot.points;
+                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentShot.points;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
+
+
+
+
+
+
+                    // 3 pointer
+                    if (recentShot.points == 3) {
+
+                        // reduce shotCounter obj, update review_summary table
+                        shotCounter[recentStat.team]["3PM"] -= 1;
+                        shotCounter[recentStat.team]["3PA"] -= 1;
+
+                        // update review_summary table
+                        $("#review_game_stats #"+ recentStat.team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["3PM"], shotCounter[recentStat.team]["3PA"]));
+
+                        // update boxScore obj (team/indiv.)
+                        boxScore[recentStat.team]['total']['3PM'] -= 1;
+                        boxScore[recentStat.team]['total']['3PA'] -= 1;
+                        boxScore[recentStat.team][recentStat.playerNumber]['3PM'] -= 1;
+                        boxScore[recentStat.team][recentStat.playerNumber]['3PA'] -= 1;
+
+                        // update box_score table (team/indiv.)
+                        $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['3PM'], boxScore[recentStat.team]['total']['3PA']));
+                        $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['3PM'], boxScore[recentStat.team][recentStat.playerNumber]['3PA']));
+
+
+                    
+                    } 
+
+                // missed shot
+                } else {
+
+
+                    // reduce shotCounter obj (FGM/FGA), update review_summary table
+                    shotCounter[recentStat.team]["FGA"] -= 1;
+                    $("#review_game_stats #"+ recentStat.team +" #FG").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["FGM"], shotCounter[recentStat.team]["FGA"]));
+
+                    // reduce boxScore obj (team/indiv.)
+                    boxScore[recentStat.team]['total']['FGA'] -= 1;
+                    boxScore[recentStat.team][recentStat.playerNumber]['FGA'] -= 1;
+
+                    // update box_score table
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['FGM'], boxScore[recentStat.team]['total']['FGA']))
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(2).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['FGM'], boxScore[recentStat.team][recentStat.playerNumber]['FGA']));
+
+
+
+
+
+
+
+                    // update input score widget
+                    var previousScore = parseInt( $('#'+recentStat.team+'_team_score').text() );
+                    $("#"+ recentStat.team +"_team_score").html( previousScore - recentShot.points );
+
+                    // highlight how many points the shot was worth
+                    //highlightShotPoints(direction, points);
+                    // need negativ highlight ^^^
+
+
+                    // update global score var
+                    scores[recentStat.team] -= recentShot.points;
+                    scores[gameReset.period][recentStat.team] -= recentShot.points;
+
+                    // update the review_summary for current quarter
+                    $("#review_scores #"+ recentStat.team +" #"+gameReset.period).text(scores[gameReset.period][recentStat.team]);
+
+                    // update the review_summary final score
+                    $("#review_scores #"+ recentStat.team +" #F").text(scores[recentStat.team]);
+
+                    // update boxScore var (team/indiv.)
+                    boxScore[recentStat.team]['total']['PTS'] -= recentShot.points;
+                    boxScore[recentStat.team][recentStat.playerNumber]['PTS'] -= recentShot.points;
+
+                    // update box_score table (team/indiv)
+                    $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(12).text(boxScore[recentStat.team]['total']['PTS']);
+                    $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(12).text(boxScore[recentStat.team][recentStat.playerNumber]['PTS']);
+
+
+
+
+
+
+                    // 3 pointer
+                    if (recentShot.points == 3) {
+
+                        // reduce shotCounter obj, update review_summary table
+                        shotCounter[recentStat.team]["3PA"] -= 1;
+
+                        // update review_summary table
+                        $("#review_game_stats #"+ recentStat.team +" #3PT").text(reviewSummaryTableToPercentage(shotCounter[recentStat.team]["3PM"], shotCounter[recentStat.team]["3PA"]));
+
+                        // update boxScore obj (team/indiv.)
+                        boxScore[recentStat.team]['total']['3PA'] -= 1;
+                        boxScore[recentStat.team][recentStat.playerNumber]['3PA'] -= 1;
+
+                        // update box_score table (team/indiv.)
+                        $("#review_box_score #"+ recentStat.team +"_box_score #summary").children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team]['total']['3PM'], boxScore[recentStat.team]['total']['3PA']));
+                        $("#review_box_score #"+ recentStat.team +"_box_score #"+ recentStat.playerNumber).children().eq(3).text(madeAttemptedToHtml(boxScore[recentStat.team][recentStat.playerNumber]['3PM'], boxScore[recentStat.team][recentStat.playerNumber]['3PA']));
+
+
+                    
+                    } 
+
+
+
+
+
+
+
+                }
+
+
+
+                
+
+
+                // update UI input
+                $("#game_body #basketball_court .shot").each(function() {
+                    if ($(this).attr('id') == recentStat.statId) {
+                        $(this).remove();
+                    }
+                })
+
+                
+
+
+
+
+            // free throw
+            } else if (recentStat.objectType == 'freeThrows') {
+                
+                // remove from global variables
+
+
+                // update UI (input & UI)
+
+
+            // secondaryStat
+            } else {
+                
+                // remove from global variables
+
+
+                // update UI (input & UI)
+
+
+            }
+
+        }
+
+
+
+    });
+
 
 
 
