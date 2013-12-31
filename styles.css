@@ -178,6 +178,24 @@ div.score_wrapper {
 
 }
 
+.player_border_container {
+    position: relative;
+    width: 100%;
+}
+
+.player_border_container .player_name {
+    position: absolute;
+    bottom: .8em;
+    width: 100%;
+    left: 0;
+    background-color: #999999;
+    color: white;
+    font-size: .8em;
+    width: 100%;
+    text-align: center;
+}
+
+
 .player_number_wrapper {
     font-size: 18px;
     text-align: center;

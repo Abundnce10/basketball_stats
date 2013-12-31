@@ -64,8 +64,18 @@ var populateInGamePlayers = function() {
     var awayPlayers = [];
     $("#away_roster ul li").slice(0, 5).each(function() {
         var player = {};
-        player.name = $(this).find('.player_name').text();
         player.number = $(this).attr('id');
+        var name = $(this).find('.player_name').text();
+        var names = name.split(' ');
+        var lastName = names[names.length - 1];
+
+        // short name, if necessary
+        if (lastName.length > 9) {
+            player.name = lastName.substring(0,9);
+        } else {
+            player.name = lastName;    
+        }
+
         awayPlayers.push(player);
     });
 
@@ -73,19 +83,43 @@ var populateInGamePlayers = function() {
     var homePlayers = [];
     $("#home_roster ul li").slice(0, 5).each(function() {
         var player = {};
-        player.name = $(this).find('.player_name').text();
         player.number = $(this).attr('id');
+        var name = $(this).find('.player_name').text();
+        var names = name.split(' ');
+        var lastName = names[names.length - 1];
+
+        // short name, if necessary
+        if (lastName.length > 9) {
+            player.name = lastName.substring(0,9);
+        } else {
+            player.name = lastName;    
+        }
+
         homePlayers.push(player);
     });
 
     // populate away players in #game
     $("#"+ currentDirection.away +"_players_wrapper .player_border_container").each(function() {
-        $(this).find('.player_number_wrapper').text('#' + awayPlayers.shift().number)
+        
+        var player = awayPlayers.shift();
+
+        // populate name
+        $(this).find('.player_name').text(player.name);
+
+        // populate number
+        $(this).find('.player_number_wrapper').text('#' + player.number);
+
     })
 
     // populate home players in #game
     $("#"+ currentDirection.home +"_players_wrapper .player_border_container").each(function() {
-        $(this).find('.player_number_wrapper').text('#' + homePlayers.shift().number)
+        var player = homePlayers.shift();
+
+        // populate name
+        $(this).find('.player_name').text(player.name);
+
+        // populate number
+        $(this).find('.player_number_wrapper').text('#' + player.number);
     })
 
 }
