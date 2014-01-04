@@ -341,7 +341,7 @@ var madeAttemptedToHtml = function(made, attempted) {
 
 $(document).ready(function(e) {
 
-
+/*
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -361,12 +361,14 @@ $(document).ready(function(e) {
     $("#review_box_score").hide();
     $("#review_shot_chart").hide();
     $("#review_play-by-play").hide();
+*/
 
 
-/*
     $("#rosters_container").hide();
     $("#game").hide();
-*/  
+    $("#review_summary").hide();
+    $("#review_box_score").hide();
+ 
 
 
     // game reset
@@ -1038,6 +1040,9 @@ $(document).ready(function(e) {
             'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
             'statId': statId
         } );
+
+        console.log("shots");
+        console.log(JSON.stringify(shots));
 
         // add shot/stat to recentStats array
         recentStats.push({

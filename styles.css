@@ -697,3 +697,88 @@ a.local_storage_delete:hover {
 }
 
 
+/* Shot Chart */
+
+#review_shot_chart {
+    text-align: center;
+}
+
+#shot_chart_container {
+    width: 1132px;
+    margin-top: 1em;
+}
+
+#shot_chart_container #teams_container {
+    border: 2px solid black;
+    
+}
+
+#teams_container .team {
+    display: inline-block;
+    width: 560px;
+    padding: .5em 0 .1em 0;
+    
+}
+
+#teams_container .team#away_team {
+    border-right: 2px solid black;
+}
+
+#teams_container .team span {
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: bold;
+    float: left;
+    margin-left: 2em;
+    vertical-align: middle;
+}
+
+#teams_container .team select {
+    float: right;
+    margin: 0 2em 0 0;
+    font-size: 1.2em;
+}
+
+#shot_chart_container #quarter_container {
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    padding: .4em 1em .3em 1em;
+
+}
+
+#quarter_container .quarter_button {
+    display: inline-block;
+    font-size: 1.4em;
+    width: 160px;
+
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    -webkit-border-top-left-radius: .2em;
+    -webkit-border-top-right-radius: .2em;
+    -moz-border-radius-topleft: .2em;
+    -moz-border-radius-topright: .2em;
+    border-top-left-radius: .2em;
+    border-top-right-radius: .2em;
+
+    -webkit-border-bottom-left-radius: .2em;
+    -webkit-border-bottom-right-radius: .2em;
+    -moz-border-radius-bottomleft: .2em;
+    -moz-border-radius-bottomright: .2em;
+    border-bottom-left-radius: -2em;
+    border-bottom-right-radius: .2em;
+}
+
+
+
+#svg_shot_chart {
+
+    background-color: #FFB56C;
+}
+
+
+
+
+
+

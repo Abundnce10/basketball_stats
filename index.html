@@ -831,9 +831,131 @@
                 </div><!-- id="review_box_score" -->
                 
                 <div id="review_shot_chart">
-                    <div><p>Shot Chart</p></div>
+                    
+                    <div id="shot_chart_container">
+
+                        <div id="teams_container">
+                            <div class="team" id="away_team">
+                                <span>Chicago Bulls</span>
+                                
+                                <select id="left_players">
+                                    <option>All Players</option>
+                                    <option>Michael Jordan</option>
+                                    <option>Scottie Pippen</option>
+                                    <option>Toni Kukoc</option>
+                                    <option>Ron Harper</option>
+                                    <option>Dennis Rodman</option>
+                                </select>
+                                
+                            </div>
+                            <div class="team" id="home_team">
+                                <span>Seattle Sonics</span>
+                                
+                                <select id="left_players">
+                                    <option>All Players</option>
+                                    <option>Gary Payton</option>
+                                    <option>Shawn Kemp</option>
+                                    <option>Hershey Hawkins</option>
+                                    <option>Detlef Schrempf</option>
+                                    <option>Sam Perkins</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+
+                        <div id="quarter_container">
+                            <div class="quarter_button">1st Quarter</div>
+                            <div class="quarter_button">2nd Quarter</div>
+                            <div class="quarter_button">3rd Quarter</div>
+                            <div class="quarter_button">4th Quarter</div>
+                            <div class="quarter_button">Overtime</div>
+                            <div class="quarter_button button_selected">Total</div>
+                        </div>
+
+
+                        <div id="svg_shot_chart_container">
+
+                            <svg id="svg_shot_chart" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1132" height="604">
+                                        <!-- Center Court -->
+                                <circle cx="566" cy="302" r="72" class="circle" />
+                                <circle cx="566" cy="302" r="24" class="circle" />
+                                <line x1="566" y1="0" x2="566" y2="604" class="thin_line" />
+
+                                <!--               Left Half             -->
+                                        <!-- 3 Point Arc -->
+                                <circle cx="50" cy="302" r="250" class="circle" />
+                                <line x1="0" y1="52" x2="60" y2="52" class="thin_line" />
+                                <line x1="0" y1="56" x2="60" y2="56" class="white_line" />  
+                                <line x1="0" y1="552" x2="60" y2="552" class="thin_line" />
+                                <line x1="0" y1="548" x2="60" y2="548" class="white_line" />
+                                        <!-- Top of Key -->
+                                <circle cx="225" cy="302" r="72" class="circle" />
+                                        <!-- Key -->
+                                <rect x="0" y="230" width="220" height="144" class="key" />
+                                        <!-- Top Hashes -->
+                                <line x1="70" y1="224" x2="85" y2="224" class="thick_line" />
+                                <line x1="123" y1="220" x2="123" y2="230" class="thick_line" />
+                                <line x1="161" y1="220" x2="161" y2="230" class="thick_line" />
+                                <line x1="199" y1="220" x2="199" y2="230" class="thick_line" />
+                                        <!-- Bottom Hashes -->
+                                <line x1="70" y1="380" x2="85" y2="380" class="thick_line" />
+                                <line x1="123" y1="376" x2="123" y2="385" class="thick_line" />
+                                <line x1="161" y1="376" x2="161" y2="385" class="thick_line" />
+                                <line x1="199" y1="376" x2="199" y2="385" class="thick_line" />
+                                <!--               End Left Half              -->
+
+
+                                <!--                  Right Key                -->
+                                        <!-- 3 Point Arc -->
+                                <circle cx="1082" cy="302" r="250" class="circle" />
+                                <line x1="1132" y1="52" x2="1072" y2="52" class="thin_line" />
+                                <line x1="1132" y1="56" x2="1072" y2="56" class="white_line" /> 
+                                <line x1="1132" y1="552" x2="1072" y2="552" class="thin_line" />
+                                <line x1="1132" y1="548" x2="1072" y2="548" class="white_line" />
+                                        <!-- Top of Key -->
+                                <circle cx="907" cy="302" r="72" class="circle" />
+                                        <!-- Key  -->
+                                <rect x="912" y="230" width="220" height="144" class="key" />
+                                        <!-- Top Hashes -->
+                                <line x1="1062" y1="224" x2="1047" y2="224" class="thick_line" />
+                                <line x1="1005" y1="220" x2="1005" y2="230" class="thick_line" />
+                                <line x1="967" y1="220" x2="967" y2="230" class="thick_line" />
+                                <line x1="929" y1="220" x2="929" y2="230" class="thick_line" />
+                                        <!-- Bottom Hashes -->
+                                <line x1="1062" y1="380" x2="1047" y2="380" class="thick_line" />
+                                <line x1="1005" y1="376" x2="1005" y2="385" class="thick_line" />
+                                <line x1="967" y1="376" x2="967" y2="385" class="thick_line" />
+                                <line x1="929" y1="376" x2="929" y2="385" class="thick_line" />
+
+
+                                        <!-- Left Backboard -->
+                                <line x1="25" y1="272" x2="25" y2="332" class="thin_line" />
+                                <line x1="29" y1="297" x2="29" y2="307" class="thick_line" />
+                                <circle  cx="47" cy="302" r="14" class="circle" />
+
+                                        <!-- Right Backboard -->
+                                <line x1="1107" y1="272" x2="1107" y2="332" class="thin_line" />
+                                <line x1="1103" y1="297" x2="1103" y2="307" class="thick_line" />
+                                <circle  cx="1085" cy="302" r="14" class="circle" />
+
+
+                                        <!-- Boundary -->
+                                <line x1="0" y1="0" x2="0" y2="604" class="boundary" />
+                                <line x1="0" y1="0" x2="1132" y2="0" class="boundary" />
+                                <line x1="0" y1="604" x2="1132" y2="604" class="boundary" />
+                                <line x1="1132" y1="0" x2="1132" y2="604" class="boundary" />
+
+                            </svg>
+
+                        </div>
+
+                    </div><!-- id="review_show_chart_container" -->
+
                 </div><!-- id="review_shot_chart" -->
                 
+
+
+
                 <div id="review_play-by-play">
                     <div><p>Play-by-Play</p></div>
                 </div><!-- id="review_play-by-play" -->
