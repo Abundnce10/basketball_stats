@@ -341,7 +341,7 @@ var madeAttemptedToHtml = function(made, attempted) {
 
 $(document).ready(function(e) {
 
-/*
+
     // Hide input buttons
     $("#game_review").hide();
     $("#game_input").hide();
@@ -361,14 +361,14 @@ $(document).ready(function(e) {
     $("#review_box_score").hide();
     $("#review_shot_chart").hide();
     $("#review_play-by-play").hide();
-*/
 
 
+/*
     $("#rosters_container").hide();
     $("#game").hide();
     $("#review_summary").hide();
     $("#review_box_score").hide();
- 
+*/
 
 
     // game reset
@@ -1459,6 +1459,9 @@ $(document).ready(function(e) {
         // hide game
         $("#game").hide();
 
+        // hide review tab
+        $("#review").hide();
+
         // remove button_class from all header buttons
         $("header button").each(function() {
             $(this).removeClass('button_selected');
@@ -1737,6 +1740,7 @@ $(document).ready(function(e) {
 
         // hide game
         $("#game").hide();
+        $("#rosters_container").hide();
 
         // remove button_class from all header buttons
         $("header button").each(function() {
