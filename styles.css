@@ -22,13 +22,13 @@ header h1 {
 }
 
 #header_left {
-    width: 10%;
+    width: 30%;
     display: inline-block;
     vertical-align: bottom;
 }
 
 #header_center {
-    width: 59%;
+    width: 39%;
     display: inline-block;
 }
 
@@ -588,7 +588,7 @@ a.local_storage_delete:hover {
 
 #review_summary div {
     display: inline-block;
-    margin-left: 4em;
+    margin-left: 5em;
 }
 
 #review_summary table {
@@ -649,8 +649,12 @@ a.local_storage_delete:hover {
     margin-top: 1em;
 }
 
+#review_box_score_container {
+    margin: 0 auto 0 auto;
+}
+
 #review_box_score div {
-    margin-left: 1em;
+    margin-left: 5em;
 }
 
 #review_box_score h2 {
@@ -697,6 +701,10 @@ a.local_storage_delete:hover {
 }
 
 
+
+
+
+
 /* Shot Chart */
 
 #review_shot_chart {
@@ -705,7 +713,7 @@ a.local_storage_delete:hover {
 
 #shot_chart_container {
     width: 1132px;
-    margin-top: 1em;
+    margin: 1em auto 0 auto;
 }
 
 #shot_chart_container #teams_container {
