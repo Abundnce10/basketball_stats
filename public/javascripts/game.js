@@ -1776,11 +1776,38 @@ $(document).ready(function(e) {
         var tabId = $(this).find('span').text().replace(' ','_').toLowerCase();
         $("#review_"+tabId).show();
 
+
+
+
+
         //console.log(tabId);
 
     });
 
 
+
+    // quarters within shot_chart
+    $("#quarter_container").on("click", ".quarter_button", function(e) {
+        e.preventDefault();
+
+        // remove button_selected class from previous selection
+        $("#quarter_container .quarter_button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // add button_selected class to current selection
+        $(this).addClass('button_selected');
+
+
+        // determine which period to filter on
+        alert( $(this).attr('id') );
+
+
+    });
+
+
+
+    // undo last stat
     $("#undo").on("click", function(e) {
         e.preventDefault();
 

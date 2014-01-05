@@ -747,6 +747,10 @@ a.local_storage_delete:hover {
     font-size: 1.2em;
 }
 
+#teams_container .team select:hover {
+    cursor: pointer;
+}
+
 #shot_chart_container #quarter_container {
     border-right: 2px solid black;
     border-left: 2px solid black;
@@ -778,6 +782,9 @@ a.local_storage_delete:hover {
     border-bottom-right-radius: .2em;
 }
 
+#quarter_container .quarter_button:hover {
+    cursor: pointer;
+}
 
 
 #svg_shot_chart {
