@@ -1041,8 +1041,8 @@ $(document).ready(function(e) {
             'statId': statId
         } );
 
-        console.log("shots");
-        console.log(JSON.stringify(shots));
+        //console.log("shots");
+        //console.log(JSON.stringify(shots));
 
         // add shot/stat to recentStats array
         recentStats.push({
@@ -1751,6 +1751,41 @@ $(document).ready(function(e) {
         $(this).addClass('button_selected');
 
 
+        // update shot_chart
+        // place all shots on court
+        d3.select("#svg_shot_chart .shots").selectAll('circle')
+            .data( shots['home'].concat(shots['away']) )
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) { return d.shotX })
+            .attr('cy', function(d) { return d.shotY })
+            .attr('r', 15)
+            .attr('fill', function(d) {
+                if (d.shotSuccess) {
+                    return 'green';
+                } else {
+                    return 'red';
+                }
+            })
+            .attr("stroke","black")
+            .attr("stroke-width", 4);
+
+
+
+        // Remove button_selected class from quarter buttons
+        $("#quarter_container .quarter_button").each(function() {
+            $(this).removeClass('button_selected');
+        });
+
+        // highlight 'All' button with button_selected class
+        $("#quarter_container #all").addClass('button_selected');
+
+        // reset select elems to 'All Players'
+        $("#shot_chart_container #teams_container .team").each(function() {
+            $(this).find('select').val('All Players');
+        });
+
+
 
     });
 
@@ -1777,9 +1812,6 @@ $(document).ready(function(e) {
         $("#review_"+tabId).show();
 
 
-
-
-
         //console.log(tabId);
 
     });
@@ -1799,8 +1831,42 @@ $(document).ready(function(e) {
         $(this).addClass('button_selected');
 
 
-        // determine which period to filter on
-        alert( $(this).attr('id') );
+        // determine which period user clicked
+        var quarter = $(this).attr('id');
+
+        console.log(quarter);
+
+    
+        // place all home/away shots on the court
+        d3.select("#svg_shot_chart .shots").selectAll('circle')
+            .data( shots['home'].concat(shots['away']) )
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) { return d.shotX })
+            .attr('cy', function(d) { return d.shotY })
+            .attr('r', 15)
+            .attr('fill', function(d) {
+                if (d.shotSuccess) {
+                    return 'green';
+                } else {
+                    return 'red';
+                }
+            })
+            .attr("stroke","black")
+            .attr("stroke-width", 4);
+
+        
+        // if user clicked specific quarter, only show those shots
+        if (quarter != 'all') {
+
+            console.log('update please')
+
+            // only show shots for the selected quarter  
+            d3.select("#svg_shot_chart .shots").selectAll('circle')
+                .filter(function(d) { return d.quarter.toString() != quarter })
+                .remove();
+            
+        } 
 
 
     });
