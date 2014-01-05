@@ -1501,6 +1501,9 @@ $(document).ready(function(e) {
         // hide roster
         $("#rosters_container").hide();
 
+        // hide review
+        $("#review").hide();
+
         // show game input view
         $("#game").show();
 
@@ -1815,6 +1818,33 @@ $(document).ready(function(e) {
         //console.log(tabId);
 
     });
+
+
+
+
+    // Filter shot_chart by player
+    $("#teams_container .team").on("click", 'select', function(e) {
+        e.preventDefault();
+
+        // Grab Team and Player
+        var team = $(this).attr('id');
+        var player = $("#teams_container #"+team).val();
+
+
+        // Filter only shots for that player (take into accout home and away)
+
+
+
+
+        // Need to add player filtering when user clicks on a quarter button
+
+
+        //console.log(team);
+        //console.log(player);
+
+    });
+
+
 
 
 
