@@ -1755,9 +1755,31 @@ $(document).ready(function(e) {
 
 
         // update shot_chart
-        // place all shots on court
-        d3.select("#svg_shot_chart .shots").selectAll('circle')
-            .data( shots['home'].concat(shots['away']) )
+        // empty previous shots
+        $("#svg_shot_chart .home_shots").empty();
+        $("#svg_shot_chart .away_shots").empty();
+
+        // place home shots on court
+        d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+            .data( shots['home'] )
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) { return d.shotX })
+            .attr('cy', function(d) { return d.shotY })
+            .attr('r', 15)
+            .attr('fill', function(d) {
+                if (d.shotSuccess) {
+                    return 'green';
+                } else {
+                    return 'red';
+                }
+            })
+            .attr("stroke","black")
+            .attr("stroke-width", 4);
+
+        // place away shots on court
+        d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+            .data( shots['away'] )
             .enter()
             .append('circle')
             .attr('cx', function(d) { return d.shotX })
@@ -1788,6 +1810,8 @@ $(document).ready(function(e) {
             $(this).find('select').val('All Players');
         });
 
+
+        console.log('update shots - clicked review button');
 
 
     });
@@ -1822,25 +1846,119 @@ $(document).ready(function(e) {
 
 
 
-    // Filter shot_chart by player
+    // Filter shot_chart by specific player
     $("#teams_container .team").on("click", 'select', function(e) {
         e.preventDefault();
 
-        // Grab Team and Player
+        // Grab Team and PlayerNumber
         var team = $(this).attr('id');
-        var player = $("#teams_container #"+team).val();
+        var playerNumber = $("#teams_container #"+team).children(":selected").attr('id')
 
 
-        // Filter only shots for that player (take into accout home and away)
+        // Grab Period (quarter/OT/All)
+        var period;
+        $("#shot_chart_container #quarter_container div").each(function() {
+            if ( $(this).attr('class').indexOf('button_selected') >= 0 ) {
+                period = $(this).attr('id');
+            }
+        });
 
 
+        // show shots for that quarter & player
+        if (period != 'all') {
+
+            console.log( shots[team] );
+
+
+            // empty previous shots
+            $("#svg_shot_chart ."+ team +"_shots").empty();
+
+
+            // Filter only shots for that Player & Period (take into accout home and away)
+            d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                .data( shots[team] )
+                .enter()
+                .append('circle')
+                .attr('cx', function(d) { return d.shotX })
+                .attr('cy', function(d) { return d.shotY })
+                .attr('r', 15)
+                .attr('fill', function(d) {
+                    if (d.shotSuccess) {
+                        return 'green';
+                    } else {
+                        return 'red';
+                    }
+                })
+                .attr("stroke","black")
+                .attr("stroke-width", 4);
+
+
+            // filter only on period
+            if (playerNumber == 'all') {
+
+                d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove()
+
+            // filter on period and player
+            } else {
+
+                // show only shots for this period
+                d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove()
+
+                // and show only shots from this player
+                d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                    .filter(function(d) { return d.playerNumber.toString() != playerNumber })
+                    .remove()
+
+                
+
+            }
+
+        // show all shots for that player
+        } else {
+
+            console.log( shots[team] );
+
+
+            // empty previous shots
+            $("#svg_shot_chart ."+ team +"_shots").empty();
+
+            // Filter only shots for that Player & Period (take into accout home and away)
+            d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                .data( shots[team] )
+                .enter()
+                .append('circle')
+                .attr('cx', function(d) { return d.shotX })
+                .attr('cy', function(d) { return d.shotY })
+                .attr('r', 15)
+                .attr('fill', function(d) {
+                    if (d.shotSuccess) {
+                        return 'green';
+                    } else {
+                        return 'red';
+                    }
+                })
+                .attr("stroke","black")
+                .attr("stroke-width", 4);
+
+
+            // filter on just the specific player
+            d3.select("#svg_shot_chart ."+ team +"_shots").selectAll('circle')
+                .filter(function(d) { return d.playerNumber.toString() != playerNumber })
+                .remove();
+
+        }
 
 
         // Need to add player filtering when user clicks on a quarter button
 
 
-        //console.log(team);
-        //console.log(player);
+        console.log(team);
+        console.log(playerNumber);
+        console.log(period);
 
     });
 
@@ -1862,14 +1980,45 @@ $(document).ready(function(e) {
 
 
         // determine which period user clicked
-        var quarter = $(this).attr('id');
+        var period = $(this).attr('id');
 
-        console.log(quarter);
+        
+        // Determine if you need to filter on a specific player
+        var homePlayerNumber = $("#teams_container #home").children(":selected").attr('id');
+        var awayPlayerNumber = $("#teams_container #away").children(":selected").attr('id');
 
+
+        console.log(period);
+        console.log(homePlayerNumber);
+        console.log(awayPlayerNumber);
+
+
+
+        // empty previous shots
+        $("#svg_shot_chart .home_shots").empty();
+        $("#svg_shot_chart .away_shots").empty();
     
-        // place all home/away shots on the court
-        d3.select("#svg_shot_chart .shots").selectAll('circle')
-            .data( shots['home'].concat(shots['away']) )
+        // place all home shots on the court
+        d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+            .data( shots['home'] )
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) { return d.shotX })
+            .attr('cy', function(d) { return d.shotY })
+            .attr('r', 15)
+            .attr('fill', function(d) {
+                if (d.shotSuccess) {
+                    return 'green';
+                } else {
+                    return 'red';
+                }
+            })
+            .attr("stroke","black")
+            .attr("stroke-width", 4);
+
+        // place all away shots on court
+        d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+            .data( shots['away'] )
             .enter()
             .append('circle')
             .attr('cx', function(d) { return d.shotX })
@@ -1886,18 +2035,87 @@ $(document).ready(function(e) {
             .attr("stroke-width", 4);
 
         
-        // if user clicked specific quarter, only show those shots
-        if (quarter != 'all') {
+        // if user clicked specific quarter (as opposed to All), only show those shots
+        if (period != 'all') {
 
-            console.log('update please')
+            // if no home player is chosen
+            if (homePlayerNumber == 'all') {
 
-            // only show shots for the selected quarter  
-            d3.select("#svg_shot_chart .shots").selectAll('circle')
-                .filter(function(d) { return d.quarter.toString() != quarter })
-                .remove();
+                // show all shots for the selected quarter  
+                d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove();
+
+            // if there is a specific home player chosen
+            } else {
+
+               // show all shots for the given quarter
+                d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove();
+
+                // show all shots for the specific player
+                d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+                    .filter(function(d) { return d.playerNumber.toString() != homePlayerNumber })
+                    .remove();
+
+            }
+
+            // if no away player is chosen
+            if (awayPlayerNumber == 'all') {
+
+                // show all shots for the selected quarter  
+                d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove();
+
+            // if a specific away player is chosen
+            } else {
+
+
+
+                // show all shots for the given quarter
+                d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+                    .filter(function(d) { return d.quarter.toString() != period })
+                    .remove();
+
+                // show all shots for the specific player
+                d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+                    .filter(function(d) { return d.playerNumber.toString() != awayPlayerNumber })
+                    .remove();
+                    
+
+
+            }
             
-        } 
+        // show shots for the entire game
+        } else {
 
+
+            // if a home player is chosen
+            if (homePlayerNumber != 'all') {
+
+                // show all shots for the specific player
+                d3.select("#svg_shot_chart .home_shots").selectAll('circle')
+                    .filter(function(d) { return d.playerNumber.toString() != homePlayerNumber })
+                    .remove();
+
+            }
+
+            // if an away player is chosen
+            if (awayPlayerNumber != 'all') {
+
+                // show all shots for the specific player
+                d3.select("#svg_shot_chart .away_shots").selectAll('circle')
+                    .filter(function(d) { return d.playerNumber.toString() != awayPlayerNumber })
+                    .remove();
+
+            }
+
+        }
+
+
+     
 
     });
 
