@@ -337,6 +337,44 @@ var madeAttemptedToHtml = function(made, attempted) {
 }
 
 
+var populateShotChart = function(awayName, homeName) {
+
+    // populate away team name
+    $("#shot_chart_container #teams_container #away_team span").text(awayName);
+
+    // populate home team name
+    $("#shot_chart_container #teams_container #home_team span").text(homeName);
+
+
+    // populate away players
+    $("#away_roster ul li").each(function() {
+        
+        // grab name of number of player
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+
+        // add an option with number as id
+        $("#shot_chart_container #teams_container #away").append( '<option id="'+ number +'">'+ name +'</option>' );
+
+    });
+
+
+    // populate home players
+    $("#home_roster ul li").each(function() {
+        
+        // grab name of number of player
+        var name = $(this).find('.player_name').text();
+        var number = $(this).attr('id');
+
+        // add an option with number as id
+        $("#shot_chart_container #teams_container #home").append( '<option id="'+ number +'">'+ name +'</option>' );
+
+    });
+
+
+}
+
+
 
 
 $(document).ready(function(e) {
@@ -816,7 +854,8 @@ $(document).ready(function(e) {
         gameReset.period = $("#quarter_buttons .button_selected").attr('id');
         gameReset.minutes = $("#minutes").val();
         gameReset.seconds = $("#seconds").val();
-        console.log(gameReset);
+        
+        //console.log(gameReset);
 
 
         // show court and hide roster view
@@ -849,6 +888,10 @@ $(document).ready(function(e) {
 
         // populate review_box_score tables & boxScore obj
         boxScore = populateBoxScore();
+
+        // populate the players as options in the shot_chart
+        populateShotChart(teams.away.teamName, teams.home.teamName);
+
 
         // hide start game button
         $("#start_game").hide();
