@@ -1098,8 +1098,23 @@ $(document).ready(function(e) {
             // Generate left hoop's shot coords
             oppositeShotCoords = rightToLeftShotCoords(shotX, shotY, leftHoopX, leftHoopY, rightHoopX, rightHoopY)
 
-            $('#basketball_court').trigger("placeMarker", [shotSuccess, team, number, oppositeShotCoords[0], oppositeShotCoords[1]]);
-            
+            // save shot to shots object
+            shots[team].push( { 
+                'playerNumber': parseInt(number),
+                'shotSuccess': shotSuccess,
+                'distanceFeet': shotDistanceFeet,
+                'points': shotPoints(shotDistancePixels),
+                'direction': direction,
+                'shotX': shotX,
+                'shotY': shotY,
+                'quarter': parseInt(gameReset.period),
+                'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+                'statId': statId,
+                'rightShotX': shotX,
+                'rightShotY': shotY,
+                'leftShotX': oppositeShotCoords[0],
+                'leftShotY': oppositeShotCoords[1]
+            } );
 
         } else {
 
@@ -1110,37 +1125,26 @@ $(document).ready(function(e) {
             // Generate right hoop's shot coords
             oppositeShotCoords = leftToRightShotCoords(shotX, shotY, leftHoopX, leftHoopY, rightHoopX, rightHoopY)
 
-            $('#basketball_court').trigger("placeMarker", [shotSuccess, team, number, oppositeShotCoords[0], oppositeShotCoords[1]]);
+            // save shot to shots object
+            shots[team].push( { 
+                'playerNumber': parseInt(number),
+                'shotSuccess': shotSuccess,
+                'distanceFeet': shotDistanceFeet,
+                'points': shotPoints(shotDistancePixels),
+                'direction': direction,
+                'shotX': shotX,
+                'shotY': shotY,
+                'quarter': parseInt(gameReset.period),
+                'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
+                'statId': statId,
+                'rightShotX': oppositeShotCoords[0],
+                'rightShotY': oppositeShotCoords[1],
+                'leftShotX': shotX,
+                'leftShotY': shotY
+            } );
 
         }
 
-
-
-        //console.log(shotX);
-        //console.log(shotY);
-
-
-
-        // save shot to shots object
-        shots[team].push( { 
-            'playerNumber': parseInt(number),
-            'shotSuccess': shotSuccess,
-            'distanceFeet': shotDistanceFeet,
-            'points': shotPoints(shotDistancePixels),
-            'direction': direction,
-            'shotX': shotX,
-            'shotY': shotY,
-            'quarter': parseInt(gameReset.period),
-            'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
-            'statId': statId
-
-            // save right hoop shot coords
-
-
-            // save left hoop shot coords
-
-
-        } );
 
         // add shot/stat to recentStats array
         recentStats.push({
@@ -1156,6 +1160,7 @@ $(document).ready(function(e) {
 
 
         //console.log("shots");
+        //console.log(shots);
         //console.log(JSON.stringify(shots));
 
 
