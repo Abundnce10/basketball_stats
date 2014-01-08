@@ -375,6 +375,32 @@ var populateShotChart = function(awayName, homeName) {
 }
 
 
+var leftToRightShotCoords = function(xShot, yShot, leftHoopX, leftHoopY, rightHoopX, rightHoopY) {
+
+  xDiff = xShot - leftHoopX;
+  yDiff = yShot - leftHoopY;
+
+  rightX = rightHoopX - xDiff;
+  rightY = rightHoopY - yDiff;
+
+  return [rightX, rightY];
+
+}
+
+
+var rightToLeftShotCoords = function(xShot, yShot, leftHoopX, leftHoopY, rightHoopX, rightHoopY) {
+
+  xDiff = rightHoopX - xShot;
+  yDiff = rightHoopY - yShot;
+
+  leftX = leftHoopX + xDiff;
+  leftY = leftHoopY + yDiff;
+
+  return [leftX, leftY];
+
+}
+
+
 
 
 $(document).ready(function(e) {
@@ -1058,17 +1084,42 @@ $(document).ready(function(e) {
 
         e.preventDefault();
 
+        // variable to store coords of shot on opposite side of the court
+        var oppositeShotCoords;
+
 
         // determine shot distance
         if (direction == 'right') {
+
             // Determine length of shot
             var shotDistancePixels = shotDistanceInPixels(rightHoopX, rightHoopY, shotX, shotY);
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+
+            // Generate left hoop's shot coords
+            oppositeShotCoords = rightToLeftShotCoords(shotX, shotY, leftHoopX, leftHoopY, rightHoopX, rightHoopY)
+
+            $('#basketball_court').trigger("placeMarker", [shotSuccess, team, number, oppositeShotCoords[0], oppositeShotCoords[1]]);
+            
+
         } else {
+
             // Determine length of shot
             var shotDistancePixels = shotDistanceInPixels(leftHoopX, leftHoopY, shotX, shotY);
             var shotDistanceFeet = pixelsToFeet(shotDistancePixels);
+
+            // Generate right hoop's shot coords
+            oppositeShotCoords = leftToRightShotCoords(shotX, shotY, leftHoopX, leftHoopY, rightHoopX, rightHoopY)
+
+            $('#basketball_court').trigger("placeMarker", [shotSuccess, team, number, oppositeShotCoords[0], oppositeShotCoords[1]]);
+
         }
+
+
+
+        //console.log(shotX);
+        //console.log(shotY);
+
+
 
         // save shot to shots object
         shots[team].push( { 
@@ -1082,10 +1133,14 @@ $(document).ready(function(e) {
             'quarter': parseInt(gameReset.period),
             'time': ''.concat(gameReset.minutes, ':', gameReset.seconds),
             'statId': statId
-        } );
 
-        //console.log("shots");
-        //console.log(JSON.stringify(shots));
+            // save right hoop shot coords
+
+
+            // save left hoop shot coords
+
+
+        } );
 
         // add shot/stat to recentStats array
         recentStats.push({
@@ -1098,6 +1153,11 @@ $(document).ready(function(e) {
 
         // increment statId
         statId += 1;
+
+
+        //console.log("shots");
+        //console.log(JSON.stringify(shots));
+
 
 
         // if shot was successful
