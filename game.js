@@ -1872,8 +1872,8 @@ $(document).ready(function(e) {
             .data( shots['home'] )
             .enter()
             .append('circle')
-            .attr('cx', function(d) { return d.shotX })
-            .attr('cy', function(d) { return d.shotY })
+            .attr('cx', function(d) { return d.rightShotX })
+            .attr('cy', function(d) { return d.rightShotY })
             .attr('r', 15)
             .attr('fill', function(d) {
                 if (d.shotSuccess) {
@@ -1890,8 +1890,8 @@ $(document).ready(function(e) {
             .data( shots['away'] )
             .enter()
             .append('circle')
-            .attr('cx', function(d) { return d.shotX })
-            .attr('cy', function(d) { return d.shotY })
+            .attr('cx', function(d) { return d.leftShotX })
+            .attr('cy', function(d) { return d.leftShotY })
             .attr('r', 15)
             .attr('fill', function(d) {
                 if (d.shotSuccess) {
@@ -1987,8 +1987,8 @@ $(document).ready(function(e) {
                 .data( shots[team] )
                 .enter()
                 .append('circle')
-                .attr('cx', function(d) { return d.shotX })
-                .attr('cy', function(d) { return d.shotY })
+                .attr('cx', function(d) { return team == 'home' ? d.rightShotX : d.leftShotX; })
+                .attr('cy', function(d) { return team == 'home' ? d.rightShotY : d.leftShotY; })
                 .attr('r', 15)
                 .attr('fill', function(d) {
                     if (d.shotSuccess) {
@@ -2039,8 +2039,8 @@ $(document).ready(function(e) {
                 .data( shots[team] )
                 .enter()
                 .append('circle')
-                .attr('cx', function(d) { return d.shotX })
-                .attr('cy', function(d) { return d.shotY })
+                .attr('cx', function(d) { return team == 'home' ? d.rightShotX : d.leftShotX; })
+                .attr('cy', function(d) { return team == 'home' ? d.rightShotY : d.leftShotY; })
                 .attr('r', 15)
                 .attr('fill', function(d) {
                     if (d.shotSuccess) {
@@ -2111,8 +2111,8 @@ $(document).ready(function(e) {
             .data( shots['home'] )
             .enter()
             .append('circle')
-            .attr('cx', function(d) { return d.shotX })
-            .attr('cy', function(d) { return d.shotY })
+            .attr('cx', function(d) { return d.rightShotX })
+            .attr('cy', function(d) { return d.rightShotY })
             .attr('r', 15)
             .attr('fill', function(d) {
                 if (d.shotSuccess) {
@@ -2129,8 +2129,8 @@ $(document).ready(function(e) {
             .data( shots['away'] )
             .enter()
             .append('circle')
-            .attr('cx', function(d) { return d.shotX })
-            .attr('cy', function(d) { return d.shotY })
+            .attr('cx', function(d) { return d.leftShotX })
+            .attr('cy', function(d) { return d.leftShotY })
             .attr('r', 15)
             .attr('fill', function(d) {
                 if (d.shotSuccess) {
