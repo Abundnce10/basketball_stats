@@ -466,6 +466,9 @@ $(document).ready(function(e) {
         }
     };
 
+    // which half is it?
+    var half = 'first';
+
     // Free Throws object, away/home
     var freeThrows = { away: [], home: [] };
 
@@ -501,6 +504,18 @@ $(document).ready(function(e) {
                 technical: [],
                 flagrant: []
             } 
+    };
+
+    // foul counter
+    var foulCounter = {
+        away: {
+            'first': 0,
+            'second': 0
+        },
+        home: {
+            'first': 0,
+            'second': 0
+        }
     };
 
     //
@@ -1385,6 +1400,15 @@ $(document).ready(function(e) {
             // Which foul did they choose?
             var secondaryStat = $('#foul').val();
 
+
+            // increment foulCounter object
+            foulCounter[selectedPlayer.team][half] += 1;
+
+            // update foul in UI
+            $(".fouls #"+ currentDirection[selectedPlayer.team]).text(foulCounter[selectedPlayer.team][half])
+
+
+
             // Save stat
             secondaryStats[selectedPlayer.team][secondaryStat].push( 
                 { 
@@ -1687,6 +1711,18 @@ $(document).ready(function(e) {
             // reset seconds
             $("#seconds").val('00');
             
+        }
+
+        // reset fouls if new half
+        if ( (gameSettings.periods == 4 && parseInt(newPeriod) == 3) || (gameSettings.periods == 2 && parseInt(newPeriod) ==2) ) {
+            
+            // change global half var
+            half = 'second';
+
+            // reset foul count in UI
+            $(".fouls #left").text("0");
+            $(".fouls #right").text("0");
+
         }
 
     });
